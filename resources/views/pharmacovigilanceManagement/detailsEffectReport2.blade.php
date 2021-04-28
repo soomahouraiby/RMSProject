@@ -260,43 +260,6 @@
                     </table>
                 </div>
             </div>
-         <div class="card shadow mb-0 pb-0" >
-                <div class="card-header " style="background-color: #F9F9F9;">
-                    <div class="row m-2 ">
-                        <h4>بيانات العرض الجانبي</h4>
-                    </div>
-                </div>
-                <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
-                    <form>
-                        @if(isset($details))
-                            @foreach($details as $detail)
-                                <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
-                                    <label class="col-form-label Text ml-3 mr-4 ">العرض : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> side_effect}} </label>
-                                </div>
-                                <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
-                                    <label class="col-form-label Text ml-5 mr-4 ">تاريخ بدء ظهور العرض : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> date_st_effect}} </label>
-                                </div>
-                                <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
-                                    <label class="col-form-label Text ml-5 mr-4 ">مدى خطورته: </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> range_dangerous}}  </label>
-                                </div>
-                                <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
-                                    <label class="col-form-label Text  ml-3 mr-4 ">هل زال العرض : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$detail -> side_effect_removed}}  </label>
-                                    <label class="col-form-label Text ml-3 mr-4 ">التاريخ : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> removed_date}}  </label>
-                                </div>
-                                <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
-                                    <label class="col-form-label Text  ml-3 mr-4 ">حالة المريض حاليا : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$detail -> status_patient_now}}  </label>
-                                </div>
-                            @endforeach
-                        @endif
-                    </form>
-                </div>
-            </div>
 
         {{--End Content--}}
 

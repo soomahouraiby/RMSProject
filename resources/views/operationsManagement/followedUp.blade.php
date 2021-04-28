@@ -84,22 +84,42 @@
                 </div>
             </div>
             <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
-                <form>
+                <table class="table table-striped ">
+                    <thead >
+                    <tr>
+                        <th>تــاريــخ الإجراء</th>
+                        <th> الإجراء المتخذ</th>
+                        <th>الــنــتــائــج</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     @if(isset($procedures))
                         @foreach($procedures as $procedure)
-                            <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
-                                <label  >  تــاريــخ الإجراء : </label>
-                                <label class="ml-3">{{$procedure -> procedure_date}}</label>
-                                <label >   الإجراء المتخذ : </label>
-                                <label class="ml-3">{{$procedure -> procedure}} </label>
-                            </div>
-                            <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
-                                <label  >   الــنــتــائــج : </label>
-                                <label class="ml-3">{{$procedure -> procedure_result}} </label>
-                            </div>
+                            <tr class="reportRow">
+                                <td>{{$procedure -> procedure_date}}</td>
+                                <td>{{$procedure -> procedure}}</td>
+                                <td>{{$procedure -> procedure_result}}</td>
+                            </tr>
                         @endforeach
                     @endif
-                </form>
+                    </tbody>
+                </table>
+{{--                <form>--}}
+{{--                    @if(isset($procedures))--}}
+{{--                        @foreach($procedures as $procedure)--}}
+{{--                            <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">--}}
+{{--                                <label  >  تــاريــخ الإجراء : </label>--}}
+{{--                                <label class="ml-3">{{$procedure -> procedure_date}}</label>--}}
+{{--                                <label >   الإجراء المتخذ : </label>--}}
+{{--                                <label class="ml-3">{{$procedure -> procedure}} </label>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">--}}
+{{--                                <label  >   الــنــتــائــج : </label>--}}
+{{--                                <label class="ml-3">{{$procedure -> procedure_result}} </label>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    @endif--}}
+{{--                </form>--}}
             </div>
             @if(isset($report))
                 @foreach($report as $reports)

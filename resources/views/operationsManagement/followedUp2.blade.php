@@ -87,30 +87,50 @@
                 </div>
             </div>
             <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
-                <form>
+                <table class="table table-striped ">
+                    <thead >
+                    <tr>
+                        <th>تــاريــخ الإجراء</th>
+                        <th> الإجراء المتخذ</th>
+                        <th>الــنــتــائــج</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     @if(isset($procedures))
                         @foreach($procedures as $procedure)
-                            <div class="row pb-5 border-bottom">
-                                <div class="col-lg">
-                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >  تــاريــخ الإجراء : </label>
-                                    <label class="col-form-label col-lg-2  mt-2  ">{{$procedure -> procedure_date}}</label>
-                                </div>
-                            </div>
-                            <div class="row pb-5 border-bottom">
-                                <div class="col-lg">
-                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >   الإجراء المتخذ : </label>
-                                    <p class="col-form-label  mx-5  ">{{$procedure -> procedure}} </p>
-                                </div>
-                            </div>
-                            <div class="row pb-5 border-bottom">
-                                <div class="col-lg">
-                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >   الــنــتــائــج : </label>
-                                    <p class="col-form-label  mx-5  ">{{$procedure -> procedure_result}} </p>
-                                </div>
-                            </div>
+                            <tr class="reportRow">
+                                <td>{{$procedure -> procedure_date}}</td>
+                                <td>{{$procedure -> procedure}}</td>
+                                <td>{{$procedure -> procedure_result}}</td>
+                            </tr>
                         @endforeach
                     @endif
-                </form>
+                    </tbody>
+                </table>
+{{--                <form>--}}
+{{--                    @if(isset($procedures))--}}
+{{--                        @foreach($procedures as $procedure)--}}
+{{--                            <div class="row pb-5 border-bottom">--}}
+{{--                                <div class="col-lg">--}}
+{{--                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >  تــاريــخ الإجراء : </label>--}}
+{{--                                    <label class="col-form-label col-lg-2  mt-2  ">{{$procedure -> procedure_date}}</label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row pb-5 border-bottom">--}}
+{{--                                <div class="col-lg">--}}
+{{--                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >   الإجراء المتخذ : </label>--}}
+{{--                                    <p class="col-form-label  mx-5  ">{{$procedure -> procedure}} </p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row pb-5 border-bottom">--}}
+{{--                                <div class="col-lg">--}}
+{{--                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >   الــنــتــائــج : </label>--}}
+{{--                                    <p class="col-form-label  mx-5  ">{{$procedure -> procedure_result}} </p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    @endif--}}
+{{--                </form>--}}
             </div>
         </div>
         {{--End Content--}}
