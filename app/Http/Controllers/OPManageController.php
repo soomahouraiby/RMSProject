@@ -214,7 +214,7 @@ class OPManageController extends Controller
             ->where('report_no', '=', $report_no)
             ->update(['transfer_party' => 'ادارة الصيدلة',
                 'transfer_date' => Carbon::now()->toDateTimeString()
-                ,'state'=>1,'reports.report_statues'=>'قيد المتابعة']);
+                ,'state'=>1,'reports.report_statues'=>'محول للمتابعة']);
         return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
     }
 
@@ -229,6 +229,20 @@ class OPManageController extends Controller
                 'reports.report_statues' , 'types_reports.type_report')
             ->where('report_statues','!=',null)
             ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->get();
+        return view('operationsManagement/followReports',compact('reports'));
+    }
+    //عشان اللفلترة حق محول للمتابعة
+    public function transferFollowingReports(){
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('report_statues','=','محول للمتابعة')
             ->where('type_report','!=','اعراض جانبية')
             ->where('type_report','!=','جودة')
             ->get();
@@ -301,7 +315,7 @@ class OPManageController extends Controller
 
         return view('operationsManagement/followedUp',compact('report','procedures'));
     }
-//عشان تفاصيل الذي قيد المتابعه
+//والمحوله //عشان تفاصيل الذي قيد المتابعه
     public function followedUp2($report_no){
         $reports = DB::table('reports')->select('reports.report_no')
             ->where('report_no','=', $report_no)->get();  // search in given table id only
@@ -314,7 +328,7 @@ class OPManageController extends Controller
             ->join('site', 'reports.site_no', '=', 'site.site_no')
             ->select('reports.report_no','reports.authors_name','reports.authors_phone',
             'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name'
-                ,'site.pharmacy_name','types_reports.type_report','reports.report_date')
+                ,'site.pharmacy_name','types_reports.type_report','reports.report_date','reports.report_statues')
             ->where('report_no','=', $report_no)->get();
 
         $procedures=DB::table('procedures')->select('procedures.procedure'

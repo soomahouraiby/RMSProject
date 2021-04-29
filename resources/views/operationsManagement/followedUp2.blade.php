@@ -79,15 +79,17 @@
         <!--//////////////////////////////////////////////////////-->
         <!--                    متابعة البلاغ                        -->
         <!--//////////////////////////////////////////////////////-->
-
-        <div class="card shadow mt-5" >
-            <div class="card-header " style="background-color: #F9F9F9;">
+        @if(isset($report))
+            @foreach($report as $reports)
+                @if($reports -> report_statues=='قيد للمتابعة')
+                    <div class="card shadow mt-5" >
+                         <div class="card-header " style="background-color: #F9F9F9;">
                 <div class="row m-2">
                     <h4>الإجراءات المتخذه حيال البلاغ</h4>
                 </div>
             </div>
-            <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
-                <table class="table table-striped ">
+                         <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
+                             <table class="table table-striped ">
                     <thead >
                     <tr>
                         <th>تــاريــخ الإجراء</th>
@@ -107,32 +109,11 @@
                     @endif
                     </tbody>
                 </table>
-{{--                <form>--}}
-{{--                    @if(isset($procedures))--}}
-{{--                        @foreach($procedures as $procedure)--}}
-{{--                            <div class="row pb-5 border-bottom">--}}
-{{--                                <div class="col-lg">--}}
-{{--                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >  تــاريــخ الإجراء : </label>--}}
-{{--                                    <label class="col-form-label col-lg-2  mt-2  ">{{$procedure -> procedure_date}}</label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="row pb-5 border-bottom">--}}
-{{--                                <div class="col-lg">--}}
-{{--                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >   الإجراء المتخذ : </label>--}}
-{{--                                    <p class="col-form-label  mx-5  ">{{$procedure -> procedure}} </p>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="row pb-5 border-bottom">--}}
-{{--                                <div class="col-lg">--}}
-{{--                                    <label class="col-form-label col-lg-2  mt-2 ml-3 Text" >   الــنــتــائــج : </label>--}}
-{{--                                    <p class="col-form-label  mx-5  ">{{$procedure -> procedure_result}} </p>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        @endforeach--}}
-{{--                    @endif--}}
-{{--                </form>--}}
-            </div>
-        </div>
+                         </div>
+                    </div>
+                @endif
+            @endforeach
+        @endif
         {{--End Content--}}
 
     </main>

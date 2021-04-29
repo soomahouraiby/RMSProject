@@ -58,6 +58,12 @@
                 </a>
                 <ul class="UL">
                     <li class="nav-item " >
+                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/transferFollowingReports')}}">
+                            <i class="far fa-newspaper"></i>
+                            <span data-feather="file" class="ml-2">محول للمتابعة</span>
+                        </a>
+                    </li>
+                    <li class="nav-item " >
                         <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/followingReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">قيد المتابعة</span>
