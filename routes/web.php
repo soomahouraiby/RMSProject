@@ -21,6 +21,33 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
 
+
+////////////////////////Begin Pharmacies Management////////////////////////
+Route::group(['namespace'=>'pharmacyManagement'],function (){
+
+    ///////////////////Show///////////////
+    Route::get('/newReports','ManageController@newReports')->name('PM_newReports');
+    Route::get('/followReports','ManageController@followReports')->name('PM_followReports');
+
+    ///////////////////Filter///////////////
+    Route::get('/newSmuggledReports','ManageController@newSmuggledReports')->name('PM_newSmuggledReports');
+    Route::get('/newDrownReports','ManageController@newDrownReports')->name('PM_newDrownReports');
+    Route::get('/newDifferentReports','ManageController@newDifferentReports')->name('PM_newDifferentReports');
+
+    ///////////////////Details///////////////
+    Route::get('/detailsDrug/{drug_no}','ManageController@detailsDrug')->name('PM_detailsDrug');
+    Route::get('/detailsReport/{report_no}','ManageController@detailsReport')->name('PM_detailsReport');
+
+    ///////////////////Follow///////////////
+    Route::get('/followNewReport/{report_no}','ManageController@followNewReport')->name('PM_followNewReport');
+
+});
+////////////////////////End Pharmacies Management////////////////////////
+
+
+
+
+////////////////////////operations Management////////////////////////
 Route::group(['prefix'=>'operationsManagement'],function (){
 
     Route::get('/newReports','OPManageController@newReports')->name('OP_newReports');
@@ -47,18 +74,12 @@ Route::group(['prefix'=>'operationsManagement'],function (){
     Route::get('create', 'OPManageController@create');
     Route::post('store', 'OPManageController@store')->name('report.store');
 });
+////////////////////////operations Management////////////////////////
 
-Route::group(['namespace'=>'pharmacyManagement'],function (){
 
-    Route::get('/addDrug','UsersController@addDrug')->name('addDrug');
-    Route::get('/newReports','UsersController@newReports')->name('newReports');
-    Route::get('/followReports','UsersController@followReports')->name('followReports');
-    Route::get('/follow','UsersController@follow')->name('follow');
-    Route::get('/detailsReport','UsersController@detailsReport')->name('detailsReport');
-    Route::post('/transfer', 'OPManageController@transfer')->name('transfer');
 
-});
 
+////////////////////////Begin pharmacovigilance Management////////////////////////
 Route::group(['prefix'=>'pharmacovigilanceManagement'],function (){
 
     Route::get('/newReports','PHCManageController@newReports')->name('PHC_newReports');
@@ -78,5 +99,6 @@ Route::group(['prefix'=>'pharmacovigilanceManagement'],function (){
     Route::get('/createProcedure/{report_no}', 'PHCManageController@createProcedure')->name('PHC_createProcedure');
     Route::post('/store/{report_no}', 'PHCManageController@store')->name('PHC_store');
 });
+////////////////////////End pharmacovigilance Management////////////////////////
 
 

@@ -4,6 +4,12 @@
     <div class="position-fixed pt-4  border-bottom">
         {{--        @if(\Illuminate\Support\Facades\Auth::user()->hasRole('operations_Management'))--}}
         <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{route('home')}}">
+                    <i class="fas fa-home"></i>
+                    <span data-feather="file" class="ml-2"> الرئيسية </span>
+                </a>
+            </li>
             <li class="nav-item " >
                 <a class="nav-link active " aria-current="page" href="{{route('PHC_newReports')}}">
                     <i class="fas fa-inbox "></i>

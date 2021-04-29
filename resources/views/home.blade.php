@@ -1,23 +1,26 @@
-@extends('layouts.app')
+@extends('layouts\master')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
+    <main class="col-md-8 ms-sm-auto col-lg-10 px-md-4 ">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 pr-2  border-bottom main " >
+            <h1 class="h2  ml-4"> </h1>
+            <div class="btn-toolbar ">
             </div>
         </div>
-    </div>
-</div>
+
+
+        {{--Content--}}
+        <h1  style="color:#ffffff">.</h1>
+        <h1 class="border-bottom" style="position: fixed; top: 55%; left: 25%" >نــظـــام إدارة الــبــلاغــات</h1>
+        <h1 style="color:#ffffff" >.</h1>
+        <h1 style="color:#ffffff" >.</h1>
+        <h1  style="color:#ffffff">.</h1>
+        <h1  style="color:#ffffff">.</h1>
+        <h1  style="color:#ffffff">.</h1>
+        <h1  style="color:#ffffff">.</h1>
+        <h1  style="color:#ffffff">.</h1>
+        <h3  style="color:#ffffff">.</h3>
+        <h6  style="color:#ffffff">.</h6>
+        <h6  style="color:#ffffff">.</h6>
+    </main>
 @endsection

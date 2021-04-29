@@ -30,7 +30,7 @@ class HomeController extends Controller
 //        return  response(Auth::user()->hasRole('operations_Management'));
 
 
-        return view('operationsManagement/addReport');
+        return view('home');
 //        if(Auth::user()->hasRole('operations_Management')){
 //            return view('operationsManagement/addReport');
 //        }

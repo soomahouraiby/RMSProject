@@ -148,7 +148,7 @@ h1 {
     color: var(--fourth-color);
 }
 
-h4 {
+h4 , h6{
     color: var(--third-color);
 }
 

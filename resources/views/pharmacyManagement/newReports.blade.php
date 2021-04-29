@@ -14,10 +14,10 @@
                         نوع البلاغ
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-light">
-                        <a class="dropdown-item " href="#">جميع البلاغات</a>
-                        <a class="dropdown-item " href="#">مهرب</a>
-                        <a class="dropdown-item " href="#">مسحوب</a>
-                        <a class="dropdown-item " href="#">غير مطابق</a>
+                        <a class="dropdown-item " href="{{route('PM_newReports')}}">جميع البلاغات</a>
+                        <a class="dropdown-item " href="{{route('PM_newSmuggledReports')}}">مهرب</a>
+                        <a class="dropdown-item " href="{{route('PM_newDrownReports')}}">مسحوب</a>
+                        <a class="dropdown-item " href="{{route('PM_newDifferentReports')}}">غير مطابق</a>
                     </div>
                 </div>
             </div>
@@ -30,71 +30,36 @@
             <div class="card-header ">
                 <table class="table table-striped table-hover ">
                     <thead >
-                        <tr>
-                            <th>اسم المبلغ</th>
-                            <th>التاريخ</th>
-                            <th>نوع البلاغ</th>
-                            <th>اسم الصيدليه</th>
-                            <th class="no-sort pr-1 align-middle data-table-row-action"></th>
-                        </tr>
+                    <tr>
+                        <th>اسم المبلغ</th>
+                        <th>التاريخ</th>
+                        <th>نوع البلاغ</th>
+                        <th>اسم الصيدليه</th>
+                        <th class="no-sort pr-1 align-middle data-table-row-action"></th>
+                    </tr>
                     </thead>
                     <tbody>
+
+                    @foreach($reports as $report)
+                        {{--                        @if($report -> type_report != 'مهرب')--}}
                         <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> report_date}}</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> pharmacy_name}}</a></td>
+                            <td><a  class="btn " href="{{route('PM_detailsReport',$report -> report_no)}}">تفاصيل</a></td>
                         </tr>
-                        <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
-                        </tr>
-                        <tr>
-                            <td><a href="{{route('detailsReport')}}">احلام محمد الفاشق</a></td>
-                            <td><a href="{{route('detailsReport')}}">June 21, 1961</a></td>
-                            <td><a href="{{route('detailsReport')}}">مهرب</a></td>
-                            <td><a href="{{route('detailsReport')}}">ابن حيان</a></td>
-                            <td><a  class="btn " href="{{route('detailsReport')}}">تفاصيل</a></td>
-                        </tr>
+                        {{--                        @else--}}
+                        {{--                            <tr>--}}
+                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>--}}
+                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> report_date}}</a></td>--}}
+                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>--}}
+                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> pharmacy_name}}</a></td>--}}
+                        {{--                                <td><a  class="btn " href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">تفاصيل</a></td>--}}
+                        {{--                            </tr>--}}
+                        {{--                        @endif--}}
+                    @endforeach
+
                     </tbody>
                 </table>
             </div>

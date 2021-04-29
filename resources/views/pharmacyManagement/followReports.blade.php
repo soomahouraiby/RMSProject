@@ -42,111 +42,21 @@
                         </tr>
                         </thead>
                         <tbody class="list" id="table-purchase-body">
-                            <tr class="btn-reveal-trigger">
-                                <td class="align-middle" style="width: 28px;">
-                                    <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="{{route('follow')}}">احلام محمد عبده الفاشق</a></td>
-                                <td class="align-middle white-space-nowrap text-left email"><a href="{{route('follow')}}">2021/5/31</a></td>
-                                <td class="align-middle white-space-nowrap text-left product"><a href="{{route('follow')}}">2021/6/1</a></td>
-                                <td class="align-middle white-space-nowrap text-left amount"><a href="{{route('follow')}}">إدارة الصيدلة</a></td>
-                                <td class="align-middle text-left  white-space-nowrap payment">
-                                    <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('follow')}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
-                                        <span data-feather="file  text-center">قيد المتابعة </span>
-                                        <i class="fas fa-file-contract ml-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger">
-                                <td class="align-middle" style="width: 28px;">
-                                    <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="{{route('follow')}}">احلام محمد عبده الفاشق</a></td>
-                                <td class="align-middle white-space-nowrap text-left email"><a href="{{route('follow')}}">2021/5/31</a></td>
-                                <td class="align-middle white-space-nowrap text-left product"><a href="{{route('follow')}}">2021/6/1</a></td>
-                                <td class="align-middle white-space-nowrap text-left amount"><a href="{{route('follow')}}">إدارة الصيدلة</a></td>
-                                <td class="align-middle text-left  white-space-nowrap payment">
-                                    <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active " href="{{route('follow')}}" style="background-color:#E3E6EA; color:#7D899B;  height:25px;"  >
-                                        <span data-feather="file  text-center " >بلاغ وارد </span>
-                                        <i class="fas fa-file-contract ml-4"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger">
-                                <td class="align-middle" style="width: 28px;">
-                                    <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="{{route('follow')}}">احلام محمد عبده الفاشق</a></td>
-                                <td class="align-middle white-space-nowrap text-left email"><a href="{{route('follow')}}">2021/5/31</a></td>
-                                <td class="align-middle white-space-nowrap text-left product"><a href="{{route('follow')}}">2021/6/1</a></td>
-                                <td class="align-middle white-space-nowrap text-left amount"><a href="{{route('follow')}}">إدارة الصيدلة</a></td>
-                                <td class="align-middle text-left  white-space-nowrap payment">
-                                    <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('follow')}}" style="background-color:#FEE0BE; color:#884802;  height:25px;"  >
-                                        <span data-feather="file  text-center">تم متابعتها </span>
-                                        <i class="fas fa-file-contract ml-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger">
-                                <td class="align-middle" style="width: 28px;">
-                                    <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="{{route('follow')}}">احلام محمد عبده الفاشق</a></td>
-                                <td class="align-middle white-space-nowrap text-left email"><a href="{{route('follow')}}">2021/5/31</a></td>
-                                <td class="align-middle white-space-nowrap text-left product"><a href="{{route('follow')}}">2021/6/1</a></td>
-                                <td class="align-middle white-space-nowrap text-left amount"><a href="{{route('follow')}}">إدارة الصيدلة</a></td>
-                                <td class="align-middle text-left  white-space-nowrap payment">
-                                    <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('follow')}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
-                                        <span data-feather="file  text-center">قيد المتابعة </span>
-                                        <i class="fas fa-file-contract ml-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger">
-                                <td class="align-middle" style="width: 28px;">
-                                    <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="{{route('follow')}}">احلام محمد عبده الفاشق</a></td>
-                                <td class="align-middle white-space-nowrap text-left email"><a href="{{route('follow')}}">2021/5/31</a></td>
-                                <td class="align-middle white-space-nowrap text-left product"><a href="{{route('follow')}}">2021/6/1</a></td>
-                                <td class="align-middle white-space-nowrap text-left amount"><a href="{{route('follow')}}">إدارة الصيدلة</a></td>
-                                <td class="align-middle text-left  white-space-nowrap payment">
-                                    <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active " href="{{route('follow')}}" style="background-color:#E3E6EA; color:#7D899B;  height:25px;"  >
-                                        <span data-feather="file  text-center " >بلاغ وارد </span>
-                                        <i class="fas fa-file-contract ml-4"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger">
-                                <td class="align-middle" style="width: 28px;">
-                                    <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="{{route('follow')}}">احلام محمد عبده الفاشق</a></td>
-                                <td class="align-middle white-space-nowrap text-left email"><a href="{{route('follow')}}">2021/5/31</a></td>
-                                <td class="align-middle white-space-nowrap text-left product"><a href="{{route('follow')}}">2021/6/1</a></td>
-                                <td class="align-middle white-space-nowrap text-left amount"><a href="{{route('follow')}}">إدارة الصيدلة</a></td>
-                                <td class="align-middle text-left  white-space-nowrap payment">
-                                    <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('follow')}}" style="background-color:#FEE0BE; color:#884802;  height:25px;"  >
-                                        <span data-feather="file  text-center">تم متابعتها </span>
-                                        <i class="fas fa-file-contract ml-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger">
-                                <td class="align-middle" style="width: 28px;">
-                                    <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="{{route('follow')}}">احلام محمد عبده الفاشق</a></td>
-                                <td class="align-middle white-space-nowrap text-left email"><a href="{{route('follow')}}">2021/5/31</a></td>
-                                <td class="align-middle white-space-nowrap text-left product"><a href="{{route('follow')}}">2021/6/1</a></td>
-                                <td class="align-middle white-space-nowrap text-left amount"><a href="{{route('follow')}}">إدارة الصيدلة</a></td>
-                                <td class="align-middle text-left  white-space-nowrap payment">
-                                    <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('follow')}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
-                                        <span data-feather="file  text-center">قيد المتابعة </span>
-                                        <i class="fas fa-file-contract ml-3"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr class="btn-reveal-trigger">
+                            <td class="align-middle" style="width: 28px;">
+                                <div class="form-check mb-2 mt-2 d-flex align-items-center"><input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                            </td>
+                            <td class="align-middle white-space-nowrap text-left name "><a href="">احلام محمد عبده الفاشق</a></td>
+                            <td class="align-middle white-space-nowrap text-left email"><a href="">2021/5/31</a></td>
+                            <td class="align-middle white-space-nowrap text-left product"><a href="">2021/6/1</a></td>
+                            <td class="align-middle white-space-nowrap text-left amount"><a href="">إدارة الصيدلة</a></td>
+                            <td class="align-middle text-left  white-space-nowrap payment">
+                                <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
+                                    <span data-feather="file  text-center">قيد المتابعة </span>
+                                    <i class="fas fa-file-contract ml-3"></i>
+                                </a>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
