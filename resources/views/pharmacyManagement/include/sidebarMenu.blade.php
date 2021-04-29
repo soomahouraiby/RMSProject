@@ -43,7 +43,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active " aria-current="page" href="">
+                <a class="nav-link active " aria-current="page" href="{{route('PM_followReports')}}">
                     <i class="fas fa-chalkboard-teacher "></i>
                     <span data-feather="file" class="ml-2">متابعةالبلاغات</span>
                     <i class="fas fa-caret-down ml-2 dropdown "></i>

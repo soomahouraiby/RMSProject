@@ -15,7 +15,6 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-light">
                         <a class="dropdown-item " href="#">جميع البلاغات</a>
-                        <a class="dropdown-item " href="#">بلاغ وارد</a>
                         <a class="dropdown-item " href="#">قيد المتابعة</a>
                         <a class="dropdown-item " href="#">تم متابعتها</a>
                     </div>
@@ -37,8 +36,9 @@
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="name">اسم المبلغ</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="email">تاريخ البلاغ</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="product">تاريخ التحويل</th>
-                            <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="payment">الجهه المُحال إليها</th>
+                            <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="payment">اسم الصيدلية</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="amount">حالة البلاغ</th>
+                            <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="amount"></th>
                         </tr>
                         </thead>
                         <tbody class="list" id="table-purchase-body">
@@ -55,6 +55,17 @@
                                     <span data-feather="file  text-center">قيد المتابعة </span>
                                     <i class="fas fa-file-contract ml-3"></i>
                                 </a>
+                            </td>
+                            <td class="align-middle white-space-nowrap">
+                                <div class="dropdown font-sans-serif">
+                                    <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                        <span class="fas fa-ellipsis-h fs--1"></span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                        <a class="dropdown-item" href="">متابعة</a>
+                                        <a class="dropdown-item" href="">إنهاء المتابعة</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         </tbody>

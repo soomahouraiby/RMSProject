@@ -127,7 +127,22 @@
                                     </ul>
                                 @else
                                     <ul class="list-group list-group-flush" >
-
+                                        <li class="list-group-item" style="background-color: #F9F9F9;">
+                                            <label>الاسم التجاري: </label>
+                                            <label  class="ml-3">{{$report -> commercial_name}}</label>
+                                        </li>
+                                        <li class="list-group-item" style="background-color: #F9F9F9;">
+                                            <label>التركيبه العلميه:</label>
+                                            <label  class="ml-3">{{$report -> material_name}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label>الوكيل :</label>
+                                            <label  class="ml-3">{{$report -> agent_name}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label>الشركة المصنعة :</label>
+                                            <label  class="ml-3">{{$report -> company_name}}</label>
+                                        </li>
                                     </ul>
                                 @endif
                             @endforeach

@@ -28,6 +28,7 @@ class ManageController extends Controller
         $this->middleware('auth');
     }
 
+
     //////////////// [ Show .. بلاغات وارده ]  ////////////////
     public function newReports(){
         $reports=DB::table('reports')
@@ -50,15 +51,16 @@ class ManageController extends Controller
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
             ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
             ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
                 'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
+                'reports.report_statues' , 'types_reports.type_report','site.pharmacy_name')
             ->where('report_statues','!=',null)
-            ->where('transfer_party','==',null)
+            ->where('transfer_party','!=',null)
             ->where('type_report','!=','اعراض جانبية')
             ->where('type_report','!=','جودة')
             ->get();
-        return view('operationsManagement/followReports',compact('reports'));
+        return view('pharmacyManagement/followReports',compact('reports'));
     }
 
 
@@ -104,14 +106,15 @@ class ManageController extends Controller
             ->join('site', 'reports.site_no', '=', 'site.site_no')
             ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
 
-            ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
-                'app_user.adjective', 'app_user.age','app_user.report_count','site.pharmacy_name',
-                'site.street_name', 'site.site_dec', 'reports.notes_user', 'reports.report_date',
-                'types_reports.type_report', 'reports.drug_picture','commercial_drug.drug_no'
-                , 'commercial_drug.drug_name', 'commercial_drug.drug_photo','commercial_drug.how_to_use'
-                ,'commercial_drug.side_effects','commercial_drug.drug_no')
+            ->select('reports.report_no','reports.drug_picture','reports.notes_user', 'reports.report_date'
+                , 'reports.commercial_name', 'reports.material_name', 'reports.agent_name', 'reports.company_name',
+                'app_user.app_user_name', 'app_user.app_user_phone', 'app_user.adjective', 'app_user.age','app_user.report_count',
+                'site.pharmacy_name', 'site.street_name', 'site.site_dec', 'types_reports.type_report',
+                'commercial_drug.drug_no', 'commercial_drug.drug_name', 'commercial_drug.drug_photo',
+                'commercial_drug.how_to_use','commercial_drug.side_effects','commercial_drug.drug_no')
             ->where('report_no', '=', $report_no)->get();
 
+//        return $reports;
         return view('pharmacyManagement.detailsReport', compact('reports'));
 
     }
