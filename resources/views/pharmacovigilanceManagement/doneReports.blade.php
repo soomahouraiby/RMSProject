@@ -18,7 +18,7 @@
         <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
             <br>
             <br><br><br><br>
-                <form method="post" action="{{url('pharmacovigilanceManagement/store',$reports -> report_no)}}">
+                <form method="post" action="{{route('PHC_store',$reports -> report_no)}}">
                     @csrf
                     <div class="row pb-3">
                         <div class="col-lg">

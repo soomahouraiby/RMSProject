@@ -18,7 +18,7 @@
                     @if(isset($report))
                         @foreach($report as $reports)
                             <a class="dropdown-item "
-                               href="{{url('operationsManagement/transferReports',$reports -> report_no)}}" >إدارة الصيدلة</a>
+                               href="{{route('OP_transferReports',$reports -> report_no)}}" >إدارة الصيدلة</a>
                         @endforeach
                     @endif
                 </div>

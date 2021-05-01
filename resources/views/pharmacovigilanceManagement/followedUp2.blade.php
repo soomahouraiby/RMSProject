@@ -40,7 +40,7 @@
                                 <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports -> drug_name}}  </label>
                             </div>
                             <div class="form-group raw mt-4  ">
-                                <a class="text-center col-form-label mb-3"  href="{{url('pharmacovigilanceManagement/detailsReport',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                <a class="text-center col-form-label mb-3"  href="{{route('PHC_detailsReport',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
                             </div>
                         @endforeach
                     @endif

@@ -18,9 +18,9 @@
                         عرض
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-light">
-                        <a class="dropdown-item " href="{{url('pharmacovigilanceManagement/followReports')}}">جميع البلاغات</a>
-                        <a class="dropdown-item " href="{{url('pharmacovigilanceManagement/followingReports')}}">قيد المتابعة</a>
-                        <a class="dropdown-item " href="{{url('pharmacovigilanceManagement/DoneReports')}}">تم انهائها</a>
+                        <a class="dropdown-item " href="{{route('PHC_followReports')}}">جميع البلاغات</a>
+                        <a class="dropdown-item " href="{{route('PHC_followingReports')}}">قيد المتابعة</a>
+                        <a class="dropdown-item " href="{{route('PHC_doneReports')}}">تم انهائها</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                                         <td class="align-middle white-space-nowrap text-left name ">{{$report -> app_user_name}}</td>
                                         <td class="align-middle white-space-nowrap text-left email">{{$report -> report_date}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('pharmacovigilanceManagement/followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('PHC_followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -72,9 +72,9 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('pharmacovigilanceManagement/followedUp',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('PHC_followedUp',$report -> report_no)}}">عرض</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item  " href="{{url('pharmacovigilanceManagement/editReport',$report -> report_no)}}!">اضافة اجراء</a>
+                                                    <a class="dropdown-item  " href="{{route('PHC_createProcedure',$report -> report_no)}}!">اضافة اجراء</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -88,7 +88,7 @@
                                         <td class="align-middle white-space-nowrap text-left name ">{{$report -> app_user_name}}</td>
                                         <td class="align-middle white-space-nowrap text-left email">{{$report -> report_date}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('pharmacovigilanceManagement/followedUp2',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('PHC_followedUp2',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -99,9 +99,7 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('pharmacovigilanceManagement/followedUp2',$report -> report_no)}}">عرض</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item  " href="{{url('pharmacovigilanceManagement/editReport',$report -> report_no)}}">تعديل</a>
+                                                    <a class="dropdown-item" href="{{route('PHC_followedUp2',$report -> report_no)}}">عرض</a>
                                                 </div>
                                             </div>
                                         </td>

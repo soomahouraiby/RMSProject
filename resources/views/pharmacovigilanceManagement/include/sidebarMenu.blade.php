@@ -16,21 +16,21 @@
                     <span data-feather="file" class="ml-2">بلاغات وارده</span>
                     <i class="fas fa-caret-down ml-3 dropdown "></i>
                 </a>
-            </li>
                 <ul class="UL">
-                <li class="nav-item " >
-                    <a class="nav-link active " aria-current="page" href="{{url('pharmacovigilanceManagement/newEffectReports')}}">
+                    <li class="nav-item " >
+                    <a class="nav-link active " aria-current="page" href="{{route('PHC_newEffectReports')}}">
                         <i class="far fa-newspaper"></i>
                         <span data-feather="file" class="ml-2">اعراض جانبية</span>
                     </a>
                 </li>
-                <li class="nav-item " >
-                    <a class="nav-link active " aria-current="page" href="{{url('pharmacovigilanceManagement/newQualityReports')}}">
+                    <li class="nav-item " >
+                    <a class="nav-link active " aria-current="page" href="{{route('PHC_newQualityReports')}}">
                         <i class="far fa-newspaper"></i>
                         <span data-feather="file" class="ml-2">جودة</span>
                     </a>
                 </li>
             </ul>
+            </li>
             <li class="nav-item">
                 <a class="nav-link active " aria-current="page" href="{{route('PHC_followReports')}}">
                     <i class="fas fa-chalkboard-teacher "></i>
@@ -39,13 +39,13 @@
                 </a>
                 <ul class="UL">
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('pharmacovigilanceManagement/followingReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('PHC_followingReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">قيد المتابعة</span>
                         </a>
                     </li>
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('pharmacovigilanceManagement/DoneReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('PHC_doneReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">تم انهائها</span>
                         </a>

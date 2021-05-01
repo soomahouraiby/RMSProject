@@ -18,9 +18,9 @@
                         نوع البلاغ
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-light">
-                        <a class="dropdown-item " href="{{url('pharmacovigilanceManagement/newReports')}}">جميع البلاغات</a>
-                        <a class="dropdown-item " href="{{url('pharmacovigilanceManagement/newEffectReports')}}">اعراض جانبية</a>
-                        <a class="dropdown-item " href="{{url('pharmacovigilanceManagement/newQualityReports')}}">جودة</a>
+                        <a class="dropdown-item " href="{{route('PHC_newReports')}}">جميع البلاغات</a>
+                        <a class="dropdown-item " href="{{route('PHC_newEffectReports')}}">اعراض جانبية</a>
+                        <a class="dropdown-item " href="{{route('PHC_newQualityReports')}}">جودة</a>
                     </div>
                 </div>
             </div>
@@ -48,36 +48,36 @@
                     @foreach($reports as $report)
                         @if($report -> type_report=='اعراض جانبية')
                             <tr class="reportRow">
-                                <td><a class="nav-link "   href="{{url('pharmacovigilanceManagement/detailsEffectReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
-                                <td><a class="nav-link  "  href="{{url('pharmacovigilanceManagement/detailsEffectReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
-                                <td ><a class="nav-link  " href="{{url('pharmacovigilanceManagement/detailsEffectReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
+                                <td><a class="nav-link "   href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
+                                <td><a class="nav-link  "  href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
+                                <td ><a class="nav-link  " href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
                                 <td class="align-middle white-space-nowrap">
                                     <div class="dropdown font-sans-serif">
                                         <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
                                             <span class="fas fa-ellipsis-h fs--1"></span>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                            <a class="dropdown-item" href="{{url('pharmacovigilanceManagement/detailsEffectReport',$report -> report_no)}}">عرض</a>
+                                            <a class="dropdown-item" href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">عرض</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item  " href="{{url('pharmacovigilanceManagement/transferReports',$report -> report_no)}}">  تحويل للمتابعة</a>
+                                            <a class="dropdown-item  " href="{{route('PHC_transferReports',$report -> report_no)}}">  تحويل للمتابعة</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                         @else
                             <tr class="reportRow">
-                                <td><a class="nav-link "   href="{{url('pharmacovigilanceManagement/detailsReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
-                                <td><a class="nav-link  "  href="{{url('pharmacovigilanceManagement/detailsReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
-                                <td ><a class="nav-link  " href="{{url('pharmacovigilanceManagement/detailsReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
+                                <td><a class="nav-link "   href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
+                                <td><a class="nav-link  "  href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
+                                <td ><a class="nav-link  " href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
                                 <td class="align-middle white-space-nowrap">
                                     <div class="dropdown font-sans-serif">
                                         <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
                                             <span class="fas fa-ellipsis-h fs--1"></span>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                            <a class="dropdown-item" href="{{url('pharmacovigilanceManagement/detailsReport',$report -> report_no)}}">عرض</a>
+                                            <a class="dropdown-item" href="{{route('PHC_detailsReport',$report -> report_no)}}">عرض</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item  " href="{{url('pharmacovigilanceManagement/transferReports',$report -> report_no)}}">تحويل للمتابعة</a>
+                                            <a class="dropdown-item  " href="{{route('PHC_transferReports',$report -> report_no)}}">تحويل للمتابعة</a>
                                         </div>
                                     </div>
                                 </td>

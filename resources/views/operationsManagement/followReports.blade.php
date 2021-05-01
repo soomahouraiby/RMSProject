@@ -18,11 +18,11 @@
                         عرض
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-light">
-                        <a class="dropdown-item " href="{{url('operationsManagement/followReports')}}">جميع البلاغات</a>
-                        <a class="dropdown-item " href="{{url('operationsManagement/transferFollowingReports')}}">محول للمتابعة</a>
-                        <a class="dropdown-item " href="{{url('operationsManagement/followingReports')}}">قيد المتابعة</a>
-                        <a class="dropdown-item " href="{{url('operationsManagement/followDoneReports')}}">تم متابعتها</a>
-                        <a class="dropdown-item " href="{{url('operationsManagement/DoneReports')}}">تم انهائها</a>
+                        <a class="dropdown-item " href="{{route('OP_followReports')}}">جميع البلاغات</a>
+                        <a class="dropdown-item " href="{{route('OP_transferFollowingReports')}}">محول للمتابعة</a>
+                        <a class="dropdown-item " href="{{route('OP_followingReports')}}">قيد المتابعة</a>
+                        <a class="dropdown-item " href="{{route('OP_followDoneReports')}}">تم متابعتها</a>
+                        <a class="dropdown-item " href="{{route('OP_doneReports')}}">تم انهائها</a>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report -> report_no)}}">عرض</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -103,9 +103,9 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp',$report -> report_no)}}">عرض</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item  " href="{{url('operationsManagement/editReport',$report -> report_no)}}!">إنهاء</a>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report -> report_no)}}!">إنهاء</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -132,9 +132,9 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp3',$report -> report_no)}}">عرض</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item  " href="{{url('operationsManagement/editReport',$report -> report_no)}}">تعديل</a>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report -> report_no)}}">تعديل</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -161,7 +161,7 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report -> report_no)}}">عرض</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -190,7 +190,7 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report -> report_no)}}">عرض</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -217,9 +217,9 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp',$report -> report_no)}}">عرض</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item  " href="{{url('operationsManagement/editReport',$report -> report_no)}}!">إنهاء</a>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report -> report_no)}}!">إنهاء</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -246,9 +246,9 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp3',$report -> report_no)}}">عرض</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item  " href="{{url('operationsManagement/editReport',$report -> report_no)}}">تعديل</a>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report -> report_no)}}">تعديل</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -275,7 +275,7 @@
                                                     <span class="fas fa-ellipsis-h fs--1"></span>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                    <a class="dropdown-item" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}">عرض</a>
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report -> report_no)}}">عرض</a>
                                                 </div>
                                             </div>
                                         </td>

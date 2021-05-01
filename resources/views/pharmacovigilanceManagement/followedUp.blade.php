@@ -44,7 +44,7 @@
                                 <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports -> drug_name}}  </label>
                             </div>
                             <div class="form-group raw mt-4  ">
-                                <a class="text-center col-form-label mb-3"  href="{{url('pharmacovigilanceManagement/detailsEffectReport2',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                <a class="text-center col-form-label mb-3"  href="{{route('PHC_detailsEffectReport2',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
                             </div>
                             @elseif($reports -> type_report=='جودة')
                                 <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
@@ -60,7 +60,7 @@
                                     <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports -> drug_name}}  </label>
                                 </div>
                                 <div class="form-group raw mt-4  ">
-                                    <a class="text-center col-form-label mb-3"  href="{{url('pharmacovigilanceManagement/detailsReport2',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                    <a class="text-center col-form-label mb-3"  href="{{route('PHC_detailsReport2',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
                                 </div>
                             @endif
                         @endforeach
@@ -75,7 +75,7 @@
                 <div class="row pb-5 ml-20 mt-10 mb-10">
                     <div class="col-lg">
                         <button class="btn " type="submit" style="margin-right:70%; width: 10%; background-color: #0F122D; color:#ffffff">
-                            <a  href="{{url('pharmacovigilanceManagement/createProcedure',$reports -> report_no)}}">اضافة اجراء </a></button>
+                            <a  href="{{route('PHC_createProcedure',$reports -> report_no)}}">اضافة اجراء </a></button>
 
                     </div>
                 </div>

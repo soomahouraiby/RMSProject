@@ -333,7 +333,6 @@ class PHCManageController extends Controller
     }
 
 
-
 //عشان تفاصيل الذي قيد المتابعه
     public function followedUp($report_no){
         $reports = DB::table('reports')->select('reports.report_no')
@@ -379,7 +378,7 @@ class PHCManageController extends Controller
         return view('pharmacovigilanceManagement/followedUp2',compact('report','procedures'));
     }
 
-//عشان حفظ ملاحظة المدير على البلاغ
+//عشان اضافة اجراء على البلاغ
     public function createProcedure($report_no){
         $reports = Reports::find($report_no);
         return view('pharmacovigilanceManagement/doneReports',compact('reports'));

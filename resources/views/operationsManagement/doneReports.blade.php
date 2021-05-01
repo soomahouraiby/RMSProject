@@ -18,7 +18,7 @@
         <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
             <br>
             <br><br><br><br>
-            <form method="post" action="{{url('operationsManagement/saveOPMNotes',$reports -> report_no)}}">
+            <form method="post" action="{{route('OP_saveOPMNotes',$reports -> report_no)}}">
                 @csrf
                 <div class="row pb-5">
                     <div class="col-lg">

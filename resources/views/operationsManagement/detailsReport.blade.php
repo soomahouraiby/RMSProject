@@ -18,7 +18,7 @@
                     @if(isset($report))
                         @foreach($report as $reports)
                             <a class="dropdown-item "
-                               href="{{url('operationsManagement/transferReports',$reports -> report_no)}}" >إدارة الصيدلة</a>
+                               href="{{route('OP_transferReports',$reports -> report_no)}}" >إدارة الصيدلة</a>
                         @endforeach
                     @endif
                 </div>
@@ -132,7 +132,7 @@
 {{--                                            <img class="card-img-top img-fluid"--}}
 {{--                                                 src="{{ asset('images/' . $reports -> drug_photo) }}">--}}
 {{--                                        </div>--}}
-                                        <a class="btn float-right" href="{{url('operationsManagement/detailsDrug',$reports -> drug_no)}}">المزيد</a>
+                                        <a class="btn float-right" href="{{route('OP_detailsDrug',$reports -> drug_no)}}">المزيد</a>
                                     </li>
                                 </ul>
                             @endforeach

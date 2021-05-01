@@ -14,7 +14,7 @@
                 @if(isset($report))
                     @foreach($report as $reports)
                         <button class="btn " type="submit" style=" width: 90%; background-color: #1b225a; color:#ffffff">
-                            <a  href="{{url('pharmacovigilanceManagement/transferReports',$reports -> report_no)}}" style=" color:#ffffff;">تحويل للمتابعة</a>
+                            <a  href="{{route('PHC_transferReports',$reports -> report_no)}}" style=" color:#ffffff;">تحويل للمتابعة</a>
                         </button>
                     @endforeach
                 @endif

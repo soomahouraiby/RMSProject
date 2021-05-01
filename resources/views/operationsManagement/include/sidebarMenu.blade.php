@@ -18,25 +18,25 @@
                 </a>
                 <ul class="UL">
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/newSmuggledReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_newSmuggledReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">مهرب</span>
                         </a>
                     </li>
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/newDrownReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_newDrownReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">مسحوب</span>
                         </a>
                     </li>
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/newDiffrentReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_newDiffrentReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">غير مطابق</span>
                         </a>
                     </li>
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/newExceptionReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_newExceptionReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">مستثناء</span>
                         </a>
@@ -58,25 +58,25 @@
                 </a>
                 <ul class="UL">
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/transferFollowingReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_transferFollowingReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">محول للمتابعة</span>
                         </a>
                     </li>
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/followingReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_followingReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">قيد المتابعة</span>
                         </a>
                     </li>
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/followDoneReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_followDoneReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">تم متابعتها</span>
                         </a>
                     </li>
                     <li class="nav-item " >
-                        <a class="nav-link active " aria-current="page" href="{{url('operationsManagement/DoneReports')}}">
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_doneReports')}}">
                             <i class="far fa-newspaper"></i>
                             <span data-feather="file" class="ml-2">تم انهائها</span>
                         </a>
