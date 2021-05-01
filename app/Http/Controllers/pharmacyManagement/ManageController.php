@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\pharmacyManagement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Procedures;
 use App\Models\Report_detailes;
 use App\Models\Sites;
 use App\Models\Commercial_drugs;
@@ -55,40 +56,85 @@ class ManageController extends Controller
             ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
                 'reports.report_date', 'reports.transfer_date','reports.transfer_party',
                 'reports.report_statues' , 'types_reports.type_report','site.pharmacy_name')
-            ->where('report_statues','!=',null)
+//            ->where('report_statues','=','قيد المتابعة','تمت المتابعة')
+//            ->where('report_statues','=','تمت المتابعة')
             ->where('transfer_party','!=',null)
+            ->where('state','=',2)
             ->where('type_report','!=','اعراض جانبية')
             ->where('type_report','!=','جودة')
             ->get();
+
         return view('pharmacyManagement/followReports',compact('reports'));
     }
 
 
 
 
-    //////////////// [ Follow .. بلاغ وارد ]  ////////////////
+    //////////////// [ Follow .. متابعة بلاغ وارد ]  ////////////////
     public function followNewReport($report_no){
         $report = DB::table('reports')->select('reports.report_no')
             ->where('report_no','=', $report_no)->get();  // search in given table id only
         if (!$report)
             return redirect()->back();
 
+        $update = DB::table('reports')->where('report_no','=', $report_no)
+            ->update(['reports.report_statues'=>'قيد المتابعة','state'=>2]);
+
+
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
             ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
             ->join('site', 'reports.site_no', '=', 'site.site_no')
+
             ->select('reports.report_no','reports.authors_name','reports.authors_phone',
                 'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name'
                 ,'site.pharmacy_name','types_reports.type_report','reports.report_date')
-            ->where('report_no','=', $report_no)->get();
 
-//        $procedures=DB::table('procedures')->select('procedures.procedure'
-//            ,'procedures.procedure_date','procedures.procedure_result')
-//            ->where('report_no','=', $report_no)->get();
+            ->where('report_no','=', $report_no)->get();
 
         return view('pharmacyManagement/follow',compact('reports'));
     }
 
+    //////////////// [ Follow .. إنهاء البلاغ ]  ////////////////
+    public function endFollowUp($report_no)
+    {
+        $report = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();
+        if (!$report)
+            return redirect()->back();
+
+
+        $reports=DB::table('reports')
+            ->select('reports.report_no','reports.report_statues')
+            ->where('report_no','=', $report_no)->update(['report_statues'=>'تمت المتابعة']);
+
+        return redirect()->back()->with(['saved'=>'تم التعديل']);
+    }
+
+    //////////////// [ Follow ..  اضافة إجراء ]  ////////////////
+    public function addProcedure(Request $request,$report_no): \Illuminate\Http\RedirectResponse
+    {
+        DB::table('procedures')->insert([
+            'procedure_date'=>Carbon::now()->toDateTimeString(),
+            'procedure'=>$request->input('procedure'),
+            'procedure_result'=>$request->input('procedure_result'),
+            'report_no'=>$report_no]);
+
+        return redirect()->back();
+
+    }
+
+
+
+
+    //////////////// [ Drug ..  اضافة دواء ]  ////////////////
+    public function addDrug(){
+        $agents=DB::table('agents')->select('agents.agent_name','agents.agent_no')->get();
+
+        $companies=DB::table('companies')->select('companies.company_name','companies.company_no')->get();
+
+        return view('pharmacyManagement/addDrug',compact('agents','companies'));
+    }
 
 
 
@@ -139,6 +185,32 @@ class ManageController extends Controller
             ->get();
 
         return view('pharmacyManagement/detailsDrug',compact('reports'));
+    }
+
+    //////////////// [ Details ..  تفاصيل المتابعة ]  ////////////////
+    public function detailsFollow($report_no){
+        $report = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$report)
+            return redirect()->back();
+
+
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+
+            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
+                'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name'
+                ,'site.pharmacy_name','types_reports.type_report','reports.report_date','reports.report_statues')
+
+            ->where('report_no','=', $report_no)->get();
+
+       $procedures= DB::table('procedures')
+           ->select('procedures.report_no','procedures.procedure_result','procedures.procedure','procedures.procedure_date')
+           ->where('report_no','=',$report_no)->get();
+
+        return view('pharmacyManagement/follow',compact('reports','procedures'));
     }
 
 

@@ -23,27 +23,72 @@
             <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
                 <div class="row pb-5">
                     <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
-                        <label class="col-form-label   mt-2 mx-4 "> الرقم المميز : </label>
+                        <label class="col-form-label   mt-2 mx-4 "> تاريخ الإنتاج : </label>
                         <div class=" mt-2 ">
-                            <input type="text" class="form-control" placeholder="الرقم المميز  ">
+                            <input type="text" class="form-control" placeholder="تاريخ الإنتاج  ">
                         </div>
-                        <label class="col-form-label   mt-2 mx-4  ">  الــتــاريــخ : </label>
+                        <label class="col-form-label   mt-2 mx-4  ">  تاريخ الإنتهاء : </label>
                         <div class=" mt-2  ">
-                            <input type="text" class="form-control" placeholder="التاريخ  ">
+                            <input type="text" class="form-control" placeholder="تاريخ الإنتهاء  ">
                         </div>
                     </div>
                     <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
-                        <label class="col-form-label  mt-2 mx-4 ">  الماده الفعاله : </label>
-                        <div class=" mt-2  ">
-                            <input type="text" class="form-control" placeholder="الاسم العلمي  ">
+                        <label class="col-form-label   mt-2 mx-4 "> الكمية : </label>
+                        <div class=" mt-2 ">
+                            <input type="text" class="form-control" placeholder="الكمية">
                         </div>
-                        <label class="col-form-label   mt-2 mx-4 ">  الاسم التجاري : </label>
+                        <label class="col-form-label   mt-2 mx-4  ">  السعر : </label>
                         <div class=" mt-2  ">
-                            <input type="text" class="form-control" placeholder="الاسم التجاري  ">
+                            <input type="text" class="form-control" placeholder="السعر ">
                         </div>
                     </div>
                     <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
-                        <label class="col-form-label  mt-2 mx-4 ">  الأثار الجانبيه : </label>
+                        <label class="col-form-label  mt-2 mx-4 ">   الوكيل : </label>
+                        <div class=" mt-2  ">
+                            <select class="form-control" name="cars" id="cars">
+                                @if(isset($agents))
+                                    @foreach($agents as $agent)
+                                        <option value="">{{$agent->agent_name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <label class="col-form-label   mt-2 mx-4 ">  الشركة : </label>
+                        <div class=" mt-2  ">
+                            <select class="form-control" name="cars" id="cars">
+                                @if(isset($companies))
+                                    @foreach($companies as $company)
+                                        <option value="">{{$company->company_name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
+                        <label class="col-form-label  mt-2 mx-4 ">   الماده الفعاله : </label>
+                        <div class=" mt-2  ">
+                            <select class="form-control" name="cars" id="cars">
+                                @if(isset($agents))
+                                    @foreach($agents as $agent)
+                                        <option value="">{{$agent->agent_name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <label class="col-form-label   mt-2 mx-4 ">  الشركة : </label>
+                        <div class=" mt-2  ">
+                            <select class="form-control" name="cars" id="cars">
+                                @if(isset($companies))
+                                    @foreach($companies as $company)
+                                        <option value="">{{$company->company_name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
+
+                        <label class="col-form-label  mt-2 mx-4 ">  اسم الوكيل : </label>
                         <div class=" mt-2">
                             <textarea class="form-control" placeholder="الأثار الجانبيه" rows="3" cols="40"></textarea>
                         </div>
@@ -55,6 +100,5 @@
             </div>
         </div>
     </main>
-
 
 @endsection

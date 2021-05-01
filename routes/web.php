@@ -37,9 +37,16 @@ Route::group(['namespace'=>'pharmacyManagement'],function (){
     ///////////////////Details///////////////
     Route::get('/detailsDrug/{drug_no}','ManageController@detailsDrug')->name('PM_detailsDrug');
     Route::get('/detailsReport/{report_no}','ManageController@detailsReport')->name('PM_detailsReport');
+    Route::get('/detailsFollow/{report_no}','ManageController@detailsFollow')->name('PM_detailsFollow');
 
     ///////////////////Follow///////////////
     Route::get('/followNewReport/{report_no}','ManageController@followNewReport')->name('PM_followNewReport');
+    Route::get('/endFollowUp/{report_no}','ManageController@endFollowUp')->name('PM_endFollowUp');
+    Route::post('/addProcedure/{report_no}','ManageController@addProcedure')->name('PM_addProcedure');
+
+    ///////////////////Drug///////////////
+    Route::get('/addDrug','ManageController@addDrug')->name('PM_addDrug');
+
 
 });
 ////////////////////////End Pharmacies Management////////////////////////

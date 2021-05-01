@@ -65,7 +65,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -121,7 +121,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -150,7 +150,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B; height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -179,7 +179,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -235,7 +235,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -264,7 +264,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
