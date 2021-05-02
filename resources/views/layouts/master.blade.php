@@ -34,7 +34,7 @@
     <div class="row ">
 
         {{--List--}}
-        @include('pharmacovigilanceManagement.include.sidebarMenu')
+        @include('operationsManagement.include.sidebarMenu')
 {{--        @include('pharmacovigilanceManagement.include.sidebarMenu')--}}
 
 

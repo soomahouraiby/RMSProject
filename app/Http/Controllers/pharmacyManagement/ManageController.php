@@ -125,8 +125,6 @@ class ManageController extends Controller
     }
 
 
-
-
     //////////////// [ Drug ..  اضافة دواء ]  ////////////////
     public function addDrug(){
         $agents=DB::table('agents')->select('agents.agent_name','agents.agent_no')->get();

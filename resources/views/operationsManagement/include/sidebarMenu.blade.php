@@ -45,10 +45,24 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{route('OP_addReport')}}">
+                <a class="nav-link active" aria-current="page" >
                     <i class="fas fa-plus "></i>
                     <span data-feather="file" class="ml-2"> إضافة بلاغ جديد</span>
                 </a>
+                <ul class="UL">
+                    <li class="nav-item " >
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_addReport')}}">
+                            <i class="far fa-newspaper"></i>
+                            <span data-feather="file" class="ml-2">مهرب</span>
+                        </a>
+                    </li>
+                    <li class="nav-item " >
+                        <a class="nav-link active " aria-current="page" href="{{route('OP_addReport')}}">
+                            <i class="far fa-newspaper"></i>
+                            <span data-feather="file" class="ml-2">ّاخر</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link active " aria-current="page" href="{{route('OP_followReports')}}">

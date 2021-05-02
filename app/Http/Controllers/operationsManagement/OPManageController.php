@@ -208,7 +208,6 @@ class OPManageController extends Controller
 
     }
 
-
 //عشان تحويل البلاغات الوارده
     public function transferReports($report_no,Request $request)
     {
@@ -219,7 +218,6 @@ class OPManageController extends Controller
                 ,'state'=>1,'reports.report_statues'=>'محول للمتابعة']);
         return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
     }
-
 
 // عشان عرض المتابعة للبلاغات
     public function followReports(){
@@ -389,27 +387,33 @@ class OPManageController extends Controller
     public function addReport(){
         return view('operationsManagement/addReport');
     }
-    public function create()
-    {
-        return view('operationsManagement.addReport');
-    }
     public function store(Request  $request): \Illuminate\Http\RedirectResponse
     {
-        echo "fff";
-        // $file_name = $this->saveImage($request->drug_picture, 'images/Report');
-        //insert
         Reports::create([
-            // 'drug_picture' => $file_name,
-            'pharmacy_address' => $request->input('pharmacy_address'),
-            'drug_name' =>   $request->input('drug_name'),
-            'material_name' =>  $request->input('material_name'),
-            'district' => $request->input('district'),
-            'notes_user' => $request->input('notes_user'),
+            'authors_name' =>   $request->input('authors_name'),
+            'authors_phone' =>  $request->input('authors_phone'),
+            'authors_adjective' => $request->input('authors_adjective'),
+            'authors_age' => $request->input('authors_age'),
             'report_date'=>Carbon::now()->toDateTimeString(),
             'transfer_party' =>$request->input('transfer_party'),
             'transfer_date'=>Carbon::now()->toDateTimeString(),
+            'commercial_name' =>   $request->input('commercial_name'),
+            'material_name' =>  $request->input('material_name'),
+            'company_name' => $request->input('company_name'),
+            'agent_name' => $request->input('agent_name'),
+            'report_statues'=>'محولة للمتابعة',
+            'notes_user' =>$request->input('notes_user'),
+            'state'=>1,
+            'type_report_no' =>$request->input('type_report_no'),
+            'site_no' =>$request->input('site_no'),
         ]);
+      Sites::create([
+          'pharmacy_name' => $request->input('pharmacy_name'),
+          'street_name' => $request->input('street_name'),
+          'neig_name' => $request->input('neig_name'),
+          'site_dec' => $request->input('site_dec'),
 
+      ]);
         // return redirect()->back()->with(['success' => 'تم اضافه البلاغ بنجاح ']);
     }
 
