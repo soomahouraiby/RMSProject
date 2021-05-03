@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
 
+
 ////////////////////////Begin Pharmacies Management////////////////////////
 Route::group(['namespace'=>'pharmacyManagement'],function (){
 
@@ -44,11 +45,14 @@ Route::group(['namespace'=>'pharmacyManagement'],function (){
     Route::post('/addProcedure/{report_no}','ManageController@addProcedure')->name('PM_addProcedure');
 
     ///////////////////Drug///////////////
-    Route::get('/addDrug','ManageController@addDrug')->name('PM_addDrug');
+    Route::get('/drug','ManageController@drug')->name('PM_drug');
+    Route::post('/addDrug','ManageController@addDrug')->name('PM_addDrug');
 
 
 });
 ////////////////////////End Pharmacies Management////////////////////////
+
+
 
 
 ////////////////////////operations Management////////////////////////
@@ -95,6 +99,8 @@ Route::group(['namespace'=>'operationsManagement'],function (){
 ////////////////////////operations Management////////////////////////
 
 
+
+
 ////////////////////////Begin pharmacovigilance Management////////////////////////
 Route::group(['namespace'=>'pharmacovigilanceManagement'],function (){
 
@@ -126,5 +132,3 @@ Route::group(['namespace'=>'pharmacovigilanceManagement'],function (){
 
 });
 ////////////////////////End pharmacovigilance Management////////////////////////
-
-

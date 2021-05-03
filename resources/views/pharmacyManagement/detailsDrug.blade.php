@@ -33,7 +33,7 @@
                                         <label  class="ml-3">{{$report -> drug_name}}</label>
                                     </li>
                                     <li class="list-group-item" style="background-color: #F9F9F9;">
-                                        <label class="Text">الاسم العلمي : </label>
+                                        <label class="Text">المادة الفعاله : </label>
                                         <label  class="ml-3">{{$report -> material_name}}</label>
                                     </li>
                                     <li class="list-group-item"style="background-color: #F9F9F9;">

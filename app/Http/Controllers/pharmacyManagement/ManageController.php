@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PharIo\Manifest\Type;
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
@@ -125,14 +126,59 @@ class ManageController extends Controller
     }
 
 
-    //////////////// [ Drug ..  اضافة دواء ]  ////////////////
-    public function addDrug(){
-        $agents=DB::table('agents')->select('agents.agent_name','agents.agent_no')->get();
 
-        $companies=DB::table('companies')->select('companies.company_name','companies.company_no')->get();
 
-        return view('pharmacyManagement/addDrug',compact('agents','companies'));
+    //////////////// [ Drug ..   ]  ////////////////
+    public function drug(){
+        $agents = DB::table('agents')->select('agents.agent_name','agents.agent_no')->get();
+
+        $companies = DB::table('companies')->select('companies.company_name','companies.company_no')->get();
+
+        $materials = DB::table('effective_material')->select('effective_material.material_no','effective_material.material_name')->get();
+
+        $drug=Commercial_drugs::orderByDesc('drug_no')->first('drug_no');
+        $shipment=Shipments::orderByDesc('shipment_no')->first('shipment_no');
+
+
+        return view('pharmacyManagement/addDrug',compact('agents','companies','materials','drug','shipment'));
     }
+
+    //////////////// [ Drug ..  اضافة دواء ]  ////////////////
+    public function addDrug(Request $request){
+
+        $drugs = DB::table('commercial_drug')->insert([
+            'drug_name'=>$request->drug_name,
+            'register_no'=>$request->register_no,
+            'drug_entrance'=>'احلام',
+            'drug_photo'=>'ااا',
+            'how_to_use'=>$request->how_to_use,
+            'drug_form'=>$request->drug_form,
+            'side_effects'=>$request->side_effects,
+            'agent_no'=>$request->agent_no,
+            'company_no'=>$request->company_no]);
+
+        $combination = DB::table('combination')->insert([
+            'material_no'=>$request->material_no,
+            'drug_no'=>$request->drug_no,
+            'con'=>$request->con]);
+
+        $shipments = DB::table('shipments')->insert([
+            'production_date'=>$request->production_date,
+            'expiry_date'=>$request->expiry_date,
+            'quantity'=>$request->quantity,
+            'price'=>$request->price
+        ]);
+
+        $batch_number = DB::table('batch_number')->insert([
+            'batch_num'=>$request->batch_num,
+            'barcode'=>$request->barcode,
+            'drug_no'=>$request->drug_no,
+            'shipment_no'=>$request->shipment_no
+        ]);
+
+        return redirect()->back();
+    }
+
 
 
 
