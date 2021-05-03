@@ -387,13 +387,20 @@ class OPManageController extends Controller
 //عشان اضافة بلاغ
     public function selectBNumber(Request $request){
         $batch_no = $request->input('batch_num');
-        $batch = DB::table('batch_number')->select('batch_number.batch_num')
-            ->where('batch_num','=', $batch_no)->get();  // search in given table id only
-        if (isNull($batch))
-            return redirect()->back()->with(['success' => 'هذا الرقم غير موجود ']);
+//        $batch = DB::table('batch_number')->select('batch_number.batch_num')
+//            ->where('batch_num','=', $batch_no)->get();  // search in given table id only
+//        if (isset($batch) && $batch->isEmpty())
+//            return view('operationsManagement/addReport')
+//             ->with(['success' => 'هذا الرقم غير موجود ']);
 
-        return redirect()->back()->with(['success' => 'هذا الرقم موجود بالفعل ']);
-        //return response($batch);
+        $drug=DB::table('batch_number')
+            ->join('commercial_drug', 'batch_number.drug_no', '=', 'commercial_drug.drug_no')
+            ->select('commercial_drug.drug_name','commercial_drug.drug_no')
+            ->where('batch_num','=', $batch_no)->get();
+
+        $site=Sites::orderByDesc('site_no')->first('site_no');
+
+        return view('operationsManagement/addReport',compact('drug','site'));
 
 
 
@@ -403,7 +410,7 @@ class OPManageController extends Controller
     }
     public function store(Request  $request): \Illuminate\Http\RedirectResponse
     {
-        Reports::create([
+        $reports = DB::table('reports')->insert ([
             'authors_name' =>   $request->input('authors_name'),
             'authors_phone' =>  $request->input('authors_phone'),
             'authors_adjective' => $request->input('authors_adjective'),
@@ -421,7 +428,7 @@ class OPManageController extends Controller
             'type_report_no' =>$request->input('type_report_no'),
             'site_no' =>$request->input('site_no'),
         ]);
-      Sites::create([
+        $sites = DB::table('site')->insert([
           'pharmacy_name' => $request->input('pharmacy_name'),
           'street_name' => $request->input('street_name'),
           'neig_name' => $request->input('neig_name'),

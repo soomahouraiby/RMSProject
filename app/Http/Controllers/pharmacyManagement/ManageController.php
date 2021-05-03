@@ -145,7 +145,7 @@ class ManageController extends Controller
 
     //////////////// [ Drug ..  اضافة دواء ]  ////////////////
     public function addDrug(Request $request){
-
+-
         $drugs = DB::table('commercial_drug')->insert([
             'drug_name'=>$request->drug_name,
             'register_no'=>$request->register_no,
