@@ -2,7 +2,11 @@
 @section('content')
 
     <main class="col-md-8 ms-sm-auto col-lg-10 px-md-4 ">
-
+        @if(Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                {{ Session::get('success') }}
+            </div>
+        @endif
         {{--Start Content Title--}}
 
         <div class="border-bottom d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 pr-2 main " >
@@ -52,7 +56,7 @@
                                      </div>
                                      <label class="col-form-label text-sm-right mt-2 ml-0"> الصفة : </label>
                                      <div class=" mt-2 ml-4  ">
-                                         <input type="text" class="form-control  " placeholder="الصفة " name="authors_character">
+                                         <input type="text" class="form-control  " placeholder="الصفة " name="authors_adjective">
                                      </div>
                                  </div>
                              </div>
@@ -64,16 +68,22 @@
                             <div class="row mt-4">
                                 <h4>موضوع البلاغ</h4>
                             </div>
-                            <div class="row ">
-                               <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
-                                    <label class="col-form-label  text-sm-right mt-2">  الرقم المميز : </label>
-                                    <div class="mt-2  ml-4">
-                                        <input type="text" class="form-control" placeholder="الرقم المميز  " name="batch_no">
+                            <form action="{{route('OP_selectBNumber')}}" method="GET">
+                                <div class="row ">
+                                    <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                        <label class="col-form-label  text-sm-right mt-2">  الرقم المميز : </label>
+                                        <div class="mt-2  ml-4">
+                                            <input type="text" class="form-control" placeholder="الرقم المميز  " name="batch_num" id="batch_num">
+                                        </div>
+                                    </div>
+                                    <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                        <button id="query" class="btn btn-primary " type="submit" style="color: white;background-color: #0F122D">
+                                        تحقق
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
-                                    <button id="query" class="btn btn-primary "  >تحقق</button>
-                                </div>
+                            </form>
+                            <div class="row ">
                                 <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                     <label class="col-form-label text-sm-right mt-2">  اسم الدواء : </label>
                                     <div class="mt-2 ml-4">
@@ -86,9 +96,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
-                                    <label class="col-form-label text-sm-right mt-2">اسم الصيديلة  : </label>
+                                    <label class="col-form-label text-sm-right mt-2">اسم الصيدلية  : </label>
                                     <div class=" mt-2 ml-4">
-                                        <input type="text" class="form-control" placeholder="اسم الصيديلة" name="pharmacy_address">
+                                        <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_address">
+                                    </div>
+                                    <label class="col-form-label text-sm-right mt-2">اسم الشارع  : </label>
+                                    <div class=" mt-2 ml-4">
+                                        <input type="text" class="form-control" placeholder="اسم الشارع" name="street_name">
                                     </div>
                                     <label class="col-form-label text-sm-right mt-2">المنطقة : </label>
                                     <div class=" mt-2 ml-4">
@@ -119,7 +133,7 @@
                                      </div>
                                      <label class="col-form-label text-sm-right mt-2">الجهه المحال إليها : </label>
                                      <div class="mt-2 ml-4">
-                                         <select class="form-control mb-3" id="transfer">
+                                         <select class="form-control mb-3" id="transfer_party">
                                              <option selected="" value="إدارة الصيدلة">إدارة الصيدلة</option>
                                          </select>
                                      </div>

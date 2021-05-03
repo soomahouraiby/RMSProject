@@ -88,6 +88,7 @@ Route::group(['namespace'=>'operationsManagement'],function (){
     Route::post('/OP_saveOPMNotes/{report_no}', 'OPManageController@saveOPMNotes')->name('OP_saveOPMNotes');
 
     ///////////////////Add report///////////////
+    Route::get('/OP_selectBNumber','OPManageController@selectBNumber')->name('OP_selectBNumber');
     Route::get('/OP_addReport','OPManageController@addReport')->name('OP_addReport');
     Route::post('OP_store', 'OPManageController@store')->name('report.store');
 });

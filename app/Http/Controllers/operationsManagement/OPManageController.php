@@ -3,6 +3,7 @@ namespace App\Http\Controllers\operationsManagement;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Batch_number;
 use App\Models\Report_detailes;
 use App\Models\Sites;
 use App\Models\Commercial_drugs;
@@ -384,6 +385,19 @@ class OPManageController extends Controller
     }
 
 //عشان اضافة بلاغ
+    public function selectBNumber(Request $request){
+        $batch_no = $request->input('batch_num');
+        $batch = DB::table('batch_number')->select('batch_number.batch_num')
+            ->where('batch_num','=', $batch_no)->get();  // search in given table id only
+        if (isNull($batch))
+            return redirect()->back()->with(['success' => 'هذا الرقم غير موجود ']);
+
+        return redirect()->back()->with(['success' => 'هذا الرقم موجود بالفعل ']);
+        //return response($batch);
+
+
+
+    }
     public function addReport(){
         return view('operationsManagement/addReport');
     }

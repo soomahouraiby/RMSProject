@@ -13,8 +13,6 @@ class Batch_number extends Model
     protected $primaryKey = 'id';
     public $timestamps=false;
 
-//    protected $hidden = [
-//        'app_user_no',
-//    ];
+
 
 }
