@@ -14,9 +14,9 @@
                         عرض
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-light">
-                        <a class="dropdown-item " href="#">جميع البلاغات</a>
-                        <a class="dropdown-item " href="#">قيد المتابعة</a>
-                        <a class="dropdown-item " href="#">تم متابعتها</a>
+                        <a class="dropdown-item " href="{{route('PM_followReports')}}">جميع البلاغات</a>
+                        <a class="dropdown-item " href="{{route('PM_followingReports')}}">قيد المتابعة</a>
+                        <a class="dropdown-item " href="{{route('PM_followDoneReports')}}">تم متابعتها</a>
                     </div>
                 </div>
             </div>
@@ -66,6 +66,13 @@
                                                     <i class="fas fa-file-contract ml-3"></i>
                                                 </a>
                                             </td>
+                                    @else
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                                <span data-feather="file  text-center">تمت المتابعة</span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
                                     @endif
                                     <td class="align-middle white-space-nowrap">
                                         <div class="dropdown font-sans-serif">
