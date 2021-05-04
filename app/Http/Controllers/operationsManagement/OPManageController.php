@@ -160,7 +160,26 @@ class OPManageController extends Controller
                 , 'commercial_drug.drug_name', 'commercial_drug.drug_photo','commercial_drug.how_to_use'
                 ,'commercial_drug.side_effects','commercial_drug.drug_no')
             ->where('report_no', '=', $report_no)->get();
-        return view('operationsManagement.detailsReport2', compact('report'));
+
+        $reports2 = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$reports2)
+            return redirect()->back();
+
+        $report2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
+            ->select('reports.report_no', 'reports.authors_name', 'reports.authors_phone',
+                'reports.authors_adjective', 'reports.authors_age', 'site.pharmacy_name',
+                'site.street_name', 'site.site_dec', 'reports.notes_user', 'reports.report_date',
+                'types_reports.type_report', 'reports.drug_picture'
+                , 'commercial_drug.drug_name', 'commercial_drug.drug_photo','commercial_drug.how_to_use'
+                ,'commercial_drug.side_effects','commercial_drug.drug_no')
+            ->where('report_no', '=', $report_no)->get();
+
+
+        return view('operationsManagement.detailsReport2', compact('report','report2'));
 
     }
  //عشان تفاصيل كل البلاغات المهربة بدون زر التحويل
@@ -182,7 +201,24 @@ class OPManageController extends Controller
                 , 'reports.drug_picture', 'reports.commercial_name', 'reports.material_name',
                 'reports.agent_name', 'reports.company_name')
             ->where('report_no', '=', $report_no)->get();
-        return view('operationsManagement.detailsSmuggledReport2', compact('report'));
+
+        $reports2 = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$reports2)
+            return redirect()->back();
+
+        $report2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->select('reports.report_no', 'reports.authors_name', 'reports.authors_phone',
+                'reports.authors_adjective', 'reports.authors_age'
+                , 'site.pharmacy_name', 'site.street_name', 'site.site_dec'
+                , 'reports.notes_user', 'reports.report_date', 'types_reports.type_report'
+                , 'reports.drug_picture', 'reports.commercial_name', 'reports.material_name',
+                'reports.agent_name', 'reports.company_name')
+            ->where('report_no', '=', $report_no)->get();
+
+        return view('operationsManagement.detailsSmuggledReport2', compact('report','report2'));
     }
 
 //عشان تفاصيل الدواء
@@ -225,7 +261,7 @@ class OPManageController extends Controller
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
             ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+            ->select('reports.report_no','app_user.app_user_name',
                 'reports.report_date', 'reports.transfer_date','reports.transfer_party',
                 'reports.report_statues' , 'types_reports.type_report')
             ->where('report_statues','!=',null)
@@ -233,21 +269,46 @@ class OPManageController extends Controller
             ->where('type_report','!=','اعراض جانبية')
             ->where('type_report','!=','جودة')
             ->get();
-        return view('operationsManagement/followReports',compact('reports'));
+
+        $reports2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->select('reports.report_no','reports.authors_name',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('app_user_no','=',null)
+            ->where('report_statues','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->get();
+        return view('operationsManagement/followReports',compact('reports','reports2'));
     }
     //عشان اللفلترة حق محول للمتابعة
     public function transferFollowingReports(){
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
             ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+            ->select('reports.report_no','app_user.app_user_name',
                 'reports.report_date', 'reports.transfer_date','reports.transfer_party',
                 'reports.report_statues' , 'types_reports.type_report')
             ->where('report_statues','=','محول للمتابعة')
             ->where('type_report','!=','اعراض جانبية')
             ->where('type_report','!=','جودة')
             ->get();
-        return view('operationsManagement/followReports',compact('reports'));
+
+        $reports2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->select('reports.report_no','reports.authors_name',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('app_user_no','=',null)
+            ->where('report_statues','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->get();
+
+        return view('operationsManagement/followReports',compact('reports','reports2'));
     }
     //عشان اللفلترة حق قيد المتابعة
     public function followingReports(){
@@ -261,7 +322,20 @@ class OPManageController extends Controller
             ->where('type_report','!=','اعراض جانبية')
             ->where('type_report','!=','جودة')
             ->get();
-        return view('operationsManagement/followReports',compact('reports'));
+
+        $reports2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->select('reports.report_no','reports.authors_name',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('app_user_no','=',null)
+            ->where('report_statues','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->get();
+
+        return view('operationsManagement/followReports',compact('reports','reports2'));
     }
     //عشان اللفلترة حق تمت المتابعة
     public function followDoneReports(){
@@ -275,7 +349,20 @@ class OPManageController extends Controller
             ->where('type_report','!=','اعراض جانبية')
             ->where('type_report','!=','جودة')
             ->get();
-        return view('operationsManagement/followReports',compact('reports'));
+
+        $reports2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->select('reports.report_no','reports.authors_name',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('app_user_no','=',null)
+            ->where('report_statues','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->get();
+
+        return view('operationsManagement/followReports',compact('reports','reports2'));
     }
     //عشان اللفلترة حق تم الانهاء
     public function doneReports(){
@@ -310,11 +397,32 @@ class OPManageController extends Controller
             ->where('report_no','=', $report_no)->get();
 
 
+        $report2 = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$report2)
+            return redirect()->back();
+
+        $report2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party','site.pharmacy_name',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('app_user_no','=',null)
+            ->where('report_statues','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->where('report_no','=', $report_no)
+            ->get();
+
+
+
         $procedures=DB::table('procedures')->select('procedures.procedure'
             ,'procedures.procedure_date','procedures.procedure_result')
             ->where('report_no','=', $report_no)->get();
 
-        return view('operationsManagement/followedUp',compact('report','procedures'));
+        return view('operationsManagement/followedUp',compact('report','procedures','report2'));
     }
 //والمحوله //عشان تفاصيل الذي قيد المتابعه
     public function followedUp2($report_no){
@@ -332,11 +440,30 @@ class OPManageController extends Controller
                 ,'site.pharmacy_name','types_reports.type_report','reports.report_date','reports.report_statues')
             ->where('report_no','=', $report_no)->get();
 
+        $report2 = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$report2)
+            return redirect()->back();
+
+        $report2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party','site.pharmacy_name',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('app_user_no','=',null)
+            ->where('report_statues','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->where('report_no','=', $report_no)
+            ->get();
+
         $procedures=DB::table('procedures')->select('procedures.procedure'
             ,'procedures.procedure_date','procedures.procedure_result')
             ->where('report_no','=', $report_no)->get();
 
-        return view('operationsManagement/followedUp2',compact('report','procedures'));
+        return view('operationsManagement/followedUp2',compact('report','procedures','report2'));
     }
 //عشان تفاصيل الذي تم الانهاء
     public function followedUp3($report_no){
@@ -356,11 +483,32 @@ class OPManageController extends Controller
             ->where('report_no','=', $report_no)
             ->get();
 
+        $report2 = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$report2)
+            return redirect()->back();
+
+        $report2 = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party','site.pharmacy_name',
+                'reports.report_statues' , 'types_reports.type_report')
+            ->where('app_user_no','=',null)
+            ->where('report_statues','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->where('report_no','=', $report_no)
+            ->get();
+
+
+
         $procedures=DB::table('procedures')->select('procedures.procedure'
             ,'procedures.procedure_date','procedures.procedure_result')
             ->where('report_no','=', $report_no)->get();
 
-        return view('operationsManagement/followedUp3',compact('report','procedures'));
+        return view('operationsManagement/followedUp3',compact('report','procedures','report2'));
     }
 
 //عشان حفظ ملاحظة المدير على البلاغ
@@ -385,13 +533,12 @@ class OPManageController extends Controller
     }
 
 //عشان اضافة بلاغ
+    public function addReport(){
+        return view('operationsManagement/addReport');
+    }
     public function selectBNumber(Request $request){
         $batch_no = $request->input('batch_num');
-//        $batch = DB::table('batch_number')->select('batch_number.batch_num')
-//            ->where('batch_num','=', $batch_no)->get();  // search in given table id only
-//        if (isset($batch) && $batch->isEmpty())
-//            return view('operationsManagement/addReport')
-//             ->with(['success' => 'هذا الرقم غير موجود ']);
+
 
         $drug=DB::table('batch_number')
             ->join('commercial_drug', 'batch_number.drug_no', '=', 'commercial_drug.drug_no')
@@ -400,33 +547,41 @@ class OPManageController extends Controller
 
         $site=Sites::orderByDesc('site_no')->first('site_no');
 
+
+
         return view('operationsManagement/addReport',compact('drug','site'));
 
 
 
     }
-    public function addReport(){
-        return view('operationsManagement/addReport');
-    }
     public function store(Request  $request): \Illuminate\Http\RedirectResponse
     {
-        $reports = DB::table('reports')->insert ([
+
+        $this->validate($request, [
+            'type_report_no' => 'required',
+        ]);
+
+
+        $reports = DB::table('reports')->insert([
             'authors_name' =>   $request->input('authors_name'),
             'authors_phone' =>  $request->input('authors_phone'),
             'authors_adjective' => $request->input('authors_adjective'),
             'authors_age' => $request->input('authors_age'),
             'report_date'=>Carbon::now()->toDateTimeString(),
-            'transfer_party' =>$request->input('transfer_party'),
+            'transfer_party' =>'ادارة الصيدلة',
             'transfer_date'=>Carbon::now()->toDateTimeString(),
             'commercial_name' =>   $request->input('commercial_name'),
             'material_name' =>  $request->input('material_name'),
             'company_name' => $request->input('company_name'),
             'agent_name' => $request->input('agent_name'),
-            'report_statues'=>'محولة للمتابعة',
+//            'batch_number' => $request->input('batch_number'),
+            'district' => $request->input('district'),
+            'report_statues'=>'محول للمتابعة',
             'notes_user' =>$request->input('notes_user'),
             'state'=>1,
             'type_report_no' =>$request->input('type_report_no'),
             'site_no' =>$request->input('site_no'),
+            'drug_no' =>$request->input('drug_no'),
         ]);
         $sites = DB::table('site')->insert([
           'pharmacy_name' => $request->input('pharmacy_name'),
@@ -435,7 +590,7 @@ class OPManageController extends Controller
           'site_dec' => $request->input('site_dec'),
 
       ]);
-        // return redirect()->back()->with(['success' => 'تم اضافه البلاغ بنجاح ']);
+         return redirect()->back()->with(['success' => 'تم اضافه البلاغ بنجاح ']);
     }
 
 

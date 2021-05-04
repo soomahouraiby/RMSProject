@@ -69,6 +69,48 @@
                             @endif
                         @endforeach
                     @endif
+                    @if(isset($report2))
+                            @foreach($report2 as $reports2)
+                                @if($reports2 -> type_report=='مهرب')
+                                    <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
+                                        <label class="col-form-label Text ml-3 mr-4 ">اسم المبلغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_name}}  </label>
+                                        <label class="col-form-label Text ml-5 mr-4 ">رقم الهاتف : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_phone}}  </label>
+                                    </div>
+                                    <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
+                                        <label class="col-form-label  Text ml-3 mr-4 ">نوع البلاغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4 ">{{$reports2 -> type_report}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">اسم الصيدلية : </label>
+                                        <label class="col-form-label ml-2 mr-4  ">{{$reports2 -> pharmacy_name}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">تاريخ البلاغ : </label>
+                                        <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports2 -> report_date}}  </label>
+                                    </div>
+                                    <div class="form-group raw mt-4  ">
+                                        <a class="text-center col-form-label mb-3"  href="{{route('OP_detailsSmuggledReport2',$reports2 -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                    </div>
+
+                                @else
+                                    <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
+                                        <label class="col-form-label Text ml-3 mr-4 ">اسم المبلغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_name}}  </label>
+                                        <label class="col-form-label Text ml-5 mr-4 ">رقم الهاتف : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_phone}}  </label>
+                                    </div>
+                                    <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
+                                        <label class="col-form-label  Text ml-3 mr-4 ">نوع البلاغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4 ">{{$reports2 -> type_report}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">اسم الصيدلية : </label>
+                                        <label class="col-form-label ml-2 mr-4  ">{{$reports2 -> pharmacy_name}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">تاريخ البلاغ : </label>
+                                        <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports2 -> report_date}}  </label>
+                                    </div>
+                                    <div class="form-group raw mt-4  ">
+                                        <a class="text-center col-form-label mb-3"  href="{{route('OP_detailsReport2',$reports2 -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endif
                 </form>
             </div>
         </div>
@@ -104,22 +146,6 @@
                     @endif
                     </tbody>
                 </table>
-{{--                <form>--}}
-{{--                    @if(isset($procedures))--}}
-{{--                        @foreach($procedures as $procedure)--}}
-{{--                            <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">--}}
-{{--                                <label  >  تــاريــخ الإجراء : </label>--}}
-{{--                                <label class="ml-3">{{$procedure -> procedure_date}}</label>--}}
-{{--                                <label >   الإجراء المتخذ : </label>--}}
-{{--                                <label class="ml-3">{{$procedure -> procedure}} </label>--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">--}}
-{{--                                <label  >   الــنــتــائــج : </label>--}}
-{{--                                <label class="ml-3">{{$procedure -> procedure_result}} </label>--}}
-{{--                            </div>--}}
-{{--                        @endforeach--}}
-{{--                    @endif--}}
-{{--                </form>--}}
             </div>
             @if(isset($report))
                 @foreach($report as $reports)
@@ -127,6 +153,16 @@
                         <div class="col-lg">
                             <button class="btn " type="submit" style="margin-right:90%; width: 10%; background-color: #0F122D; color:#ffffff">
                                 <a  href="{{route('OP_editReport',$reports -> report_no)}}">انهاء</a></button>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+            @if(isset($report2))
+                @foreach($report2 as $reports2)
+                    <div class="row pb-5">
+                        <div class="col-lg">
+                            <button class="btn " type="submit" style="margin-right:90%; width: 10%; background-color: #0F122D; color:#ffffff">
+                                <a  href="{{route('OP_editReport',$reports2 -> report_no)}}">انهاء</a></button>
                         </div>
                     </div>
                 @endforeach

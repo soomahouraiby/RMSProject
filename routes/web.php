@@ -94,7 +94,7 @@ Route::group(['namespace'=>'operationsManagement'],function (){
     ///////////////////Add report///////////////
     Route::get('/OP_selectBNumber','OPManageController@selectBNumber')->name('OP_selectBNumber');
     Route::get('/OP_addReport','OPManageController@addReport')->name('OP_addReport');
-    Route::post('OP_store', 'OPManageController@store')->name('report.store');
+    Route::post('OP_store', 'OPManageController@store')->name('OP_store');
 });
 ////////////////////////operations Management////////////////////////
 

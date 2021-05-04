@@ -72,6 +72,48 @@
                             @endif
                         @endforeach
                     @endif
+                    @if(isset($report2))
+                        @foreach($report2 as $reports2)
+                            @if($reports2 -> type_report=='مهرب')
+                                <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
+                                        <label class="col-form-label Text ml-3 mr-4 ">اسم المبلغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_name}}  </label>
+                                        <label class="col-form-label Text ml-5 mr-4 ">رقم الهاتف : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_phone}}  </label>
+                                </div>
+                                <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
+                                        <label class="col-form-label  Text ml-3 mr-4 ">نوع البلاغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4 ">{{$reports2 -> type_report}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">اسم الصيدلية : </label>
+                                        <label class="col-form-label ml-2 mr-4  ">{{$reports2 -> pharmacy_name}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">تاريخ البلاغ : </label>
+                                        <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports2 -> report_date}}  </label>
+                                </div>
+                                <div class="form-group raw mt-4  ">
+                                        <a class="text-center col-form-label mb-3"  href="{{route('OP_detailsSmuggledReport2',$reports2 -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                </div>
+
+                            @else
+                                 <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
+                                        <label class="col-form-label Text ml-3 mr-4 ">اسم المبلغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_name}}  </label>
+                                        <label class="col-form-label Text ml-5 mr-4 ">رقم الهاتف : </label>
+                                        <label class="col-form-label  ml-2 mr-4  ">{{$reports2 -> authors_phone}}  </label>
+                                    </div>
+                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
+                                        <label class="col-form-label  Text ml-3 mr-4 ">نوع البلاغ : </label>
+                                        <label class="col-form-label  ml-2 mr-4 ">{{$reports2 -> type_report}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">اسم الصيدلية : </label>
+                                        <label class="col-form-label ml-2 mr-4  ">{{$reports2 -> pharmacy_name}}  </label>
+                                        <label class="col-form-label Text  ml-5 mr-4 ">تاريخ البلاغ : </label>
+                                        <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports2 -> report_date}}  </label>
+                                    </div>
+                                 <div class="form-group raw mt-4  ">
+                                        <a class="text-center col-form-label mb-3"  href="{{route('OP_detailsReport2',$reports2 -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                 </div>
+                            @endif
+                        @endforeach
+                    @endif
                 </form>
             </div>
         </div>
@@ -110,6 +152,41 @@
                     </tbody>
                 </table>
                          </div>
+                    </div>
+                @endif
+            @endforeach
+        @endif
+        @if(isset($report2))
+            @foreach($report2 as $reports2)
+                @if($reports2 -> report_statues=='قيد للمتابعة')
+                    <div class="card shadow mt-5" >
+                        <div class="card-header " style="background-color: #F9F9F9;">
+                            <div class="row m-2">
+                                <h4>الإجراءات المتخذه حيال البلاغ</h4>
+                            </div>
+                        </div>
+                        <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
+                            <table class="table table-striped ">
+                                <thead >
+                                <tr>
+                                    <th>تــاريــخ الإجراء</th>
+                                    <th> الإجراء المتخذ</th>
+                                    <th>الــنــتــائــج</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if(isset($procedures))
+                                    @foreach($procedures as $procedure)
+                                        <tr class="reportRow">
+                                            <td>{{$procedure -> procedure_date}}</td>
+                                            <td>{{$procedure -> procedure}}</td>
+                                            <td>{{$procedure -> procedure_result}}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 @endif
             @endforeach

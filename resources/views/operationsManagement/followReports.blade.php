@@ -52,10 +52,241 @@
                         </tr>
                         </thead>
                         <tbody class="list" id="table-purchase-body">
+                        @foreach($reports2 as $report2)
+                            @if($report2 -> type_report=='مهرب')
+                                @if($report2 -> report_statues=='قيد المتابعة')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report2 -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report2 -> report_no)}}">عرض</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @elseif($report2 -> report_statues=='تمت المتابعة')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp',$report2 -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp',$report2 -> report_no)}}">عرض</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report2 -> report_no)}}!">إنهاء</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @elseif($report2 -> report_statues=='تم الانهاء')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp3',$report2 -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp3',$report2 -> report_no)}}">عرض</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report2 -> report_no)}}">تعديل</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @elseif($report2 -> report_statues=='محول للمتابعة')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report2 -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B; height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report2 -> report_no)}}">عرض</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @else
+                                @if($report2 -> report_statues=='قيد المتابعة')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report2 -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report2 -> report_no)}}">عرض</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @elseif($report2 -> report_statues=='تمت المتابعة')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp',$report2 -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp',$report2 -> report_no)}}">عرض</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report2 -> report_no)}}!">إنهاء</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @elseif($report2 -> report_statues=='تم الانهاء')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp3',$report2 -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp3',$report2 -> report_no)}}">عرض</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item  " href="{{route('OP_editReport',$report2 -> report_no)}}">تعديل</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @elseif($report2 -> report_statues=='محول للمتابعة')
+                                    <tr class="btn-reveal-trigger">
+                                        <td class="align-middle" style="width: 28px;">
+                                            <div class="form-check mb-2 mt-2 d-flex align-items-center">
+                                                <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report2 -> authors_name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report2 -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left product">{{$report2 -> transfer_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left amount">{{$report2 -> transfer_party}}</td>
+                                        <td class="align-middle text-left  white-space-nowrap payment">
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report2 -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B;  height:25px;"  >
+                                                <span data-feather="file  text-center">{{$report2 -> report_statues}} </span>
+                                                <i class="fas fa-file-contract ml-3"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap">
+                                            <div class="dropdown font-sans-serif">
+                                                <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
+                                                    <span class="fas fa-ellipsis-h fs--1"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
+                                                    <a class="dropdown-item" href="{{route('OP_followedUp2',$report2 -> report_no)}}">عرض</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endif
+                        @endforeach
                         @foreach($reports as $report)
                             @if($report -> type_report=='مهرب')
                                 @if($report -> report_statues=='قيد المتابعة')
-                                <tr class="btn-reveal-trigger">
+                                     <tr class="btn-reveal-trigger">
                                         <td class="align-middle" style="width: 28px;">
                                             <div class="form-check mb-2 mt-2 d-flex align-items-center">
                                                 <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
@@ -65,7 +296,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -81,7 +312,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                            @elseif($report -> report_statues=='تمت المتابعة')
+                                @elseif($report -> report_statues=='تمت المتابعة')
                                      <tr class="btn-reveal-trigger">
                                         <td class="align-middle" style="width: 28px;">
                                             <div class="form-check mb-2 mt-2 d-flex align-items-center">
@@ -92,7 +323,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -121,7 +352,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp3',$report -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -150,7 +381,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B; height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B; height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -179,7 +410,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report -> report_no)}}" style="background-color:#FDE6D8; color:#A7613A;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -206,7 +437,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -235,7 +466,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp3',$report -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp3',$report -> report_no)}}" style="background-color:#CCF6E4; color:#00864E;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
@@ -264,7 +495,7 @@
                                         <td class="align-middle white-space-nowrap text-left product">{{$report -> transfer_date}}</td>
                                         <td class="align-middle white-space-nowrap text-left amount">{{$report -> transfer_party}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
-                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{url('operationsManagement/followedUp2',$report -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B;  height:25px;"  >
+                                            <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('OP_followedUp2',$report -> report_no)}}" style="background-color:#E3E6EA; color:#7D899B;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> report_statues}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>

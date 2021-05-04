@@ -34,7 +34,7 @@
                         {{--                    التحقق من الرقم                   --}}
                         {{--//////////////////////////////////////////////////////--}}
                         <form action="{{route('OP_selectBNumber')}}" method="GET">
-                        <div class="row ">
+                            <div class="row ">
                                 <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                     <label class="col-form-label  text-sm-right mt-2">  رقم التشغيلة : </label>
                                     <div class="mt-2  ml-4">
@@ -47,8 +47,9 @@
                                     </button>
                                 </div>
                             </div>
+                        </form>
                         @if (isset($drug) && $drug->isEmpty())
-                            <form method="POST" action="">
+                            <form method="POST" action="{{route('OP_store')}}">
                             @csrf
                                 {{--  //////////////////////////////////////////////////////--}}
                                 {{--                      بيانات المبلغ                   --}}
@@ -89,33 +90,53 @@
                             </div>
                             <div class="row ">
                                 <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
-                                    <label class="col-form-label text-sm-right mt-2">  اسم الدواء : </label>
+                                    <label class="col-form-label text-sm-right mt-2">  الاسم التجاري للدواء: </label>
                                     <div class="mt-2 ml-4">
-                                        <input type="text" class="form-control" placeholder="اسم الدواء" name="drug_name">
+                                        <input name="drug_no" type="hidden" value="0">
+                                        <input type="text" class="form-control" placeholder="اسم الدواء" name="commercial_name">
                                     </div>
-                                    <label class="col-form-label text-sm-right mt-2 "> التركيبة العلمية : </label>
+                                    <label class="col-form-label text-sm-right mt-2 "> الاسم العلمي : </label>
                                     <div class=" mt-2 ml-4 ">
                                         <input type="text" class="form-control" placeholder="الاسم العلمي " name="material_name">
                                     </div>
                                 </div>
                                 <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                    <label class="col-form-label text-sm-right mt-2">  اسم الشركة : </label>
+                                    <div class="mt-2 ml-4">
+                                        <input type="text" class="form-control" placeholder="اسم الشركة" name="company_name">
+                                    </div>
+                                    <label class="col-form-label text-sm-right mt-2 "> اسم الوكيل : </label>
+                                    <div class=" mt-2 ml-4 ">
+                                        <input type="text" class="form-control" placeholder="اسم الوكيل " name="agent_name">
+                                    </div>
+                                </div>
+                                <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+
+                                    <input name="site_no" type="hidden" value="{{$site->site_no + 1}}">
+
                                     <label class="col-form-label text-sm-right mt-2">اسم الصيدلية  : </label>
                                     <div class=" mt-2 ml-4">
-                                        <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_address">
+                                        <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_name">
                                     </div>
                                     <label class="col-form-label text-sm-right mt-2">اسم الشارع  : </label>
                                     <div class=" mt-2 ml-4">
                                         <input type="text" class="form-control" placeholder="اسم الشارع" name="street_name">
                                     </div>
+                                </div>
+                                <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                     <label class="col-form-label text-sm-right mt-2">المنطقة : </label>
                                     <div class=" mt-2 ml-4">
                                         <input type="text" class="form-control" placeholder="المنطقة " name="district">
+                                    </div>
+                                    <label class="col-form-label text-sm-right mt-2">اسم الحي  : </label>
+                                    <div class=" mt-2 ml-4">
+                                        <input type="text" class="form-control" placeholder="اسم الحي" name="neig_name">
                                     </div>
                                 </div>
                                  <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                      <label class="col-form-label text-sm-right mt-2">وصف الموقع : </label>
                                      <div class=" mt-2 ml-4">
-                                         <input type="text" class="form-control" placeholder="وصف الموقع ">
+                                         <textarea  class="form-control" placeholder="وصف الموقع " name="site_dec"></textarea>
                                      </div>
                                  </div>
                                 <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
@@ -126,30 +147,24 @@
                                 </div>
                                  <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                      <label class="col-form-label text-sm-right mt-2">نوع البلاغ : </label>
+                                     <input type="hidden" class="form-control"  name="type_report_no" value="1">
                                      <div class=" mt-2 ml-4">
-                                         <select class="form-control mb-3" id="type_report">
-                                             <option selected="" value="4">غير معروف</option>
-                                             <option value="1">مهرب</option>
-                                             <option value="2">مسحوب</option>
-                                             <option value="3">غير مطابق</option>
-                                         </select>
+                                         <input type="text" class="form-control" placeholder="مهرب" name="type_report" value="مهرب">
                                      </div>
                                      <label class="col-form-label text-sm-right mt-2">الجهه المحال إليها : </label>
                                      <div class="mt-2 ml-4">
-                                         <select class="form-control mb-3" id="transfer_party">
-                                             <option selected="" value="إدارة الصيدلة">إدارة الصيدلة</option>
-                                         </select>
+                                         <input type="text" class="form-control" placeholder="ادارة الصيدلة"  value="ادارة الصيدلة">
                                      </div>
                                  </div>
                             </div>
-                            <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
-                                <button id="save" class="btn btn-primary "  >حفظ</button>
+                            <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
+                                <button id="save" class="btn btn-primary " type="submit" style="margin-right:90%; background-color: #0F122D; color: white">حفظ</button>
                             </div>
 
 
                         </form>
                         @elseif(isset($drug) && $drug!=null)
-                            <form method="POST" action="">
+                            <form method="POST" action="{{route('OP_store')}}">
                                 @csrf
                                 {{--//////////////////////////////////////////////////////--}}
                                 {{--                       بيانات المبلغ                   --}}
@@ -201,29 +216,33 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        <label class="col-form-label text-sm-right mt-2 "> التركيبة العلمية : </label>
-                                        <div class=" mt-2 ml-4 ">
-                                            <input type="text" class="form-control" placeholder="الاسم العلمي " name="material_name">
-                                        </div>
                                     </div>
                                     <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                        <input name="site_no" type="hidden" value="{{$site->site_no + 1}}">
+
                                         <label class="col-form-label text-sm-right mt-2">اسم الصيدلية  : </label>
                                         <div class=" mt-2 ml-4">
-                                            <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_address">
+                                            <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_name">
                                         </div>
                                         <label class="col-form-label text-sm-right mt-2">اسم الشارع  : </label>
                                         <div class=" mt-2 ml-4">
                                             <input type="text" class="form-control" placeholder="اسم الشارع" name="street_name">
                                         </div>
+                                    </div>
+                                    <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                         <label class="col-form-label text-sm-right mt-2">المنطقة : </label>
                                         <div class=" mt-2 ml-4">
                                             <input type="text" class="form-control" placeholder="المنطقة " name="district">
+                                        </div>
+                                        <label class="col-form-label text-sm-right mt-2">اسم الحي  : </label>
+                                        <div class=" mt-2 ml-4">
+                                            <input type="text" class="form-control" placeholder="اسم الحي" name="neig_name">
                                         </div>
                                     </div>
                                     <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                         <label class="col-form-label text-sm-right mt-2">وصف الموقع : </label>
                                         <div class=" mt-2 ml-4">
-                                            <input type="text" class="form-control" placeholder="وصف الموقع ">
+                                            <textarea  class="form-control" placeholder="وصف الموقع " name="site_dec"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
@@ -235,29 +254,26 @@
                                     <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                         <label class="col-form-label text-sm-right mt-2">نوع البلاغ : </label>
                                         <div class=" mt-2 ml-4">
-                                            <select class="form-control mb-3" id="type_report">
-                                                <option selected="" value="4">غير معروف</option>
-                                                <option value="1">مهرب</option>
-                                                <option value="2">مسحوب</option>
-                                                <option value="3">غير مطابق</option>
+                                            <select class="form-control mb-3" name="type_report_no">
+                                                <option selected="" ></option>
+                                                <option value="2" >مسحوب</option>
+                                                <option value="3" >غير مطابق</option>
                                             </select>
                                         </div>
                                         <label class="col-form-label text-sm-right mt-2">الجهه المحال إليها : </label>
                                         <div class="mt-2 ml-4">
-                                            <select class="form-control mb-3" id="transfer_party">
-                                                <option selected="" value="إدارة الصيدلة">إدارة الصيدلة</option>
-                                            </select>
+                                            <input type="text" class="form-control" placeholder="ادارة الصيدلة"  value="ادارة الصيدلة">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
-                                    <button id="save" class="btn btn-primary "  >حفظ</button>
+                                <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
+                                    <button id="save" class="btn btn-primary " type="submit" style="margin-right:90%;background-color: #0F122D; color: white">حفظ</button>
                                 </div>
 
 
                             </form>
                         @endif
-                        </form>
+
                     </div>
                 </div>
             </div>
