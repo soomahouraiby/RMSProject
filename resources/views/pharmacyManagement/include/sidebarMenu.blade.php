@@ -43,12 +43,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{route('PM_drug')}}">
-                    <i class="fas fa-plus"></i>
-                    <span data-feather="file" class="ml-2">إضافة شحنة جديده</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link active " aria-current="page" href="{{route('PM_followReports')}}">
                     <i class="fas fa-chalkboard-teacher "></i>
                     <span data-feather="file" class="ml-2">متابعةالبلاغات</span>
