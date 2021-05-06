@@ -25,15 +25,15 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['namespace'=>'Management'],function (){
 
     ///////////////////Show///////////////
-    Route::get('/showReports','ManagementController@showReports')->name('showReports');
-    Route::get('/showUsers','ManagementController@showUsers')->name('showUsers');
+    Route::get('/Reports','ManagementController@showReports')->name('showReports');
+    Route::get('/Users','ManagementController@showUsers')->name('showUsers');
 
     ///////////////////Filter///////////////
-    Route::get('/showNewReports','ManagementController@showNewReports')->name('showNewReports');
-    Route::get('/showTransferReports','ManagementController@showTransferReports')->name('showTransferReports');
-    Route::get('/showFollowingReports','ManagementController@showFollowingReports')->name('showFollowingReports');
-    Route::get('/showFollowDoneReports','ManagementController@showFollowDoneReports')->name('showFollowDoneReports');
-    Route::get('/showDoneReports','ManagementController@showDoneReports')->name('showDoneReports');
+    Route::get('/NewReports','ManagementController@showNewReports')->name('showNewReports');
+    Route::get('/TransferReports','ManagementController@showTransferReports')->name('showTransferReports');
+    Route::get('/FollowingReports','ManagementController@showFollowingReports')->name('showFollowingReports');
+    Route::get('/FollowDoneReports','ManagementController@showFollowDoneReports')->name('showFollowDoneReports');
+    Route::get('/DoneReports','ManagementController@showDoneReports')->name('showDoneReports');
 
     ///////////////////Details///////////////
     Route::get('/details/{report_no}','ManagementController@detailsReport')->name('detailsReport');

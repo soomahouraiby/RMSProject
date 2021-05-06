@@ -25,6 +25,11 @@ use function PHPUnit\Framework\isNull;
 
 class OPManageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:operation_Management');
+    }
     //عشان عرض البلاغات الوارده
     public function newReports()
     {

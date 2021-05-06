@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use function Ramsey\Uuid\v1;
 
 class UsersController extends Controller
 {
@@ -11,28 +13,9 @@ class UsersController extends Controller
         $this->middleware('auth');
     }
 
-    public function addReport(){
-        return view('operationsManagement/addReport');
-    }
+   public function index(){
 
-    public function detailsFollow(){
-        return view('operationsManagement/detailsFollow');
-    }
-
-    public function detailsReport(){
-        return view('operationsManagement/detailsReport');
-    }
-
-    public function followReports(){
-        return view('operationsManagement/followReports');
-    }
-
-    public function managementReports(){
-        return view('operationsManagement/managementReports');
-    }
-
-    public function newReports(){
-        return view('operationsManagement/newReports');
-    }
-
+        $users = User::all();
+        return view('Management/users',compact('users'));
+   }
 }

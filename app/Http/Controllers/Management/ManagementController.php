@@ -9,6 +9,7 @@ use App\Models\Commercial_drugs;
 use App\Models\App_users;
 use App\Models\Reports;
 use App\Models\Types_report;
+use App\Models\User;
 use App\Request\ReportsRequest;
 use App\Models\Shipments;
 use App\Models\Combinations;
@@ -28,7 +29,7 @@ class ManagementController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('role:admin');
     }
 
 
@@ -48,7 +49,8 @@ class ManagementController extends Controller
     //////////////// [ Show .. المستخدمين ]  ////////////////
     public function showUsers(){
 
-        return view('Management/users');
+        $users = User::all();
+        return view('Management/users',compact('users'));
     }
 
 
