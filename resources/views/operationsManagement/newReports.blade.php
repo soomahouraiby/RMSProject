@@ -49,36 +49,36 @@
                     @foreach($reports as $report)
                         @if($report -> type_report=='مهرب')
                                 <tr class="reportRow">
-                                    <td><a class="nav-link "   href="{{route('OP_detailsSmuggledReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
-                                    <td><a class="nav-link  "  href="{{route('OP_detailsSmuggledReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
-                                    <td ><a class="nav-link  " href="{{route('OP_detailsSmuggledReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
+                                    <td><a class="nav-link "   href="{{route('OP_detailsSmuggledReport',$report -> id)}}">{{$report -> name}}</a></td>
+                                    <td><a class="nav-link  "  href="{{route('OP_detailsSmuggledReport',$report -> id)}}">{{$report -> date}} </a></td>
+                                    <td ><a class="nav-link  " href="{{route('OP_detailsSmuggledReport',$report -> id)}}">{{$report -> type_report}}</a></td>
                                     <td class="align-middle white-space-nowrap">
                                         <div class="dropdown font-sans-serif">
                                             <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
                                                 <span class="fas fa-ellipsis-h fs--1"></span>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                <a class="dropdown-item" href="{{route('OP_detailsSmuggledReport',$report -> report_no)}}">عرض</a>
+                                                <a class="dropdown-item" href="{{route('OP_detailsSmuggledReport',$report -> id)}}">عرض</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item  " href="{{route('OP_transferReports',$report -> report_no)}}">تحويل</a>
+                                                <a class="dropdown-item  " href="{{route('OP_transferReports',$report -> id)}}">تحويل</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                         @else
                             <tr class="reportRow">
-                                    <td><a class="nav-link "   href="{{route('OP_detailsReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
-                                    <td><a class="nav-link  "  href="{{route('OP_detailsReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
-                                    <td ><a class="nav-link  " href="{{route('OP_detailsReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
+                                    <td><a class="nav-link "   href="{{route('OP_detailsReport',$report -> id)}}">{{$report -> name}}</a></td>
+                                    <td><a class="nav-link  "  href="{{route('OP_detailsReport',$report -> id)}}">{{$report -> date}} </a></td>
+                                    <td ><a class="nav-link  " href="{{route('OP_detailsReport',$report -> id)}}">{{$report -> type_report}}</a></td>
                                     <td class="align-middle white-space-nowrap">
                                         <div class="dropdown font-sans-serif">
                                             <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">
                                                 <span class="fas fa-ellipsis-h fs--1"></span>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
-                                                <a class="dropdown-item" href="{{route('OP_detailsReport',$report -> report_no)}}">عرض</a>
+                                                <a class="dropdown-item" href="{{route('OP_detailsReport',$report -> id)}}">عرض</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item  " href="{{route('OP_transferReports',$report -> report_no)}}">تحويل</a>
+                                                <a class="dropdown-item  " href="{{route('OP_transferReports',$report -> id)}}">تحويل</a>
                                             </div>
                                         </div>
                                     </td>

@@ -99,23 +99,23 @@ Route::group(['namespace'=>'operationsManagement'],function (){
     Route::get('/OP_doneReports','OPManageController@DoneReports')->name('OP_doneReports');
 
     ///////////////////Details///////////////
-    Route::get('/OP_detailsReport/{report_no}','OPManageController@detailsReport')->name('OP_detailsReport');
-    Route::get('/OP_detailsReport2/{report_no}','OPManageController@detailsReport2')->name('OP_detailsReport2');
-    Route::get('/OP_detailsDrug/{drug_no}','OPManageController@detailsDrug')->name('OP_detailsDrug');
-    Route::get('/OP_detailsSmuggledReport/{report_no}','OPManageController@detailsSmuggledReport')->name('OP_detailsSmuggledReport');
-    Route::get('/OP_detailsSmuggledReport2/{report_no}','OPManageController@detailsSmuggledReport2')->name('OP_detailsSmuggledReport2');
+    Route::get('/OP_detailsReport/{id}','OPManageController@detailsReport')->name('OP_detailsReport');
+    Route::get('/OP_detailsReport2/{id}','OPManageController@detailsReport2')->name('OP_detailsReport2');
+    Route::get('/OP_detailsDrug/{id}','OPManageController@detailsDrug')->name('OP_detailsDrug');
+    Route::get('/OP_detailsSmuggledReport/{id}','OPManageController@detailsSmuggledReport')->name('OP_detailsSmuggledReport');
+    Route::get('/OP_detailsSmuggledReport2/{id}','OPManageController@detailsSmuggledReport2')->name('OP_detailsSmuggledReport2');
 
     ///////////////////Transfer///////////////
-    Route::get('/OP_transferReports/{report_no}', 'OPManageController@transferReports')->name('OP_transferReports');
+    Route::get('/OP_transferReports/{id}', 'OPManageController@transferReports')->name('OP_transferReports');
 
     ///////////////////Follow///////////////
-    Route::get('/OP_followedUp/{report_no}','OPManageController@followedUp')->name('OP_followedUp');
-    Route::get('/OP_followedUp2/{report_no}','OPManageController@followedUp2')->name('OP_followedUp2');
-    Route::get('/OP_followedUp3/{report_no}','OPManageController@followedUp3')->name('OP_followedUp3');
+    Route::get('/OP_followedUp/{id}','OPManageController@followedUp')->name('OP_followedUp');
+    Route::get('/OP_followedUp2/{id}','OPManageController@followedUp2')->name('OP_followedUp2');
+    Route::get('/OP_followedUp3/{id}','OPManageController@followedUp3')->name('OP_followedUp3');
 
     ///////////////////OPManagement notes///////////////
-    Route::get('/OP_editReport/{report_no}', 'OPManageController@editReport')->name('OP_editReport');
-    Route::post('/OP_saveOPMNotes/{report_no}', 'OPManageController@saveOPMNotes')->name('OP_saveOPMNotes');
+    Route::get('/OP_editReport/{id}', 'OPManageController@editReport')->name('OP_editReport');
+    Route::post('/OP_saveOPMNotes/{id}', 'OPManageController@saveOPMNotes')->name('OP_saveOPMNotes');
 
     ///////////////////Add report///////////////
     Route::get('/OP_selectBNumber','OPManageController@selectBNumber')->name('OP_selectBNumber');

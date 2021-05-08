@@ -35,8 +35,8 @@ class OPManageController extends Controller
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id as report_no','app_users.name as app_user_name'
-                , 'reports.date as report_date', 'types_reports.name as type_report')
+            ->select('reports.id ','app_users.name '
+                , 'reports.date ', 'types_reports.name as type_report')
 
             ->where('types_reports.name','!=','اعراض جانبية')
             ->where('state','=',0)
@@ -52,8 +52,8 @@ class OPManageController extends Controller
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id as report_no','app_users.name as app_user_name'
-                , 'reports.date as report_date', 'types_reports.name as type_report')
+            ->select('reports.id ','app_users.name '
+                , 'reports.date ', 'types_reports.name as type_report')
 
             ->where('state','=',0)
             ->where('types_reports.name','=','مهرب')
@@ -66,8 +66,8 @@ class OPManageController extends Controller
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id as report_no','app_users.name as app_user_name'
-                , 'reports.date as report_date', 'types_reports.name as type_report')
+            ->select('reports.id ','app_users.name '
+                , 'reports.date ', 'types_reports.name as type_report')
 
             ->where('state','=',0)
             ->where('types_reports.name','=','مسحوب')
@@ -80,8 +80,8 @@ class OPManageController extends Controller
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id as report_no','app_users.name as app_user_name'
-                , 'reports.date as report_date', 'types_reports.name as type_report')
+            ->select('reports.id ','app_users.name '
+                , 'reports.date ', 'types_reports.name as type_report')
 
             ->where('state','=',0)
             ->where('types_reports.name','=','غير مطابق')
@@ -94,8 +94,8 @@ class OPManageController extends Controller
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id as report_no','app_users.name as app_user_name'
-                , 'reports.date as report_date', 'types_reports.name as type_report')
+            ->select('reports.id ','app_users.name '
+                , 'reports.date ', 'types_reports.name as type_report')
 
             ->where('state','=',0)
             ->where('types_reports.name','=','مستثناء')
@@ -110,132 +110,139 @@ class OPManageController extends Controller
         if (!$reports)
             return redirect()->back();
 
-        $reports = DB::table('reports')
+        $report = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id as report_no','app_users.name as app_user_name'
-                , 'reports.date as report_date', 'types_reports.name as type_report')
+            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
+                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
+                'reports.drug_picture','reports.date ',
+                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
+                'reports.date as report_date', 'types_reports.name as type_report')
+            ->where('reports.id', '=', $id)->get();
 
-            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-            ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
-                'app_user.adjective', 'app_user.age', 'site.pharmacy_name',
-                'site.street_name', 'site.site_dec', 'reports.notes_user', 'reports.report_date',
-                'types_reports.type_report', 'reports.drug_picture'
-                , 'commercial_drug.drug_name', 'commercial_drug.drug_photo','commercial_drug.how_to_use'
-                ,'commercial_drug.side_effects','commercial_drug.drug_no')
-            ->where('report_no', '=', $report_no)->get();
-        return view('operationsManagement.detailsReport', compact('report'));
+        $r = DB::table('reports')->select('reports.batch_number ')
+            ->where('reports.id', '=', $id)->get();
+
+        $drug=DB::table('batch_numbers')
+            ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
+            ->select('commercial_drugs.name as drug_name', 'commercial_drugs.photo as drug_photo',
+                'commercial_drugs.how_use','commercial_drugs.side_effects','commercial_drugs.id')
+            ->where('batch_numbers.batch_num','=', $r)->get();
+        return view('operationsManagement.detailsReport', compact('report' ,'drug'));
 
     }
 //عشان تفاصيل كل البلاغات المهربة
-    public function detailsSmuggledReport($report_no){
+    public function detailsSmuggledReport($id){
         //استخدمت هذا بدل find
-        $reports = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        $reports = DB::table('reports')->select('reports.id')
+            ->where('reports.id','=', $id)->get();  // search in given table id only
         if (!$reports)
             return redirect()->back();
 
         $report = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
-                'app_user.adjective', 'app_user.age'
-                , 'site.pharmacy_name', 'site.street_name', 'site.site_dec'
-                , 'reports.notes_user', 'reports.report_date', 'types_reports.type_report'
-                , 'reports.drug_picture', 'reports.commercial_name', 'reports.material_name',
-                'reports.agent_name', 'reports.company_name')
-            ->where('report_no', '=', $report_no)->get();
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
+                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
+                'reports.drug_picture','reports.date ',
+                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
+                'reports.date as report_date', 'types_reports.name as type_report',
+                'reports.commercial_name','reports.material_name','reports.companies_name',
+                'reports.agent_name')
+            ->where('reports.id', '=', $id)->get();
+
         return view('operationsManagement.detailsSmuggledReport', compact('report'));
     }
 
 
 //عشان تفاصيل كل البلاغات المسحوبة والغير مطابقة بدون زر التحويل
-    public function detailsReport2($report_no){
-        $reports = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+    public function detailsReport2($id){
+        $reports = DB::table('reports')->select('reports.id')
+            ->where('reports.id','=', $id)->get();  // search in given table id only
         if (!$reports)
             return redirect()->back();
 
         $report = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-            ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
-                'app_user.adjective', 'app_user.age', 'site.pharmacy_name',
-                'site.street_name', 'site.site_dec', 'reports.notes_user', 'reports.report_date',
-                'types_reports.type_report', 'reports.drug_picture'
-                , 'commercial_drug.drug_name', 'commercial_drug.drug_photo','commercial_drug.how_to_use'
-                ,'commercial_drug.side_effects','commercial_drug.drug_no')
-            ->where('report_no', '=', $report_no)->get();
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
+                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
+                'reports.drug_picture','reports.date ',
+                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
+                'reports.date as report_date', 'types_reports.name as type_report')
+            ->where('reports.id', '=', $id)->get();
 
-        $reports2 = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        $r = DB::table('reports')->select('reports.batch_number ')
+            ->where('reports.id', '=', $id)->get();
+
+        $drug=DB::table('batch_numbers')
+            ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
+            ->select('commercial_drugs.name as drug_name', 'commercial_drugs.photo as drug_photo',
+                'commercial_drugs.how_use','commercial_drugs.side_effects','commercial_drugs.id')
+            ->where('batch_numbers.batch_num','=', $r)->get();
+
+
+        $reports2 = DB::table('reports')->select('reports.id')
+            ->where('reports.id','=', $id)->get();  // search in given table id only
         if (!$reports2)
             return redirect()->back();
 
         $report2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-            ->select('reports.report_no', 'reports.authors_name', 'reports.authors_phone',
-                'reports.authors_adjective', 'reports.authors_age', 'site.pharmacy_name',
-                'site.street_name', 'site.site_dec', 'reports.notes_user', 'reports.report_date',
-                'types_reports.type_report', 'reports.drug_picture'
-                , 'commercial_drug.drug_name', 'commercial_drug.drug_photo','commercial_drug.how_to_use'
-                ,'commercial_drug.side_effects','commercial_drug.drug_no')
-            ->where('report_no', '=', $report_no)->get();
-
-
-        return view('operationsManagement.detailsReport2', compact('report','report2'));
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
+                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
+                'reports.drug_picture','reports.date ',
+                'reports.amount_name ','reports.phone ', 'reports.adjective','reports.age',
+                'reports.date as report_date', 'types_reports.name as type_report')
+            ->where('reports.id', '=', $id)->get();
+        return view('operationsManagement.detailsReport2', compact('report' ,'drug','report2'));
 
     }
  //عشان تفاصيل كل البلاغات المهربة بدون زر التحويل
-    public function detailsSmuggledReport2($report_no){
+    public function detailsSmuggledReport2($id){
         //استخدمت هذا بدل find
-        $reports = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        $reports = DB::table('reports')->select('reports.id')
+            ->where('reports.id','=', $id)->get();  // search in given table id only
         if (!$reports)
             return redirect()->back();
 
         $report = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
-                'app_user.adjective', 'app_user.age'
-                , 'site.pharmacy_name', 'site.street_name', 'site.site_dec'
-                , 'reports.notes_user', 'reports.report_date', 'types_reports.type_report'
-                , 'reports.drug_picture', 'reports.commercial_name', 'reports.material_name',
-                'reports.agent_name', 'reports.company_name')
-            ->where('report_no', '=', $report_no)->get();
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
+                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
+                'reports.drug_picture','reports.date ',
+                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
+                'reports.date as report_date', 'types_reports.name as type_report',
+                'reports.commercial_name','reports.material_name','reports.companies_name',
+                'reports.agent_name')
+            ->where('reports.id', '=', $id)->get();
 
-        $reports2 = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        $reports2 = DB::table('reports')->select('reports.id')
+            ->where('reports.id','=', $id)->get();  // search in given table id only
         if (!$reports2)
             return redirect()->back();
 
         $report2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no', 'reports.authors_name', 'reports.authors_phone',
-                'reports.authors_adjective', 'reports.authors_age'
-                , 'site.pharmacy_name', 'site.street_name', 'site.site_dec'
-                , 'reports.notes_user', 'reports.report_date', 'types_reports.type_report'
-                , 'reports.drug_picture', 'reports.commercial_name', 'reports.material_name',
-                'reports.agent_name', 'reports.company_name')
-            ->where('report_no', '=', $report_no)->get();
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
+                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
+                'reports.drug_picture','reports.date ',
+                'reports.amount_name ','reports.phone ', 'reports.adjective','reports.age',
+                'reports.date as report_date', 'types_reports.name as type_report',
+            'reports.commercial_name','reports.material_name','reports.companies_name',
+                'reports.agent_name')
+            ->where('reports.id', '=', $id)->get();
 
         return view('operationsManagement.detailsSmuggledReport2', compact('report','report2'));
     }
 
 //عشان تفاصيل الدواء
-    public function detailsDrug($drug_no){
+    public function detailsDrug($id){
 
-        $r = DB::table('commercial_drug')
-            ->join('combination', 'combination.drug_no', '=','commercial_drug.drug_no')
-            ->join('effective_material', 'combination.material_no', '=', 'effective_material.material_no')
+        $r = DB::table('commercial_drugs')
+            ->join('combinations', 'combinations.drug_no', '=','commercial_drugs.drug_no')
+            ->join('effective_materials', 'combinations.material_no', '=', 'effective_materials.material_no')
             ->join('batch_number', 'batch_number.drug_no', '=','commercial_drug.drug_no')
             ->join('shipments', 'batch_number.shipment_no', '=', 'shipments.shipment_no')
             ->join('agents', 'commercial_drug.agent_no', '=', 'agents.agent_no')
@@ -245,7 +252,7 @@ class OPManageController extends Controller
                 ,'effective_material.material_name','companies.company_name','companies.company_country'
                 ,'batch_number.batch_num','shipments.production_date','shipments.expiry_date'
                 ,'shipments.shipment_drawn','shipments.exception')
-            ->where('commercial_drug.drug_no','=',$drug_no)
+            ->where('commercial_drug.drug_no','=',$id)
             ->get();
 
 
@@ -547,7 +554,6 @@ class OPManageController extends Controller
     }
     public function selectBNumber(Request $request){
         $batch_no = $request->input('batch_num');
-
 
         $drug=DB::table('batch_number')
             ->join('commercial_drug', 'batch_number.drug_no', '=', 'commercial_drug.drug_no')
