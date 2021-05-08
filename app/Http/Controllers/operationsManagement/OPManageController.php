@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\operationsManagement;
 
-
 use App\Http\Controllers\Controller;
 use App\Models\Batch_number;
 use App\Models\Report_detailes;
@@ -29,14 +28,14 @@ class OPManageController extends Controller
     public function newReports()
     {
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','app_user.app_user_name'
-                , 'reports.report_date', 'types_reports.type_report')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id as report_no','app_users.name as app_user_name'
+                , 'reports.date as report_date', 'types_reports.name as type_report')
 
-            ->where('type_report','!=','اعراض جانبية')
+            ->where('types_reports.name','!=','اعراض جانبية')
             ->where('state','=',0)
-            ->where('type_report','!=','جودة')
+            ->where('types_reports.name','!=','جودة')
             ->get();
         //return response($reports);
         return view('operationsManagement.newReports', compact('reports'));
@@ -94,7 +93,6 @@ class OPManageController extends Controller
             ->get();
         return view('operationsManagement.newReports', compact('reports'));
     }
-
 
 //عشان تفاصيل كل البلاغات المسحوبة والغير مطابقة
     public function detailsReport($report_no){
