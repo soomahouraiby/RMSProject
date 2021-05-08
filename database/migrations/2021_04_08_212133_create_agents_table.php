@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoleUsersTable extends Migration
+class CreateAgentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateRoleUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_users', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
+        Schema::create('agents', function (Blueprint $table) {
+            $table->id('agent_no');
+            $table->string('agent_name',50);
+            $table->string('agent_phone',9);
+            $table->string('agent_email',20);
+            $table->string('agent_address',50);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateRoleUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_users');
+        Schema::dropIfExists('agents');
     }
 }

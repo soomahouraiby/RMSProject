@@ -50,12 +50,13 @@ class OPManageController extends Controller
     public function newSmuggledReports()
     {
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','app_user.app_user_name'
-                , 'reports.report_date', 'types_reports.type_report')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id as report_no','app_users.name as app_user_name'
+                , 'reports.date as report_date', 'types_reports.name as type_report')
+
             ->where('state','=',0)
-            ->where('type_report','=','مهرب')
+            ->where('types_reports.name','=','مهرب')
             ->get();
         return view('operationsManagement.newReports', compact('reports'));
     }
@@ -63,12 +64,13 @@ class OPManageController extends Controller
     public function newDrownReports()
     {
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','app_user.app_user_name'
-                , 'reports.report_date', 'types_reports.type_report')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id as report_no','app_users.name as app_user_name'
+                , 'reports.date as report_date', 'types_reports.name as type_report')
+
             ->where('state','=',0)
-            ->where('type_report','=','مسحوب')
+            ->where('types_reports.name','=','مسحوب')
             ->get();
         return view('operationsManagement.newReports', compact('reports'));
     }
@@ -76,12 +78,13 @@ class OPManageController extends Controller
     public function newDiffrentReports()
     {
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','app_user.app_user_name'
-                , 'reports.report_date', 'types_reports.type_report')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id as report_no','app_users.name as app_user_name'
+                , 'reports.date as report_date', 'types_reports.name as type_report')
+
             ->where('state','=',0)
-            ->where('type_report','=','غير مطابق')
+            ->where('types_reports.name','=','غير مطابق')
             ->get();
         return view('operationsManagement.newReports', compact('reports'));
     }
@@ -89,27 +92,30 @@ class OPManageController extends Controller
     public function newExceptionReports()
     {
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','app_user.app_user_name'
-                , 'reports.report_date', 'types_reports.type_report')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id as report_no','app_users.name as app_user_name'
+                , 'reports.date as report_date', 'types_reports.name as type_report')
+
             ->where('state','=',0)
-            ->where('type_report','=','مستثناء')
+            ->where('types_reports.name','=','مستثناء')
             ->get();
         return view('operationsManagement.newReports', compact('reports'));
     }
 
 //عشان تفاصيل كل البلاغات المسحوبة والغير مطابقة
-    public function detailsReport($report_no){
-        $reports = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+    public function detailsReport($id){
+        $reports = DB::table('reports')->select('reports.id')
+            ->where('reports.id','=', $id)->get();  // search in given table id only
         if (!$reports)
             return redirect()->back();
 
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id as report_no','app_users.name as app_user_name'
+                , 'reports.date as report_date', 'types_reports.name as type_report')
+
             ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
             ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
                 'app_user.adjective', 'app_user.age', 'site.pharmacy_name',
