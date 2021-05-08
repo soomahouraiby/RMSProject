@@ -27,7 +27,7 @@ class ManageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('role:pharmacy_Management');
     }
 
 
@@ -306,6 +306,38 @@ class ManageController extends Controller
             ->where('transfer_party','=','ادارة الصيدلة')
             ->get();
         return view('pharmacyManagement.newReports', compact('reports'));
+    }
+
+    //////////////// [ Filter .. بلاغات قيد المتابعة ]  ////////////////
+    public function followingReports(){
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+                'reports.report_statues' , 'types_reports.type_report','site.pharmacy_name')
+            ->where('report_statues','=','قيد المتابعة')
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->get();
+        return view('pharmacyManagement/followReports',compact('reports'));
+    }
+
+    //////////////// [ Filter .. بلاغات تمت المتابعة ]  ////////////////
+    public function followDoneReports(){
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+                'reports.report_statues' , 'types_reports.type_report','site.pharmacy_name')
+            ->where('report_statues','=','تمت المتابعة')
+            ->where('type_report','!=','اعراض جانبية')
+            ->where('type_report','!=','جودة')
+            ->get();
+        return view('pharmacyManagement/followReports',compact('reports'));
     }
 
 }

@@ -34,17 +34,10 @@
     <div class="row ">
 
         {{--List--}}
-        @include('operationsManagement.include.sidebarMenu')
-{{--        @include('pharmacovigilanceManagement.include.sidebarMenu')--}}
 
-
-{{--                @if (auth()->user()->hasRole('operation_Management'))--}}
-{{--                    @include('operationsManagement.include.sidebarMenu')--}}
-{{--                @elseif (auth()->user()->hasRole('pharmacies_Management'))--}}
-{{--                    @include('pharmacyManagement.include.sidebarMenu')--}}
-{{--                @endif--}}
-
-
+        @if(auth()->user())
+            @include('include.sidebarMenu')
+        @endif
 
         {{--Content--}}
         @yield('content')

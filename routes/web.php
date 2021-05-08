@@ -21,6 +21,29 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');
 
 
+////////////////////////Begin Pharmacies Management////////////////////////
+Route::group(['namespace'=>'Management'],function (){
+
+    ///////////////////Show///////////////
+    Route::get('/Reports','ManagementController@showReports')->name('showReports');
+    Route::get('/Users','ManagementController@showUsers')->name('showUsers');
+
+    ///////////////////Filter///////////////
+    Route::get('/NewReports','ManagementController@showNewReports')->name('showNewReports');
+    Route::get('/TransferReports','ManagementController@showTransferReports')->name('showTransferReports');
+    Route::get('/FollowingReports','ManagementController@showFollowingReports')->name('showFollowingReports');
+    Route::get('/FollowDoneReports','ManagementController@showFollowDoneReports')->name('showFollowDoneReports');
+    Route::get('/DoneReports','ManagementController@showDoneReports')->name('showDoneReports');
+
+    ///////////////////Details///////////////
+    Route::get('/details/{report_no}','ManagementController@detailsReport')->name('detailsReport');
+
+
+});
+////////////////////////End Pharmacies Management////////////////////////
+
+
+
 
 ////////////////////////Begin Pharmacies Management////////////////////////
 Route::group(['namespace'=>'pharmacyManagement'],function (){
@@ -33,6 +56,9 @@ Route::group(['namespace'=>'pharmacyManagement'],function (){
     Route::get('/newSmuggledReports','ManageController@newSmuggledReports')->name('PM_newSmuggledReports');
     Route::get('/newDrownReports','ManageController@newDrownReports')->name('PM_newDrownReports');
     Route::get('/newDifferentReports','ManageController@newDifferentReports')->name('PM_newDifferentReports');
+    Route::get('/followingReports','ManageController@followingReports')->name('PM_followingReports');
+    Route::get('/followDoneReports','ManageController@followDoneReports')->name('PM_followDoneReports');
+
 
     ///////////////////Details///////////////
     Route::get('/detailsDrug/{drug_no}','ManageController@detailsDrug')->name('PM_detailsDrug');

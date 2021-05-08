@@ -24,6 +24,12 @@ use function PHPUnit\Framework\isNull;
 
 class PHCManageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('role:pharmacovigilance_Management');
+    }
+
     //عشان عرض البلاغات الوارده
     public function newReports()
     {

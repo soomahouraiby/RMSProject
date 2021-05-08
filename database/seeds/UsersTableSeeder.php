@@ -12,25 +12,44 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        $admin = User::create([
+            'name'=>'المدير العام',
+            'email'=>'admin@gmail.com',
+            'phone'=>773773211,
+            'district'=>'الامانة',
+            'address'=>'الحي السياسي',
+            'password'=>bcrypt('admin')]);
+
+        $admin->attachRole('admin');
+
         $operation = User::create([
-            'name'=>'operation_Management',
+            'name'=>'مدير العمليات',
             'email'=>'admin1@gmail.com',
+            'phone'=>773773211,
+            'district'=>'الامانة',
+            'address'=>'الحي السياسي',
             'password'=>bcrypt('admin')]);
 
         $operation->attachRole('operation_Management');
 
-        $pharmacies = User::create([
-            'name'=>'pharmacies_Management',
+        $pharmacy = User::create([
+            'name'=>'مدير الصيدلة',
             'email'=>'admin2@gmail.com',
+            'phone'=>773773211,
+            'district'=>'الامانة',
+            'address'=>'الحي السياسي',
             'password'=>bcrypt('admin')]);
 
-        $pharmacies->attachRole('pharmacies_Management');
+        $pharmacy->attachRole('pharmacy_Management');
 
         $pharmacovigilance = User::create([
-            'name'=>'pharmacovigilance_Management',
+            'name'=>'مدير التيقظ الدوائي',
             'email'=>'admin3@gmail.com',
+            'phone'=>773773211,
+            'district'=>'الامانة',
+            'address'=>'الحي السياسي',
             'password'=>bcrypt('admin')]);
 
-        $pharmacovigilance->attachRole('pharmacies_Management');
+        $pharmacovigilance->attachRole('pharmacovigilance_Management');
     }
 }

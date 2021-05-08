@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group raw mt-4 pb-4 border-bottom" style="display: flex; flex-wrap: wrap; ">
                         <label class="col-form-label   mt-2 mx-4 "> رقم التشغيلة : </label>
-                        <div class=" mt-2 ">
+                        <div class=" mt-2">
                             <input name="batch_num" type="text" class="form-control" placeholder="رقم التشغيلة">
                         </div>
                         <label class="col-form-label   mt-2 mx-4  ">  الباركود : </label>

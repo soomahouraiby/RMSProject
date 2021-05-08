@@ -11,6 +11,13 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
+
+        $admin = Role::create([
+            'name'=>'admin',
+            'display_name'=>'admin',
+            'description'=>'can do anything in the project'
+        ]);
+
         $operation = Role::create([
             'name'=>'operation_Management',
             'display_name'=>'operation Management',
@@ -18,7 +25,7 @@ class RolesTableSeeder extends Seeder
         ]);
 
         $pharmacies = Role::create([
-            'name'=>'pharmacies_Management',
+            'name'=>'pharmacy_Management',
             'display_name'=>'pharmacies Management',
             'description'=>'can do anything in the project'
         ]);
