@@ -98,6 +98,14 @@ class PHCManageController extends Controller
                 'report_alert_drugs.Relation_with_patient as Relation_with_patient',
                 'report_alert_drugs.expiration_date as expiration_date')
             ->where('report_alert_drugs.id','=', $id)->get();
+        if (isset($report) && $report->count() > 0) {
+            foreach ($report as $reports) {
+
+                $reports->gender = $reports->gender == 1 ? 'انثى' : 'ذكر';
+                $reports->status_stop_use = $reports->status_stop_use == 1 ? 'نعم' : 'لا';
+            }
+        }
+
 
         $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number as batch_number')
             ->where('report_alert_drugs.id', '=', $id)->get();
@@ -140,7 +148,13 @@ class PHCManageController extends Controller
                 'report_alert_drugs.Relation_with_patient as Relation_with_patient',
                 'report_alert_drugs.expiration_date as expiration_date')
             ->where('report_alert_drugs.id','=', $id)->get();
+        if (isset($report) && $report->count() > 0) {
+            foreach ($report as $reports) {
 
+                $reports->gender = $reports->gender == 1 ? 'انثى' : 'ذكر';
+                $reports->status_stop_use = $reports->status_stop_use == 1 ? 'نعم' : 'لا';
+            }
+        }
         $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number as batch_number')
             ->where('report_alert_drugs.id', '=', $id)->get();
         foreach ($r as $rr) {
@@ -155,30 +169,33 @@ class PHCManageController extends Controller
                 ->where('batch_numbers.batch_num','=', $rr->batch_number)->get();
         }
 
-        $effect=DB::table('other_drugs')
-            ->join('side_effects', 'other_drugs.side_effect_id', '=', 'side_effects.id')
-            ->select('report_side_effects.Relation_with_patient','report_side_effects.report_side_effect_no',
-                'report_side_effects.purpose_of_use','report_side_effects.date_start_use','report_side_effects.dose',
-                'report_side_effects.how_use_drug','report_side_effects.how_get_drug',
-                'report_side_effects.status_stop_use','report_side_effects.date_stop_use',
-                'report_side_effects.expiration_date','drug_user.drug_user_name','drug_user.age'
-                ,'drug_user.height','drug_user.weight','drug_user.gender'
-                ,'side_effects.side_effect','side_effects.date_st_effect','side_effects.range_dangerous',
-                'side_effects.status_patient_now','side_effects.side_effect_removed','side_effects.removed_date')
-            ->where('side_effects.id','=', $id)->get();
-
         $o_drug=DB::table('other_drugs')
-            ->join('report_side_effects', 'other_drug.report_side_effects_no',
-                '=', 'report_side_effects.report_side_effect_no')
-            ->select('other_drug.drug_name','other_drug.dose','other_drug.date_start_use',
-                'other_drug.date_end_use','other_drug.purpose_of_use','report_side_effects.report_no')
-            ->where('report_side_effects.report_no','=', $report_no)
+            ->join('side_effects', 'other_drugs.side_effect_id', '=', 'side_effects.id')
+            ->select('side_effects.id','side_effects.start_side_effect as date_st_effect','side_effects.severity as range_dangerous',
+                'side_effects.patient_condition as status_patient_now','side_effects.sideshow_still as side_effect_removed',
+                'side_effects.date_end_side as removed_date','side_effects.inform_doctor as inform_doctor'
+            ,'side_effects.doctor_name as doctor_name','side_effects.doctor_hospital as doctor_hospital'
+                ,'side_effects.doctor_phone as doctor_phone','other_drugs.side_effect_id as side_effect_id',
+            'other_drugs.name as drug_name','other_drugs.dosage as dose','other_drugs.start_use_date as date_start_use',
+                'other_drugs.end_use_date as date_end_use','other_drugs.purpose_use as purpose_of_use')
+            ->where('side_effects.report_alert_drug_id','=', $id)
             ->get();
+        if (isset($o_drug) && $o_drug->count() > 0) {
+            foreach ($o_drug as $o_drugs) {
 
-    return view('pharmacovigilanceManagement.detailsEffectReport', compact('report','details'))
-        ->with('o_drug',$o_drug);
+                $o_drugs->side_effect_removed = $o_drugs->side_effect_removed == 1 ? 'نعم' : 'لا';
+            }
+        }
+
+    return view('pharmacovigilanceManagement.detailsEffectReport', compact('report','o_drug','drug'));
 
     }
+
+    public function transferReports($report_no,Request $request)
+    {
+        return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
+    }
+
 
 ////عشان تفاصيل كل البلاغات الجودة بدون زر التحويل
 //    public function detailsReport2($report_no){
