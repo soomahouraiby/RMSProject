@@ -117,7 +117,7 @@ class OPManageController extends Controller
                 'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
                 'reports.drug_picture','reports.date ',
                 'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date as report_date', 'types_reports.name as type_report')
+                'reports.date ', 'types_reports.name as type_report')
             ->where('reports.id', '=', $id)->get();
 
         $r = DB::table('reports')->select('reports.batch_number ')
@@ -146,7 +146,7 @@ class OPManageController extends Controller
                 'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
                 'reports.drug_picture','reports.date ',
                 'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date as report_date', 'types_reports.name as type_report',
+                'reports.date ', 'types_reports.name as type_report',
                 'reports.commercial_name','reports.material_name','reports.companies_name',
                 'reports.agent_name')
             ->where('reports.id', '=', $id)->get();
@@ -169,7 +169,7 @@ class OPManageController extends Controller
                 'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
                 'reports.drug_picture','reports.date ',
                 'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date as report_date', 'types_reports.name as type_report')
+                'reports.date ', 'types_reports.name as type_report')
             ->where('reports.id', '=', $id)->get();
 
         $r = DB::table('reports')->select('reports.batch_number ')
@@ -213,7 +213,7 @@ class OPManageController extends Controller
                 'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
                 'reports.drug_picture','reports.date ',
                 'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date as report_date', 'types_reports.name as type_report',
+                'reports.date ', 'types_reports.name as type_report',
                 'reports.commercial_name','reports.material_name','reports.companies_name',
                 'reports.agent_name')
             ->where('reports.id', '=', $id)->get();
@@ -229,7 +229,7 @@ class OPManageController extends Controller
                 'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
                 'reports.drug_picture','reports.date ',
                 'reports.amount_name ','reports.phone ', 'reports.adjective','reports.age',
-                'reports.date as report_date', 'types_reports.name as type_report',
+                'reports.date ', 'types_reports.name as type_report',
             'reports.commercial_name','reports.material_name','reports.companies_name',
                 'reports.agent_name')
             ->where('reports.id', '=', $id)->get();

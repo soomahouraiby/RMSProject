@@ -10,15 +10,15 @@
         {{--Title--}}
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 pr-2  border-bottom main " >
             <h1 class="h2   ml-2 mt-2 mb-2">تفاصيل بلاغ وارد</h1>
-            <div class="dropdown  ml-5" >
-                @if(isset($report))
-                    @foreach($report as $reports)
-                        <button class="btn " type="submit" style=" width: 90%; background-color: #1b225a; color:#ffffff">
-                    <a  href="{{route('PHC_transferReports',$reports -> report_no)}}" style=" color:#ffffff;">تحويل للمتابعة</a>
-                </button>
-                    @endforeach
-                @endif
-            </div>
+{{--            <div class="dropdown  ml-5" >--}}
+{{--                @if(isset($report))--}}
+{{--                    @foreach($report as $reports)--}}
+{{--                        <button class="btn " type="submit" style=" width: 90%; background-color: #1b225a; color:#ffffff">--}}
+{{--                    <a  href="{{route('PHC_transferReports',$reports -> report_no)}}" style=" color:#ffffff;">تحويل للمتابعة</a>--}}
+{{--                </button>--}}
+{{--                    @endforeach--}}
+{{--                @endif--}}
+{{--            </div>--}}
         </div>
 
         {{--Title--}}
@@ -50,12 +50,9 @@
                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label Text  ml-3 mr-4 ">تاريخ البلاغ : </label>
                                     <label class="col-form-label ml-2 mr-4  ">{{$reports -> report_date}}  </label>
-                            @endforeach
-                        @endif
-                        @if(isset($details))
-                             @foreach($details as $detail)
+
                                     <label class="col-form-label Text ml-3 mr-4 ">صلة القرابة بالمريض : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> Relation_with_patient}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> Relation_with_patient}}  </label>
                              @endforeach
                         @endif
                                 </div>
@@ -75,21 +72,21 @@
                 </div>
                 <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
                     <form>
-                        @if(isset($details))
-                            @foreach($details as $detail)
+                        @if(isset($report))
+                            @foreach($report as $reports)
                                 <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
                                     <label class="col-form-label Text ml-3 mr-4 ">الاسم : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> drug_user_name}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> drug_user_name}}  </label>
                                     <label class="col-form-label Text ml-5 mr-4 ">العمر : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> age}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> age}}  </label>
                                     <label class="col-form-label Text ml-5 mr-4 ">الجنس : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> gender}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> gender}}  </label>
                                 </div>
                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label Text  ml-3 mr-4 ">الوزن : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$detail -> weight}}  </label>
+                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> weight}}  </label>
                                     <label class="col-form-label Text ml-3 mr-4 ">الطول : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> height}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> height}}  </label>
                                 </div>
                             @endforeach
                         @endif
@@ -108,63 +105,55 @@
                 </div>
                 <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
                     <form>
-                        @if(isset($report))
-                            @foreach($report as $reports)
+                        @if(isset($drug))
+                            @foreach($drug as $drugs)
                                 <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
                                     <label class="col-form-label Text ml-3 mr-4 ">اسم الدواء التجاري : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> drug_name}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$drugs -> drug_name}}  </label>
                                     <label class="col-form-label Text ml-5 mr-4 ">اسم الدواء العلمي : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> material_name}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$drugs -> material_name}}  </label>
                                 </div>
                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label Text ml-5 mr-4 ">اسم المصنع : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> company_name}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$drugs -> company_name}}  </label>
                                     <label class="col-form-label Text  ml-3 mr-4 ">رقم التشغيلة : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> batch_num}}  </label>
+                                    <label class="col-form-label ml-2 mr-4  ">{{$drugs -> batch_num}}  </label>
                                     <label class="col-form-label Text ml-3 mr-4 ">شكل الدواء : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> drug_form}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$drugs -> drug_form}}  </label>
                                 </div>
                             @endforeach
-                        @endif
-                        @if(isset($details))
-                             @foreach($details as $detail)
-                                <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
-                                    <label class="col-form-label Text  ml-3 mr-4 ">كيفية الحصول على الدواء : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$detail -> how_get_drug}}  </label>
-                                </div>
-                             @endforeach
                         @endif
                         @if(isset($report))
-                            @foreach($report as $reports)
+                             @foreach($report as $reports)
+                                <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
+                                    <label class="col-form-label Text  ml-3 mr-4 ">كيفية الحصول على الدواء : </label>
+                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> how_get_drug}}  </label>
+                                </div>
                                <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label Text  ml-3 mr-4 ">اسم المنشأه التي تم صرف الدواء منها : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> pharmacy_name}}  </label>
+                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> facility_name}}  </label>
                                     <label class="col-form-label Text ml-3 mr-4 ">العنوان : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> street_name}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> facility_address}}  </label>
                                 </div>
-                            @endforeach
-                        @endif
-                        @if(isset($details))
-                            @foreach($details as $detail)
                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label Text  ml-3 mr-4 ">تاريخ بدء استخدام الدواء : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$detail -> date_start_use}}  </label>
+                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> date_start_use}}  </label>
                                     <label class="col-form-label Text ml-3 mr-4 ">طريقة استخدامه : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> how_use_drug}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> how_use_drug}}  </label>
                                     <label class="col-form-label Text ml-3 mr-4 ">الغرض من استخدامه : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> purpose_of_use}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> purpose_of_use}}  </label>
                                 </div>
                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label Text  ml-3 mr-4 ">الجرعة : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$detail -> dose}}  </label>
+                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> dose}}  </label>
                                     <label class="col-form-label Text ml-3 mr-4 ">تاريخ الصلاحية : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> expiration_date}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> expiration_date}}  </label>
                                 </div>
                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label Text  ml-3 mr-4 ">هل تم ايقاف الاستخدام : </label>
-                                    <label class="col-form-label ml-2 mr-4  ">{{$detail -> status_stop_use}}  </label>
+                                    <label class="col-form-label ml-2 mr-4  ">{{$reports -> status_stop_use}}  </label>
                                     <label class="col-form-label Text ml-3 mr-4 ">التاريخ : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$detail -> date_stop_use}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> date_stop_use}}  </label>
                                 </div>
                             @endforeach
                         @endif
