@@ -27,7 +27,7 @@ class PHCManageController extends Controller
 
     public function __construct()
     {
-        $this->middleware('role:pharmacovigilance_Management');
+        $this->middleware(['role:مدير التيقظ الدوائي']);
     }
 
     //عشان عرض البلاغات الوارده

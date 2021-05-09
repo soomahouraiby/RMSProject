@@ -13,9 +13,5 @@ class UsersController extends Controller
         $this->middleware('auth');
     }
 
-   public function index(){
 
-        $users = User::all();
-        return view('Management/users',compact('users'));
-   }
 }

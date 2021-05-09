@@ -26,7 +26,16 @@ Route::group(['namespace'=>'Management'],function (){
 
     ///////////////////Show///////////////
     Route::get('/Reports','ManagementController@showReports')->name('showReports');
-    Route::get('/Users','ManagementController@showUsers')->name('showUsers');
+
+    ///////////////////Users///////////////
+    Route::get('/users','UsersController@index')->name('users.index');
+    Route::get('/edit/{id}','UsersController@edit')->name('users.edit');
+    Route::post('/update/{id}','UsersController@update')->name('users.update');
+    Route::get('/add','UsersController@add')->name('add');
+    Route::post('/insert','UsersController@insert')->name('users.insert');
+
+
+
 
     ///////////////////Filter///////////////
     Route::get('/NewReports','ManagementController@showNewReports')->name('showNewReports');
@@ -37,6 +46,7 @@ Route::group(['namespace'=>'Management'],function (){
 
     ///////////////////Details///////////////
     Route::get('/details/{report_no}','ManagementController@detailsReport')->name('detailsReport');
+
 
 
 });

@@ -14,17 +14,16 @@ class CreateProceduresTable extends Migration
     public function up()
     {
         Schema::create('procedures', function (Blueprint $table) {
-            $table->id('procedure_no');
-            $table->longText('procedure');
-            $table->date('procedure_date');
-            $table->longText('procedure_result');
+            $table->id();
+            $table->text('procedure');
+            $table->date('date');
+            $table->text('result');
 
-
-            $table->unsignedInteger('report_no');
-            $table->foreign('report_no')->references('report_no')->on('reports');
+            $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
 
             $table->timestamps();
         });
+
     }
 
     /**

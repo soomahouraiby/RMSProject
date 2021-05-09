@@ -172,7 +172,7 @@ return [
          * Method to be called in the middleware return case.
          * Available: abort|redirect
          */
-        'handling' => 'abort',
+        'handling' => 'redirect',
 
         /**
          * Handlers for the unauthorized method in the middlewares.
@@ -183,7 +183,7 @@ return [
              * Aborts the execution with a 403 code and allows you to provide the response text
              */
             'abort' => [
-                'code' => 403,
+                'code' => 404,
                 'message' => 'User does not have any of the necessary access rights.'
             ],
 

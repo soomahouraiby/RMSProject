@@ -14,14 +14,13 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-                $table->id('company_no');
-                $table->string('company_name',50);
-                $table->string('company_country',30);
-
-
+                $table->id();
+                $table->string('name',50)->nullable();
+                $table->string('country',30)->nullable();
 
                 $table->timestamps();
         });
+
     }
 
     /**

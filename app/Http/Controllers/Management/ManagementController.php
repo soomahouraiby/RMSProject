@@ -29,7 +29,7 @@ class ManagementController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:admin');
+        $this->middleware(['role:المدير العام']);
     }
 
 
@@ -45,14 +45,6 @@ class ManagementController extends Controller
             ->get();
         return view('Management/showReports',compact('reports'));
     }
-
-    //////////////// [ Show .. المستخدمين ]  ////////////////
-    public function showUsers(){
-
-        $users = User::all();
-        return view('Management/users',compact('users'));
-    }
-
 
 
 

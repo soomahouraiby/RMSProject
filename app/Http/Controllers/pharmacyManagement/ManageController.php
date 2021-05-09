@@ -27,22 +27,21 @@ class ManageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:pharmacy_Management');
+        $this->middleware(['role:مدير الصيدلة']);
     }
 
 
     //////////////// [ Show .. بلاغات وارده ]  ////////////////
     public function newReports(){
         $reports=DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site','reports.site_no','=','site.site_no')
-            ->select('reports.report_no','app_user.app_user_name','reports.state',
-                'reports.report_date','reports.transfer_party', 'types_reports.type_report','.site.pharmacy_name')
-            ->where('type_report','!=','اعراض جانبية')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->select('reports.id as id_report','app_users.name as name_user','reports.state',
+                'reports.date','reports.transfer_party', 'types_reports.name as type_report','reports.pharmacy_title')
+            ->where('types_reports.name','!=','اعراض جانبية')
             ->where('state','=',1)
             ->where('transfer_party','=','ادارة الصيدلة')
-            ->where('type_report','!=','جودة')
+            ->where('types_reports.name','!=','جودة')
             ->get();
 
         return view('pharmacyManagement/newReports',compact('reports'));
@@ -73,25 +72,23 @@ class ManageController extends Controller
 
     //////////////// [ Follow .. متابعة بلاغ وارد ]  ////////////////
     public function followNewReport($report_no){
-        $report = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        $report = DB::table('reports')->select('reports.id')
+            ->where('id','=', $report_no)->get();  // search in given table id only
         if (!$report)
             return redirect()->back();
 
-        $update = DB::table('reports')->where('report_no','=', $report_no)
-            ->update(['reports.report_statues'=>'قيد المتابعة','state'=>2]);
+        $update = DB::table('reports')->where('id','=', $report_no)
+            ->update(['reports.report_statuses'=>'قيد المتابعة','state'=>2]);
 
 
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
 
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-                'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name'
-                ,'site.pharmacy_name','types_reports.type_report','reports.report_date')
+            ->select('reports.id as id_report','app_users.name as name_user','app_users.phone as phone_user'
+                ,'reports.pharmacy_title','types_reports.name as type_report','reports.date','reports.report_statuses')
 
-            ->where('report_no','=', $report_no)->get();
+            ->where('reports.id','=', $report_no)->get();
 
         return view('pharmacyManagement/follow',compact('reports'));
     }
@@ -116,10 +113,10 @@ class ManageController extends Controller
     public function addProcedure(Request $request,$report_no): \Illuminate\Http\RedirectResponse
     {
         DB::table('procedures')->insert([
-            'procedure_date'=>Carbon::now()->toDateTimeString(),
+            'date'=>Carbon::now()->toDateTimeString(),
             'procedure'=>$request->input('procedure'),
-            'procedure_result'=>$request->input('procedure_result'),
-            'report_no'=>$report_no]);
+            'result'=>$request->input('result'),
+            'report_id'=>$report_no]);
 
         return redirect()->back();
 
@@ -184,27 +181,23 @@ class ManageController extends Controller
 
     //////////////// [ Details ..  بلاغ وارد ]  ////////////////
     public function detailsReport($report_no){
-        $report = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();
+        $report = DB::table('reports')->select('reports.id')
+            ->where('id','=', $report_no)->get();
 
         if (!$report)
             return redirect()->back();
 
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
 
-            ->select('reports.report_no','reports.drug_picture','reports.notes_user', 'reports.report_date'
-                , 'reports.commercial_name', 'reports.material_name', 'reports.agent_name', 'reports.company_name',
-                'app_user.app_user_name', 'app_user.app_user_phone', 'app_user.adjective', 'app_user.age','app_user.report_count',
-                'site.pharmacy_name', 'site.street_name', 'site.site_dec', 'types_reports.type_report',
-                'commercial_drug.drug_no', 'commercial_drug.drug_name', 'commercial_drug.drug_photo',
-                'commercial_drug.how_to_use','commercial_drug.side_effects','commercial_drug.drug_no')
-            ->where('report_no', '=', $report_no)->get();
+            ->select('reports.id as id_report','reports.drug_picture','reports.notes_user', 'reports.date',
+                'reports.site_dec','reports.neig_name','reports.pharmacy_title','reports.street_name',
+                'app_users.name as name_user', 'app_users.phone as phone_user', 'app_users.adjective'
+                , 'app_users.age','app_users.report_count',
+                'types_reports.name as type_report')
+            ->where('reports.id', '=', $report_no)->get();
 
-//        return $reports;
         return view('pharmacyManagement.detailsReport', compact('reports'));
 
     }
@@ -233,26 +226,24 @@ class ManageController extends Controller
 
     //////////////// [ Details ..  تفاصيل المتابعة ]  ////////////////
     public function detailsFollow($report_no){
-        $report = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        $report = DB::table('reports')->select('reports.id')
+            ->where('id','=', $report_no)->get();  // search in given table id only
         if (!$report)
             return redirect()->back();
 
 
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
 
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-                'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name'
-                ,'site.pharmacy_name','types_reports.type_report','reports.report_date','reports.report_statues')
+            ->select('reports.id as id_report','app_users.name as name_user','app_users.phone as phone_user',
+                'types_reports.name as type_report','reports.date','reports.report_statuses')
 
-            ->where('report_no','=', $report_no)->get();
+            ->where('reports.id','=', $report_no)->get();
 
        $procedures= DB::table('procedures')
-           ->select('procedures.report_no','procedures.procedure_result','procedures.procedure','procedures.procedure_date')
-           ->where('report_no','=',$report_no)->get();
+           ->select('procedures.report_id','procedures.result','procedures.procedure','procedures.date')
+           ->where('procedures.report_id','=',$report_no)->get();
 
         return view('pharmacyManagement/follow',compact('reports','procedures'));
     }

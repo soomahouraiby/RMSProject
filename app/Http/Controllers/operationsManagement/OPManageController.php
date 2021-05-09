@@ -27,7 +27,7 @@ class OPManageController extends Controller
 
     public function __construct()
     {
-        $this->middleware('role:operation_Management');
+        $this->middleware(['role:مدير العمليات']);
     }
     //عشان عرض البلاغات الوارده
     public function newReports()

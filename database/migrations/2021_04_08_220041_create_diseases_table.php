@@ -14,10 +14,11 @@ class CreateDiseasesTable extends Migration
     public function up()
     {
         Schema::create('diseases', function (Blueprint $table) {
-            $table->id('disease_no');
-            $table->string('disease_name',20);
+            $table->id();
+            $table->string('name',20);
 
             $table->timestamps();
+
         });
     }
 

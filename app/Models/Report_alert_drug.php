@@ -5,7 +5,7 @@ namespace App\Models;
 //use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class  report_alert_drug extends Model
+class  Report_alert_drug extends Model
 {
     //use HasFactory;
     protected $table=" report_alert_drugs";

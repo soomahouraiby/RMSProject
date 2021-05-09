@@ -2,11 +2,10 @@
 @section('content')
 
 
-    <div id="New">
+    <div style="top: 90%; left: 1%; position: fixed;z-index: 150;">
         @foreach($reports as $report)
-            <a class="nav-link active" href="{{route('PM_followNewReport',$report->report_no)}}">
-                <i class="fas fa-plus fa-1x ml-0 mr-0"></i>
-                <span data-feather="file" class="ml-1">متابعة</span>
+            <a class="nav-link active btn" href="{{route('PM_followNewReport',$report->id_report)}}" style="background-color:#31365c ; color: #ffffff ; border-radius: 20px;">
+               متابعة
             </a>
         @endforeach
     </div>
@@ -40,11 +39,11 @@
                                 <ul class="list-group list-group-flush" >
                                     <li class="list-group-item" style="background-color: #F9F9F9;">
                                         <label class="Text">الاسم : </label>
-                                        <label  class="ml-3">{{$report -> app_user_name}}</label>
+                                        <label  class="ml-3">{{$report -> name_user}}</label>
                                     </li>
                                     <li class="list-group-item" style="background-color: #F9F9F9;">
                                         <label class="Text">رقم الهاتف : </label>
-                                        <label  class="ml-3">{{$report -> app_user_phone}}</label>
+                                        <label  class="ml-3">{{$report -> phone_user}}</label>
                                     </li>
                                     <li class="list-group-item"style="background-color: #F9F9F9;">
                                         <label class="Text">العمر : </label>
@@ -74,11 +73,15 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item" style="background-color: #F9F9F9;">
                                         <label class="Text"> اسم الصيدلية : </label>
-                                        <label  class="ml-3">{{$report -> pharmacy_name}}</label>
+                                        <label  class="ml-3">{{$report -> pharmacy_title}}</label>
                                     </li>
                                     <li class="list-group-item"style="background-color: #F9F9F9;">
                                         <label class="Text">  الشارع : </label>
                                         <label  class="ml-3">{{$report -> street_name}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">  الحي : </label>
+                                        <label  class="ml-3">{{$report -> neig_name}}</label>
                                     </li>
                                     <li class="list-group-item"style="background-color: #F9F9F9;">
                                         <label class="Text"> وصف الموقع :</label>
@@ -110,38 +113,38 @@
                                     <ul class="list-group list-group-flush" >
                                         <li class="list-group-item" style="background-color: #F9F9F9;">
                                             <label class="Text">الاسم التجاري: </label>
-                                            <label  class="ml-3">{{$report -> drug_name}}</label>
+                                            <label  class="ml-3">{{--{{$report -> drug_name}}--}}</label>
                                         </li>
                                         <li class="list-group-item" style="background-color: #F9F9F9;">
                                             <label class="Text"> الاستخدامات:</label>
-                                            <label  class="ml-3">{{$report -> how_to_use}}</label>
+                                            <label  class="ml-3">{{--{{$report -> how_to_use}}--}}</label>
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
                                             <label class="Text">الاعراض الجانبية :</label>
-                                            <label  class="ml-3">{{$report -> side_effects}}</label>
+                                            <label  class="ml-3">{{--{{$report -> side_effects}}--}}</label>
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
                                             <div class="card-img-top" ><img class="card-img-top img-fluid" src="../images/Panadol.jpg"></div>
-                                            <a class="btn float-right" href="{{route('PM_detailsDrug',$report -> drug_no)}}">المزيد</a>
+                                            <a class="btn float-right" href="{{--{{route('PM_detailsDrug',$report -> drug_no)}}--}}">المزيد</a>
                                         </li>
                                     </ul>
                                 @else
                                     <ul class="list-group list-group-flush" >
                                         <li class="list-group-item" style="background-color: #F9F9F9;">
-                                            <label>الاسم التجاري: </label>
-                                            <label  class="ml-3">{{$report -> commercial_name}}</label>
+                                            <label class="Text">الاسم التجاري: </label>
+                                            <label  class="ml-3">{{--{{$report -> commercial_name}}--}}</label>
                                         </li>
                                         <li class="list-group-item" style="background-color: #F9F9F9;">
-                                            <label>التركيبه العلميه:</label>
-                                            <label  class="ml-3">{{$report -> material_name}}</label>
+                                            <label class="Text">التركيبه العلميه:</label>
+                                            <label  class="ml-3">{{--{{$report -> material_name}}--}}</label>
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
-                                            <label>الوكيل :</label>
-                                            <label  class="ml-3">{{$report -> agent_name}}</label>
+                                            <label class="Text">الوكيل :</label>
+                                            <label  class="ml-3"></label>
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
-                                            <label>الشركة المصنعة :</label>
-                                            <label  class="ml-3">{{$report -> company_name}}</label>
+                                            <label class="Text">الشركة المصنعة :</label>
+                                            <label  class="ml-3"></label>
                                         </li>
                                     </ul>
                                 @endif
@@ -170,7 +173,7 @@
                                     </li>
                                     <li class="list-group-item"style="background-color: #F9F9F9;">
                                         <label class="Text">تاريخ البلاغ :</label>
-                                        <label  class="ml-3">{{$report -> report_date}}</label>
+                                        <label  class="ml-3">{{$report -> date}}</label>
                                     </li>
                                     <li class="list-group-item"style="background-color: #F9F9F9;">
                                         <label class="Text"> ملاحظة المبلغ :</label>

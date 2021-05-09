@@ -13,43 +13,47 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $admin = User::create([
-            'name'=>'المدير العام',
+            'name'=>'محمد الفاشق',
             'email'=>'admin@gmail.com',
             'phone'=>773773211,
             'district'=>'الامانة',
             'address'=>'الحي السياسي',
+//            'adjective'=>'المدير العام  ',
             'password'=>bcrypt('admin')]);
 
-        $admin->attachRole('admin');
+        $admin->attachRole('المدير العام');
 
         $operation = User::create([
-            'name'=>'مدير العمليات',
+            'name'=>'عبده الشوافي',
             'email'=>'admin1@gmail.com',
             'phone'=>773773211,
             'district'=>'الامانة',
             'address'=>'الحي السياسي',
+//            'adjective'=>'مدير العمليات ',
             'password'=>bcrypt('admin')]);
 
-        $operation->attachRole('operation_Management');
+        $operation->attachRole('مدير العمليات');
 
         $pharmacy = User::create([
-            'name'=>'مدير الصيدلة',
+            'name'=>'منير الحريبي',
             'email'=>'admin2@gmail.com',
             'phone'=>773773211,
             'district'=>'الامانة',
             'address'=>'الحي السياسي',
+//            'adjective'=>'مدير الصيدلة',
             'password'=>bcrypt('admin')]);
 
-        $pharmacy->attachRole('pharmacy_Management');
+        $pharmacy->attachRole('مدير الصيدلة');
 
         $pharmacovigilance = User::create([
-            'name'=>'مدير التيقظ الدوائي',
+            'name'=>'عمر الجيلاني',
             'email'=>'admin3@gmail.com',
             'phone'=>773773211,
             'district'=>'الامانة',
             'address'=>'الحي السياسي',
+//            'adjective'=>'مدير التيقظ الدوائي',
             'password'=>bcrypt('admin')]);
 
-        $pharmacovigilance->attachRole('pharmacovigilance_Management');
+        $pharmacovigilance->attachRole('مدير التيقظ الدوائي');
     }
 }

@@ -1,7 +1,7 @@
 {{--sidebarMenu--}}
 <nav id="sidebarMenu" class="col-md-4 col-lg-2 d-md-block">
     <div class="position-fixed pt-4  border-bottom">
-        @if(auth()->user()->hasRole('operation_Management'))
+        @if(auth()->user()->hasRole('مدير العمليات'))
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('home')}}">
@@ -89,7 +89,7 @@
                     </a>
                 </li>
             </ul>
-        @elseif(auth()->user()->hasRole('pharmacy_Management'))
+        @elseif(auth()->user()->hasRole('مدير الصيدلة'))
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('home')}}">
@@ -158,7 +158,7 @@
                     </a>
                 </li>
             </ul>
-        @elseif(auth()->user()->hasRole('pharmacovigilance_Management'))
+        @elseif(auth()->user()->hasRole('مدير التيقظ الدوائي'))
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('home')}}">
@@ -215,7 +215,7 @@
                     </a>
                 </li>
             </ul>
-        @elseif(auth()->user()->hasRole('admin'))
+        @elseif(auth()->user()->hasRole('المدير العام'))
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('home')}}">
@@ -263,9 +263,15 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('showUsers')}}">
-                        <i class="fas fa-file-contract "></i>
+                    <a class="nav-link active" aria-current="page" href="{{route('users.index')}}">
+                        <i class="fas fa-users"></i>
                         <span data-feather="file" class="ml-2">إدارة المستخدمين</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{route('add')}}">
+                        <i class="fas fa-user-plus"></i>
+                        <span data-feather="file" class="ml-2">إضافة مستخدم</span>
                     </a>
                 </li>
                 <li class="nav-item">

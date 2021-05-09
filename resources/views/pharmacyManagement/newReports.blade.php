@@ -39,25 +39,14 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     @foreach($reports as $report)
-                        {{--                        @if($report -> type_report != 'مهرب')--}}
                         <tr>
-                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
-                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> report_date}}</a></td>
-                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
-                            <td><a href="{{route('PM_detailsReport',$report -> report_no)}}">{{$report -> pharmacy_name}}</a></td>
-                            <td><a  class="btn " href="{{route('PM_detailsReport',$report -> report_no)}}">تفاصيل</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> name_user}}</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> date}}</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> type_report}}</a></td>
+                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> pharmacy_title}}</a></td>
+                            <td><a  class="btn " href="{{route('PM_detailsReport',$report -> id_report)}}">تفاصيل</a></td>
                         </tr>
-                        {{--                        @else--}}
-                        {{--                            <tr>--}}
-                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>--}}
-                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> report_date}}</a></td>--}}
-                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>--}}
-                        {{--                                <td><a href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">{{$report -> pharmacy_name}}</a></td>--}}
-                        {{--                                <td><a  class="btn " href="{{route('PM_detailsSmuggledReport',$report -> report_no)}}">تفاصيل</a></td>--}}
-                        {{--                            </tr>--}}
-                        {{--                        @endif--}}
                     @endforeach
 
                     </tbody>

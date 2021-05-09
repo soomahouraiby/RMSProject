@@ -1,6 +1,12 @@
 @extends('layouts\master')
 @section('content')
 
+    <div id="New">
+        <a class="nav-link active " href="{{route('add')}}">
+            <i class="fas fa-user-plus"></i>
+        </a>
+    </div>
+
     <main class="col-md-8 ms-sm-auto col-lg-10 px-md-4 ">
 
         {{--Title--}}
@@ -25,33 +31,29 @@
                             </th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="name">اسم المتخدم</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="payment">المديرية</th>
+                            <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="payment">الصفة</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="email">البريد الإلكتروني</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="product">رقم الهاتف</th>
-                            <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="product"> العنوان</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="amount"></th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="amount"></th>
 
                         </tr>
                         </thead>
                         <tbody class="list" id="table-purchase-body">
-{{--                        @if(isset($users))--}}
                             @foreach($users as $index=>$user)
                             <tr class="btn-reveal-trigger">
                                 <td class="align-middle" style="width: 28px;">
                                     <div class="form-check mb-2 mt-2 d-flex align-items-center">{{$index + 1}}</div>
                                 </td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="">{{$user -> name}}</a></td>
+                                <td class="align-middle white-space-nowrap text-left name "><a href="">{{$user -> user_name}}</a></td>
                                 <td class="align-middle white-space-nowrap text-left name "><a href="">{{$user -> district}}</a></td>
+                                <td class="align-middle white-space-nowrap text-left name "><a href="">{{$user->role_name}}</a></td>
                                 <td class="align-middle white-space-nowrap text-left name "><a href="">{{$user -> email}}</a></td>
                                 <td class="align-middle white-space-nowrap text-left name "><a href="">{{$user -> phone}}</a></td>
-                                <td class="align-middle white-space-nowrap text-left name "><a href="">{{$user -> address}}</a></td>
-                                <td class="align-middle white-space-nowrap text-left name "><a class=" btn-primary btn-sm" href="">تعديل</a></td>
-                                <td class="align-middle white-space-nowrap text-left name "><a class=" btn-danger btn-sm" href="">حذف</a></td>
-
-
+                                <td class="align-middle white-space-nowrap text-left name "><a class=" btn-primary btn-sm" href="{{route('users.edit',$user->id)}}"><i class="fas fa-user-edit"></i></a></td>
+                                <td class="align-middle white-space-nowrap text-left name "><a class=" btn-danger btn-sm" href=""><i class="fas fa-user-minus"></i></a></td>
                             </tr>
                             @endforeach
-{{--                        @endif--}}
                         </tbody>
                     </table>
                 </div>

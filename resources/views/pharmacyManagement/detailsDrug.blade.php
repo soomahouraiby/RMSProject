@@ -123,7 +123,7 @@
                                 @foreach($reports as $report)
                                     <ul class="list-group list-group-flush" >
                                         <li class="list-group-item" style="background-color: #F9F9F9;">
-                                            <label class="Text">رقم الشحنة  : </label>
+                                            <label class="Text">رقم التشغيلة  : </label>
                                             <label  class="ml-3">{{$report -> batch_num}}</label>
                                         </li>
                                         <li class="list-group-item" style="background-color: #F9F9F9;">

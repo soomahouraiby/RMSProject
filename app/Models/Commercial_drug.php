@@ -13,7 +13,7 @@ class Commercial_drug extends Model
     //use HasFactory;
     protected $table="commercial_drugs";
     protected $filliable = [
-        'id', 'name', 'register_no', 'drug_entrranc','photo',
+        'id', 'name', 'register_no', 'drug_entrance','photo',
         'how_use', 'drug_form', 'side_effects', 'agent_id','company_id'
     ];
     public $timestamps=false;

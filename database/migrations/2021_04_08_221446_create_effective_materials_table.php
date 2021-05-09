@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSiteTable extends Migration
+class CreateEffectiveMaterialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateSiteTable extends Migration
      */
     public function up()
     {
-        Schema::create('site', function (Blueprint $table) {
-            $table->id('site_no');
-            $table->string('pharmacy_name',30);
-            $table->string('street_name',20);
-            $table->string('neig_name',20);
-            $table->longText('site_dec');
-
+        Schema::create('effective_materials', function (Blueprint $table) {
+            $table->id();
+            $table->string('name',50);
+            $table->longText('indications_use');
 
             $table->timestamps();
         });
+
     }
 
     /**
@@ -32,6 +30,6 @@ class CreateSiteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site');
+        Schema::dropIfExists('effective_materials');
     }
 }

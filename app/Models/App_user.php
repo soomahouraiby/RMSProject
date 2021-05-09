@@ -11,7 +11,7 @@ class App_user extends Model
     protected $table="app_users";
     protected $fillable = [
         'id', 'name', 'phone', 'email',
-        'age',  'sex','email_verified_at' ,'adjective',
+        'age',  'sex','email_verified_at' ,'adjective','report_count'
     ];
     protected $primaryKey = 'id';
     public $timestamps=false;

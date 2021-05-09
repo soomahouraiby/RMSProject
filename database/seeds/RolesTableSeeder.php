@@ -13,25 +13,25 @@ class RolesTableSeeder extends Seeder
     {
 
         $admin = Role::create([
-            'name'=>'admin',
+            'name'=>'المدير العام',
             'display_name'=>'admin',
             'description'=>'can do anything in the project'
         ]);
 
         $operation = Role::create([
-            'name'=>'operation_Management',
+            'name'=>'مدير العمليات',
             'display_name'=>'operation Management',
             'description'=>'can do anything in the project'
         ]);
 
-        $pharmacies = Role::create([
-            'name'=>'pharmacy_Management',
-            'display_name'=>'pharmacies Management',
+        $pharmacy = Role::create([
+            'name'=>'مدير الصيدلة',
+            'display_name'=>'pharmacy Management',
             'description'=>'can do anything in the project'
         ]);
 
         $pharmacovigilance = Role::create([
-            'name'=>'pharmacovigilance_Management',
+            'name'=>'مدير التيقظ الدوائي',
             'display_name'=>'pharmacovigilance Management',
             'description'=>'can do anything in the project'
         ]);
