@@ -12,7 +12,7 @@
             <h1 class="h2   ml-2 mt-2 mb-2">تفاصيل بلاغ وارد</h1>
             @if(isset($report))
                 @foreach($report as $reports)
-                    @if($reports->state==null)
+                    @if($reports->state==0)
                         <div class="dropdown  ml-5" >
                             <button class="btn " type="submit" style=" width: 90%; background-color: #1b225a; color:#ffffff">
                                 <a  href="{{route('PHC_transferReports',$reports -> report_no)}}" style=" color:#ffffff;">تحويل للمتابعة</a>

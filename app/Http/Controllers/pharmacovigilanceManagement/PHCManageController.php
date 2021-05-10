@@ -36,7 +36,7 @@ class PHCManageController extends Controller
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
                 , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
-            ->where('report_alert_drugs.state','=',null)
+            ->where('report_alert_drugs.state','=',0)
             ->where('types_reports.name','!=','مهرب')
             ->where('types_reports.name','!=','مسحوب')
             ->where('types_reports.name','!=','غير مطابق')
@@ -54,7 +54,7 @@ class PHCManageController extends Controller
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
                 , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
-            ->where('report_alert_drugs.state','=',null)
+            ->where('report_alert_drugs.state','=',0)
             ->where('types_reports.name','=','اعراض جانبية')
             ->get();
         return view('pharmacovigilanceManagement.newReports', compact('reports'));
@@ -67,7 +67,7 @@ class PHCManageController extends Controller
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
                 , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
-            ->where('report_alert_drugs.state','=',null)
+            ->where('report_alert_drugs.state','=',0)
             ->where('types_reports.name','=','جودة')
             ->get();
         return view('pharmacovigilanceManagement.newReports', compact('reports'));
@@ -190,7 +190,7 @@ class PHCManageController extends Controller
     {
         $reports = DB::table('report_alert_drugs')
             ->where('report_alert_drugs.id', '=', $id)
-            ->update(['state'=>0]);
+            ->update(['state'=>1]);
         return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
     }
 
@@ -225,7 +225,7 @@ class PHCManageController extends Controller
             ->select('report_alert_drugs.id as report_no','app_users.name'
                 , 'report_alert_drugs.state','report_alert_drugs.date_report',
                 'types_reports.name as type_report')
-            ->where('report_alert_drugs.state','!=',null)
+            ->where('report_alert_drugs.state','!=',0)
             ->where('types_reports.name','!=','مهرب')
             ->where('types_reports.name','!=','مسحوب')
             ->where('types_reports.name','!=','غير مطابق')
@@ -234,7 +234,7 @@ class PHCManageController extends Controller
         if (isset($reports) && $reports->count() > 0) {
             foreach ($reports as $report) {
 
-                $report->state = $report->state == 1 ? ' تم الانهاء' : 'قيد المتابعة';
+                $report->state = $report->state == 2 ? ' تم الانهاء' : 'قيد المتابعة';
             }
         }
 
@@ -242,28 +242,6 @@ class PHCManageController extends Controller
     }
     //عشان اللفلترة حق قيد المتابعة
     public function followingReports(){
-        $reports = DB::table('report_alert_drugs')
-            ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
-            ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
-            ->select('report_alert_drugs.id as report_no','app_users.name'
-                , 'report_alert_drugs.state','report_alert_drugs.date_report',
-                'types_reports.name as type_report')
-            ->where('report_alert_drugs.state','=',0)
-            ->where('types_reports.name','!=','مهرب')
-            ->where('types_reports.name','!=','مسحوب')
-            ->where('types_reports.name','!=','غير مطابق')
-            ->where('types_reports.name','!=','مستثناء')
-            ->get();
-        if (isset($reports) && $reports->count() > 0) {
-            foreach ($reports as $report) {
-
-                $report->state = $report->state == 1 ? ' تم الانهاء' : 'قيد المتابعة';
-            }
-        }
-        return view('pharmacovigilanceManagement/followReports',compact('reports'));
-    }
-    //عشان اللفلترة حق تم الانهاء
-    public function doneReports(){
         $reports = DB::table('report_alert_drugs')
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
@@ -279,7 +257,29 @@ class PHCManageController extends Controller
         if (isset($reports) && $reports->count() > 0) {
             foreach ($reports as $report) {
 
-                $report->state = $report->state == 1 ? ' تم الانهاء' : 'قيد المتابعة';
+                $report->state = $report->state == 2 ? ' تم الانهاء' : 'قيد المتابعة';
+            }
+        }
+        return view('pharmacovigilanceManagement/followReports',compact('reports'));
+    }
+    //عشان اللفلترة حق تم الانهاء
+    public function doneReports(){
+        $reports = DB::table('report_alert_drugs')
+            ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
+            ->select('report_alert_drugs.id as report_no','app_users.name'
+                , 'report_alert_drugs.state','report_alert_drugs.date_report',
+                'types_reports.name as type_report')
+            ->where('report_alert_drugs.state','=',2)
+            ->where('types_reports.name','!=','مهرب')
+            ->where('types_reports.name','!=','مسحوب')
+            ->where('types_reports.name','!=','غير مطابق')
+            ->where('types_reports.name','!=','مستثناء')
+            ->get();
+        if (isset($reports) && $reports->count() > 0) {
+            foreach ($reports as $report) {
+
+                $report->state = $report->state == 2 ? ' تم الانهاء' : 'قيد المتابعة';
             }
         }
         return view('pharmacovigilanceManagement/followReports',compact('reports'));
@@ -297,7 +297,7 @@ class PHCManageController extends Controller
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
                 ,'app_users.phone', 'report_alert_drugs.date_report', 'types_reports.name as type_report',
-                'report_alert_drugs.facility_name')
+                'report_alert_drugs.facility_name','report_alert_drugs.state','report_alert_drugs.notes')
             ->where('report_alert_drugs.id','=', $id)->get();
 
         $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number')
@@ -349,7 +349,7 @@ class PHCManageController extends Controller
         $reports = DB::table('report_alert_drugs')->select('report_alert_drugs.id')
             ->where('report_alert_drugs.id', '=', $id)
             ->update(['notes' => $request->notes,
-                'state'=>1 ]);
+                'state'=>2 ]);
 
         $reports = DB::table('report_alert_drugs')
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')

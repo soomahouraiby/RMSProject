@@ -88,6 +88,7 @@
 
         @if(isset($report))
             @foreach($report as $reports)
+                @if($reports -> state == 1)
                 <div class="row pb-5 ml-20 mt-10 mb-10">
                     <div class="col-lg">
                         <button class="btn " type="submit" style="margin-right:70%; width: 10%; background-color: #0F122D; color:#ffffff">
@@ -95,6 +96,23 @@
 
                     </div>
                 </div>
+                @elseif($reports->state==2)
+                    <div class="card shadow mt-5" >
+                        <div class="card-header " style="background-color: #F9F9F9;">
+                            <div class="row m-2">
+                                <h4>الإجراء المتخذ حيال البلاغ</h4>
+                            </div>
+                        </div>
+
+                        <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
+                                    <div class="row pb-5 border-bottom">
+                                        <div class="col-lg">
+                                            <p class="col-form-label  mx-5  ">{{$reports -> notes}}</p>
+                                        </div>
+                                    </div>
+                        </div>
+                    </div>
+                @endif
             @endforeach
         @endif
         {{--End Content--}}
