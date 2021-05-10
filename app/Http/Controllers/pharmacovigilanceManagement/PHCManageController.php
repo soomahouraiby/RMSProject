@@ -216,7 +216,6 @@ class PHCManageController extends Controller
 
     }
 
-
 // عشان عرض المتابعة للبلاغات
     public function followReports(){
         $reports = DB::table('report_alert_drugs')
@@ -311,32 +310,6 @@ class PHCManageController extends Controller
 
 
         return view('pharmacovigilanceManagement/followedUp',compact('report','drug'));
-    }
-//عشان تفاصيل الذي تم الانهاء
-    public function followedUp2($id){
-        $reports = DB::table('report_alert_drugs')->select('report_alert_drugs.id')
-            ->where('report_alert_drugs.id','=', $id)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-        $report = DB::table('report_alert_drugs')
-            ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
-            ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
-            ->select('report_alert_drugs.id as report_no','app_users.name'
-                ,'app_users.phone', 'report_alert_drugs.date_report', 'types_reports.name as type_report',
-                'report_alert_drugs.facility_name','report_alert_drugs.notes')
-            ->where('report_alert_drugs.id','=', $id)->get();
-
-        $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number')
-            ->where('report_alert_drugs.id', '=', $id)->get();
-        foreach ($r as $rr) {
-            $drug = DB::table('batch_numbers')
-                ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
-                ->select( 'commercial_drugs.name as drug_name', 'commercial_drugs.id as drug_no')
-                ->where('batch_numbers.batch_num','=', $rr->batch_number)->get();
-        }
-
-
-        return view('pharmacovigilanceManagement/followedUp2',compact('report','drug'));
     }
 
 //عشان اضافة اجراء على البلاغ

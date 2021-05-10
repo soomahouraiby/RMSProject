@@ -71,7 +71,7 @@
                                                 <div class="dropdown-menu dropdown-menu-right border py-2" aria-labelledby="dropdown0">
                                                     <a class="dropdown-item" href="{{route('PHC_followedUp',$report -> report_no)}}">عرض</a>
                                                     <div class="dropdown-divider"></div>
-                                                    @if($report->state==1)
+                                                    @if($report->state=='قيد المتابعة')
                                                     <a class="dropdown-item  " href="{{route('PHC_createProcedure',$report -> report_no)}}!">اضافة اجراء</a>
                                                     @endif
                                                 </div>

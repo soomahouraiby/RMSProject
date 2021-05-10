@@ -49,6 +49,7 @@
                     </li>
                 @endguest
                 @auth
+                @if(auth()->user()->hasRole('مدير الصيدلة'))
                     <li class="dropdown dropdown-notification nav-item  dropdown-notifications" >
                         <a class="nav-link nav-link-label" href="#" data-toggle="dropdown" >
                             <i class="fa fa-bell" style="color: white"> </i>
@@ -85,6 +86,7 @@
                         {{--                            </li>--}}
                         {{--                        </ul>--}}
                     </li>
+                @endif
                 @endauth
             </ul>
         </div>
