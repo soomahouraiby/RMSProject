@@ -155,7 +155,7 @@ Route::group(['namespace'=>'pharmacovigilanceManagement'],function (){
     Route::get('/PHC_detailsEffectReport/{id}','PHCManageController@detailsEffectReport')->name('PHC_detailsEffectReport');
     Route::get('/PHC_detailsReport2/{report_no}','PHCManageController@detailsReport2')->name('PHC_detailsReport2');
     Route::get('/PHC_detailsEffectReport2/{report_no}','PHCManageController@detailsEffectReport2')->name('PHC_detailsEffectReport2');
-    Route::get('/PHC_detailsDrug/{drug_no}','PHCManageController@detailsDrug')->name('PHC_detailsDrug');
+    Route::get('/PHC_detailsDrug/{id}','PHCManageController@detailsDrug')->name('PHC_detailsDrug');
 
     ///////////////////Transfer///////////////
     Route::get('/transferReports/{report_no}', 'PHCManageController@transferReports')->name('PHC_transferReports');

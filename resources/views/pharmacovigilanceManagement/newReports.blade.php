@@ -48,8 +48,8 @@
                     @foreach($reports as $report)
                         @if($report -> type_report=='اعراض جانبية')
                             <tr class="reportRow">
-                                <td><a class="nav-link "   href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
-                                <td><a class="nav-link  "  href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
+                                <td><a class="nav-link "   href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> name}}</a></td>
+                                <td><a class="nav-link  "  href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> date_report}} </a></td>
                                 <td ><a class="nav-link  " href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
                                 <td class="align-middle white-space-nowrap">
                                     <div class="dropdown font-sans-serif">
@@ -66,8 +66,8 @@
                             </tr>
                         @else
                             <tr class="reportRow">
-                                <td><a class="nav-link "   href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> app_user_name}}</a></td>
-                                <td><a class="nav-link  "  href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> report_date}} </a></td>
+                                <td><a class="nav-link "   href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> name}}</a></td>
+                                <td><a class="nav-link  "  href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> date_report}} </a></td>
                                 <td ><a class="nav-link  " href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
                                 <td class="align-middle white-space-nowrap">
                                     <div class="dropdown font-sans-serif">

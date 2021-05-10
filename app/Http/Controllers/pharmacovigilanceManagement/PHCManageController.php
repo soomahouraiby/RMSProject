@@ -36,9 +36,9 @@ class PHCManageController extends Controller
         $reports = DB::table('report_alert_drugs')
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
-            ->select('report_alert_drugs.id as report_no','app_users.name as app_user_name'
-                , 'report_alert_drugs.date as report_date', 'types_reports.name as type_report')
-
+            ->select('report_alert_drugs.id as report_no','app_users.name'
+                , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
+            ->where('report_alert_drugs.state','=',null)
             ->where('types_reports.name','!=','مهرب')
             ->where('types_reports.name','!=','مسحوب')
             ->where('types_reports.name','!=','غير مطابق')
@@ -54,9 +54,9 @@ class PHCManageController extends Controller
         $reports = DB::table('report_alert_drugs')
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
-            ->select('report_alert_drugs.id as report_no','app_users.name as app_user_name'
-                , 'report_alert_drugs.date as report_date', 'types_reports.name as type_report')
-
+            ->select('report_alert_drugs.id as report_no','app_users.name'
+                , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
+            ->where('report_alert_drugs.state','=',null)
             ->where('types_reports.name','=','اعراض جانبية')
             ->get();
         return view('pharmacovigilanceManagement.newReports', compact('reports'));
@@ -67,9 +67,9 @@ class PHCManageController extends Controller
         $reports = DB::table('report_alert_drugs')
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
-            ->select('report_alert_drugs.id as report_no','app_users.name as app_user_name'
-                , 'report_alert_drugs.date as report_date', 'types_reports.name as type_report')
-
+            ->select('report_alert_drugs.id as report_no','app_users.name'
+                , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
+            ->where('report_alert_drugs.state','=',null)
             ->where('types_reports.name','=','جودة')
             ->get();
         return view('pharmacovigilanceManagement.newReports', compact('reports'));
@@ -84,30 +84,28 @@ class PHCManageController extends Controller
         $report = DB::table('report_alert_drugs')
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
-            ->select('report_alert_drugs.id as report_no','app_users.name as app_user_name'
-                ,'app_users.email as app_user_email','app_users.phone as app_user_phone'
-                , 'report_alert_drugs.date as report_date', 'types_reports.name as type_report',
-                'report_alert_drugs.user_name as drug_user_name','report_alert_drugs.sex as gender',
-                'report_alert_drugs.age as age','report_alert_drugs.weight as weight',
-                'report_alert_drugs.length as height','report_alert_drugs.method_obtaining as how_get_drug',
-                'report_alert_drugs.start_using_date as date_start_use','report_alert_drugs.take_drug as how_use_drug',
-                'report_alert_drugs.purpose_use as purpose_of_use','report_alert_drugs.dosage as dose',
-                'report_alert_drugs.stopped_using_date as date_stop_use','report_alert_drugs.describe_problem as notes_user',
-                'report_alert_drugs.stopped_using as status_stop_use','report_alert_drugs.facility_name as facility_name',
-                'report_alert_drugs.facility_address as facility_address',
-                'report_alert_drugs.Relation_with_patient as Relation_with_patient',
-                'report_alert_drugs.expiration_date as expiration_date')
+            ->select('report_alert_drugs.id as report_no','app_users.name'
+                ,'app_users.email','app_users.phone'
+                , 'report_alert_drugs.date_report', 'types_reports.name as type_report',
+                'report_alert_drugs.user_name','report_alert_drugs.sex',
+                'report_alert_drugs.age','report_alert_drugs.weight',
+                'report_alert_drugs.length','report_alert_drugs.method_obtaining',
+                'report_alert_drugs.start_using_date','report_alert_drugs.take_drug',
+                'report_alert_drugs.purpose_use','report_alert_drugs.dosage',
+                'report_alert_drugs.stopped_using_date','report_alert_drugs.describe_problem',
+                'report_alert_drugs.stopped_using','report_alert_drugs.facility_name',
+                'report_alert_drugs.facility_address','report_alert_drugs.relative_relation')
             ->where('report_alert_drugs.id','=', $id)->get();
         if (isset($report) && $report->count() > 0) {
             foreach ($report as $reports) {
 
-                $reports->gender = $reports->gender == 1 ? 'انثى' : 'ذكر';
-                $reports->status_stop_use = $reports->status_stop_use == 1 ? 'نعم' : 'لا';
+                $reports->sex = $reports->sex == 1 ? 'انثى' : 'ذكر';
+                $reports->stopped_using = $reports->stopped_using == 1 ? 'نعم' : 'لا';
             }
         }
 
 
-        $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number as batch_number')
+        $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number')
             ->where('report_alert_drugs.id', '=', $id)->get();
         foreach ($r as $rr) {
             $drug = DB::table('batch_numbers')
@@ -115,9 +113,9 @@ class PHCManageController extends Controller
                 ->join('combinations', 'combinations.commercial_id', '=','commercial_drugs.id')
                 ->join('effective_materials', 'combinations.material_id', '=', 'effective_materials.id')
                 ->join('companies', 'commercial_drugs.company_id', '=', 'companies.id')
-                ->select('batch_numbers.batch_num as batch_num', 'commercial_drugs.name as drug_name',
-                    'commercial_drugs.drug_form as drug_form','effective_materials.name as material_name',
-                    'companies.name as company_name')
+                ->select('batch_numbers.batch_num', 'commercial_drugs.name as drug_name',
+                    'commercial_drugs.drug_form','commercial_drugs.id as drug_no',
+                    'effective_materials.name as material_name', 'companies.name as company_name')
                 ->where('batch_numbers.batch_num','=', $rr->batch_number)->get();
         }
 
@@ -134,28 +132,26 @@ class PHCManageController extends Controller
         $report = DB::table('report_alert_drugs')
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
-            ->select('report_alert_drugs.id as report_no','app_users.name as app_user_name'
-                ,'app_users.email as app_user_email','app_users.phone as app_user_phone'
-                , 'report_alert_drugs.date as report_date', 'types_reports.name as type_report',
-                'report_alert_drugs.user_name as drug_user_name','report_alert_drugs.sex as gender',
-                'report_alert_drugs.age as age','report_alert_drugs.weight as weight',
-                'report_alert_drugs.length as height','report_alert_drugs.method_obtaining as how_get_drug',
-                'report_alert_drugs.start_using_date as date_start_use','report_alert_drugs.take_drug as how_use_drug',
-                'report_alert_drugs.purpose_use as purpose_of_use','report_alert_drugs.dosage as dose',
-                'report_alert_drugs.stopped_using_date as date_stop_use','report_alert_drugs.describe_problem as notes_user',
-                'report_alert_drugs.stopped_using as status_stop_use','report_alert_drugs.facility_name as facility_name',
-                'report_alert_drugs.facility_address as facility_address',
-                'report_alert_drugs.Relation_with_patient as Relation_with_patient',
-                'report_alert_drugs.expiration_date as expiration_date')
+            ->select('report_alert_drugs.id as report_no','app_users.name'
+                ,'app_users.email','app_users.phone'
+                , 'report_alert_drugs.date_report', 'types_reports.name as type_report',
+                'report_alert_drugs.user_name','report_alert_drugs.sex',
+                'report_alert_drugs.age','report_alert_drugs.weight',
+                'report_alert_drugs.length','report_alert_drugs.method_obtaining',
+                'report_alert_drugs.start_using_date','report_alert_drugs.take_drug',
+                'report_alert_drugs.purpose_use','report_alert_drugs.dosage',
+                'report_alert_drugs.stopped_using_date','report_alert_drugs.describe_problem',
+                'report_alert_drugs.stopped_using','report_alert_drugs.facility_name',
+                'report_alert_drugs.facility_address','report_alert_drugs.relative_relation')
             ->where('report_alert_drugs.id','=', $id)->get();
         if (isset($report) && $report->count() > 0) {
             foreach ($report as $reports) {
 
-                $reports->gender = $reports->gender == 1 ? 'انثى' : 'ذكر';
-                $reports->status_stop_use = $reports->status_stop_use == 1 ? 'نعم' : 'لا';
+                $reports->sex = $reports->sex == 1 ? 'انثى' : 'ذكر';
+                $reports->stopped_using = $reports->stopped_using == 1 ? 'نعم' : 'لا';
             }
         }
-        $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number as batch_number')
+        $r = DB::table('report_alert_drugs')->select('report_alert_drugs.batch_number')
             ->where('report_alert_drugs.id', '=', $id)->get();
         foreach ($r as $rr) {
             $drug = DB::table('batch_numbers')
@@ -163,27 +159,28 @@ class PHCManageController extends Controller
                 ->join('combinations', 'combinations.commercial_id', '=','commercial_drugs.id')
                 ->join('effective_materials', 'combinations.material_id', '=', 'effective_materials.id')
                 ->join('companies', 'commercial_drugs.company_id', '=', 'companies.id')
-                ->select('batch_numbers.batch_num as batch_num', 'commercial_drugs.name as drug_name',
-                    'commercial_drugs.drug_form as drug_form','effective_materials.name as material_name',
-                    'companies.name as company_name')
+                ->select('batch_numbers.batch_num', 'commercial_drugs.name as drug_name',
+                    'commercial_drugs.id as drug_no', 'commercial_drugs.drug_form',
+                    'effective_materials.name as material_name', 'companies.name as company_name')
                 ->where('batch_numbers.batch_num','=', $rr->batch_number)->get();
         }
 
         $o_drug=DB::table('other_drugs')
             ->join('side_effects', 'other_drugs.side_effect_id', '=', 'side_effects.id')
-            ->select('side_effects.id','side_effects.start_side_effect as date_st_effect','side_effects.severity as range_dangerous',
-                'side_effects.patient_condition as status_patient_now','side_effects.sideshow_still as side_effect_removed',
-                'side_effects.date_end_side as removed_date','side_effects.inform_doctor as inform_doctor'
-            ,'side_effects.doctor_name as doctor_name','side_effects.doctor_hospital as doctor_hospital'
-                ,'side_effects.doctor_phone as doctor_phone','other_drugs.side_effect_id as side_effect_id',
-            'other_drugs.name as drug_name','other_drugs.dosage as dose','other_drugs.start_use_date as date_start_use',
-                'other_drugs.end_use_date as date_end_use','other_drugs.purpose_use as purpose_of_use')
+            ->select('side_effects.id','side_effects.start_side_effect','side_effects.severity',
+                'side_effects.patient_condition','side_effects.sideshow_still',
+                'side_effects.date_end_side','side_effects.inform_doctor'
+            ,'side_effects.doctor_name','side_effects.doctor_hospital'
+                ,'side_effects.doctor_phone','other_drugs.side_effect_id',
+            'other_drugs.name','other_drugs.dosage','other_drugs.start_use_date',
+                'other_drugs.end_use_date','other_drugs.purpose_use')
             ->where('side_effects.report_alert_drug_id','=', $id)
             ->get();
         if (isset($o_drug) && $o_drug->count() > 0) {
             foreach ($o_drug as $o_drugs) {
 
-                $o_drugs->side_effect_removed = $o_drugs->side_effect_removed == 1 ? 'نعم' : 'لا';
+                $o_drugs->sideshow_still = $o_drugs->sideshow_still == 1 ? 'نعم' : 'لا';
+                $o_drugs->inform_doctor = $o_drugs->inform_doctor == 1 ? 'نعم' : 'لا';
             }
         }
 
@@ -191,263 +188,169 @@ class PHCManageController extends Controller
 
     }
 
-    public function transferReports($report_no,Request $request)
+    public function transferReports($id,Request $request)
     {
+        $reports = DB::table('report_alert_drugs')
+            ->where('report_alert_drugs.id', '=', $id)
+            ->update(['state'=>0]);
         return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
     }
 
+//عشان تفاصيل الدواء
+    public function detailsDrug($id){
 
-////عشان تفاصيل كل البلاغات الجودة بدون زر التحويل
-//    public function detailsReport2($report_no){
-//        $reports = DB::table('reports')->select('reports.report_no')
-//            ->where('report_no','=', $report_no)->get();  // search in given table id only
-//        if (!$reports)
-//            return redirect()->back();
-//
-//        $report = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->join('site', 'reports.site_no', '=', 'site.site_no')
-//            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-//            ->join('batch_number', 'commercial_drug.drug_no', '=', 'batch_number.drug_no')
-//            ->join('combination', 'combination.drug_no', '=','commercial_drug.drug_no')
-//            ->join('effective_material', 'combination.material_no', '=', 'effective_material.material_no')
-//            ->join('companies', 'commercial_drug.company_no', '=', 'companies.company_no')
-//            ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
-//                'app_user.app_user_email', 'site.pharmacy_name', 'site.street_name',
-//                'reports.notes_user', 'reports.report_date', 'types_reports.type_report',
-//                'reports.drug_picture', 'commercial_drug.drug_name', 'commercial_drug.drug_no',
-//                'commercial_drug.drug_form','batch_number.batch_num'
-//                ,'effective_material.material_name','companies.company_name')
-//            ->where('report_no', '=', $report_no)->get();
-//
-//
-//        $details=DB::table('report_side_effects')
-//            ->join('drug_user', 'report_side_effects.drug_user_no', '=',
-//                'drug_user.drug_user_no')
-//            ->select('report_side_effects.Relation_with_patient','report_side_effects.purpose_of_use'
-//                ,'report_side_effects.date_start_use','report_side_effects.dose',
-//                'report_side_effects.how_use_drug','report_side_effects.how_get_drug',
-//                'report_side_effects.status_stop_use','report_side_effects.date_stop_use',
-//                'report_side_effects.expiration_date','drug_user.drug_user_name','drug_user.age'
-//                ,'drug_user.height','drug_user.weight','drug_user.gender')
-//            ->where('report_no','=', $report_no)->get();
-//
-//        return view('pharmacovigilanceManagement.detailsReport2', compact('report','details'));
-//        //return Response($details);
-//    }
-////عشان تفاصيل كل البلاغات الاعراض الجانبية بدون زر التحويل
-//    public function detailsEffectReport2($report_no){
-//        $reports = DB::table('reports')->select('reports.report_no')
-//            ->where('report_no','=', $report_no)->get();  // search in given table id only
-//        if (!$reports)
-//            return redirect()->back();
-//
-//        $report = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->join('site', 'reports.site_no', '=', 'site.site_no')
-//            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-//            ->join('batch_number', 'commercial_drug.drug_no', '=', 'batch_number.drug_no')
-//            ->join('combination', 'combination.drug_no', '=','commercial_drug.drug_no')
-//            ->join('effective_material', 'combination.material_no', '=', 'effective_material.material_no')
-//            ->join('companies', 'commercial_drug.company_no', '=', 'companies.company_no')
-//            ->select('reports.report_no', 'app_user.app_user_name', 'app_user.app_user_phone',
-//                'app_user.app_user_email', 'site.pharmacy_name', 'site.street_name',
-//                'reports.notes_user', 'reports.report_date', 'types_reports.type_report',
-//                'reports.drug_picture', 'commercial_drug.drug_name', 'commercial_drug.drug_no',
-//                'commercial_drug.drug_form','batch_number.batch_num'
-//                ,'effective_material.material_name','companies.company_name')
-//            ->where('report_no', '=', $report_no)->get();
-//
-//
-//        $details=DB::table('report_side_effects')
-//
-//            ->join('drug_user', 'report_side_effects.drug_user_no', '=',
-//                'drug_user.drug_user_no')
-//            ->join('side_effects', 'side_effects.drug_user_no', '=', 'drug_user.drug_user_no')
-//            ->select('report_side_effects.Relation_with_patient','report_side_effects.report_side_effect_no',
-//                'report_side_effects.purpose_of_use','report_side_effects.date_start_use','report_side_effects.dose',
-//                'report_side_effects.how_use_drug','report_side_effects.how_get_drug',
-//                'report_side_effects.status_stop_use','report_side_effects.date_stop_use',
-//                'report_side_effects.expiration_date','drug_user.drug_user_name','drug_user.age'
-//                ,'drug_user.height','drug_user.weight','drug_user.gender'
-//                ,'side_effects.side_effect','side_effects.date_st_effect','side_effects.range_dangerous',
-//                'side_effects.status_patient_now','side_effects.side_effect_removed','side_effects.removed_date')
-//            ->where('report_no','=', $report_no)->get();
-//
-//        $o_drug=DB::table('other_drug')
-//            ->join('report_side_effects', 'other_drug.report_side_effects_no',
-//                '=', 'report_side_effects.report_side_effect_no')
-//            ->select('other_drug.drug_name','other_drug.dose','other_drug.date_start_use',
-//                'other_drug.date_end_use','other_drug.purpose_of_use','report_side_effects.report_no')
-//            ->where('report_side_effects.report_no','=', $report_no)
-//            ->get();
-//
-//        return view('pharmacovigilanceManagement.detailsEffectReport2', compact('report','details'))
-//            ->with('o_drug',$o_drug);
-//
-//    }
-//
-//
-////عشان تفاصيل الدواء
-//    public function detailsDrug($drug_no){
-//
-//        $r = DB::table('commercial_drug')
-//            ->join('combination', 'combination.drug_no', '=','commercial_drug.drug_no')
-//            ->join('effective_material', 'combination.material_no', '=', 'effective_material.material_no')
-//            ->join('batch_number', 'batch_number.drug_no', '=','commercial_drug.drug_no')
-//            ->join('shipments', 'batch_number.shipment_no', '=', 'shipments.shipment_no')
-//            ->join('agents', 'commercial_drug.agent_no', '=', 'agents.agent_no')
-//            ->join('companies', 'commercial_drug.company_no', '=', 'companies.company_no')
-//            ->select('commercial_drug.drug_name','commercial_drug.how_to_use'
-//                ,'commercial_drug.side_effects','commercial_drug.drug_form','commercial_drug.drug_no','agents.agent_name'
-//                ,'effective_material.material_name','companies.company_name','companies.company_country'
-//                ,'batch_number.batch_num','shipments.production_date','shipments.expiry_date')
-//            ->where('commercial_drug.drug_no','=',$drug_no)
-//            ->get();
-//
-//
-//        return view('pharmacovigilanceManagement/detailsDrug',compact('r'));
-//        //return response($r) ;
-//
-//    }
-//
-////عشان تحويل البلاغات الوارده الى متابعة
-//    public function transferReports($report_no,Request $request)
-//    {
-//        $reports = DB::table('reports')->select('reports.transfer_party')
-//            ->where('report_no', '=', $report_no)
-//            ->update(['state'=>1,'reports.report_statues'=>'قيد المتابعة']);
-//        return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
-//    }
-//
-//
-//// عشان عرض المتابعة للبلاغات
-//    public function followReports(){
-//        $reports = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-//                'reports.report_date', 'reports.report_statues', 'types_reports.type_report' )
-//            ->where('report_statues','!=',null)
-//            ->where('type_report','!=','مهرب')
-//            ->where('type_report','!=','مسحوب')
-//            ->where('type_report','!=','غير مطابق')
-//            ->where('type_report','!=','مستثناء')
-//            ->get();
-//        return view('pharmacovigilanceManagement/followReports',compact('reports'));
-//    }
-//    //عشان اللفلترة حق قيد المتابعة
-//    public function followingReports(){
-//        $reports = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-//                'reports.report_date', 'reports.report_statues' , 'types_reports.type_report')
-//            ->where('report_statues','=','قيد المتابعة')
-//            ->where('type_report','!=','مهرب')
-//            ->where('type_report','!=','مسحوب')
-//            ->where('type_report','!=','غير مطابق')
-//            ->where('type_report','!=','مستثناء')
-//            ->get();
-//        return view('pharmacovigilanceManagement/followReports',compact('reports'));
-//    }
-//    //عشان اللفلترة حق تم الانهاء
-//    public function doneReports(){
-//        $reports = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-//                'reports.report_date', 'reports.report_statues' , 'types_reports.type_report')
-//            ->where('report_statues','=','تم الانهاء')
-//            ->where('type_report','!=','مهرب')
-//            ->where('type_report','!=','مسحوب')
-//            ->where('type_report','!=','غير مطابق')
-//            ->where('type_report','!=','مستثناء')
-//            ->get();
-//        return view('pharmacovigilanceManagement/followReports',compact('reports'));
-//    }
-//
-//
-//
-////عشان تفاصيل الذي قيد المتابعه
-//    public function followedUp($report_no){
-//        $reports = DB::table('reports')->select('reports.report_no')
-//            ->where('report_no','=', $report_no)->get();  // search in given table id only
-//        if (!$reports)
-//            return redirect()->back();
-//
-//        $report = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->join('site', 'reports.site_no', '=', 'site.site_no')
-//            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-//            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-//                'app_user.app_user_name','app_user.app_user_phone'
-//                ,'site.pharmacy_name','types_reports.type_report','commercial_drug.drug_name')
-//            ->where('report_no','=', $report_no)->get();
-//
-//
-//        return view('pharmacovigilanceManagement/followedUp',compact('report'));
-//    }
-////عشان تفاصيل الذي تم الانهاء
-//    public function followedUp2($report_no){
-//        $reports = DB::table('reports')->select('reports.report_no')
-//            ->where('report_no','=', $report_no)->get();  // search in given table id only
-//        if (!$reports)
-//            return redirect()->back();
-//
-//        $report = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->join('site', 'reports.site_no', '=', 'site.site_no')
-//            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-//            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-//                'app_user.app_user_name','app_user.app_user_phone'
-//                ,'site.pharmacy_name','types_reports.type_report','commercial_drug.drug_name')
-//            ->where('report_no','=', $report_no)
-//            ->get();
-//
-//        $procedures=DB::table('procedures')->select('procedures.procedure'
-//            ,'procedures.procedure_date','procedures.procedure_result')
-//            ->where('report_no','=', $report_no)->get();
-//
-//        return view('pharmacovigilanceManagement/followedUp2',compact('report','procedures'));
-//    }
-//
-////عشان اضافة اجراء على البلاغ
-//    public function createProcedure($report_no){
-//        $reports = Reports::find($report_no);
-//        return view('pharmacovigilanceManagement/doneReports',compact('reports'));
-//    }
-//    public function store($report_no,Request $request)
-//    {
-//        Procedures::create([
-//            'procedure' => $request->procedure,
-//            'procedure_date' => $request->procedure_date,
-//            'procedure_result' => $request->procedure_result,
-//            'report_no' => $report_no,
-//             ]);
-//
-//         DB::table('reports')->select('reports.transfer_party')
-//            ->where('report_no', '=', $report_no)
-//            ->update(['reports.report_statues'=>'تم الانهاء']);
-//
-//        $reports = DB::table('reports')
-//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-//            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-//            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-//                'reports.report_date', 'reports.report_statues', 'types_reports.type_report' )
-//            ->where('report_statues','!=',null)
-//            ->where('type_report','!=','مهرب')
-//            ->where('type_report','!=','مسحوب')
-//            ->where('type_report','!=','غير مطابق')
-//            ->where('type_report','!=','مستثناء')
-//            ->get();
-//        return view('pharmacovigilanceManagement/followReports',compact('reports'));
-//
-//    }
+        $r = DB::table('batch_numbers')
+            ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
+            ->join('combinations', 'combinations.commercial_id', '=','commercial_drugs.id')
+            ->join('effective_materials', 'combinations.material_id', '=', 'effective_materials.id')
+            ->join('agents', 'commercial_drugs.agent_id', '=', 'agents.id')
+            ->join('companies', 'commercial_drugs.company_id', '=', 'companies.id')
+            ->select('batch_numbers.batch_num', 'commercial_drugs.name as drug_name',
+                'commercial_drugs.id as drug_no','commercial_drugs.how_use'
+                ,'commercial_drugs.side_effects', 'commercial_drugs.drug_form'
+                ,'effective_materials.name as material_name','batch_numbers.production_date',
+                'batch_numbers.expiry_date','agents.name as agent_name',
+                'companies.name as company_name','companies.country')
+            ->where('commercial_drugs.id','=',$id)->get();
+
+        return view('pharmacovigilanceManagement/detailsDrug',compact('r'));
+        //return response($r) ;
+
+    }
+
+
+// عشان عرض المتابعة للبلاغات
+    public function followReports(){
+        $reports = DB::table('report_alert_drugs')
+            ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
+            ->select('report_alert_drugs.id as report_no','app_users.name'
+                , 'report_alert_drugs.state','report_alert_drugs.date_report',
+                'types_reports.name as type_report')
+            ->where('report_alert_drugs.state','!=',null)
+            ->where('types_reports.name','!=','مهرب')
+            ->where('types_reports.name','!=','مسحوب')
+            ->where('types_reports.name','!=','غير مطابق')
+            ->where('types_reports.name','!=','مستثناء')
+            ->get();
+        if (isset($report) && $report->count() > 0) {
+            foreach ($report as $reports) {
+
+                $reports->state = $reports->state == 1 ? 'تم الانهاء' : 'قيد المتابعة';
+            }
+        }
+
+        return view('pharmacovigilanceManagement/followReports',compact('reports'));
+    }
+    //عشان اللفلترة حق قيد المتابعة
+    public function followingReports(){
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+                'reports.report_date', 'reports.report_statues' , 'types_reports.type_report')
+            ->where('report_statues','=','قيد المتابعة')
+            ->where('type_report','!=','مهرب')
+            ->where('type_report','!=','مسحوب')
+            ->where('type_report','!=','غير مطابق')
+            ->where('type_report','!=','مستثناء')
+            ->get();
+        return view('pharmacovigilanceManagement/followReports',compact('reports'));
+    }
+    //عشان اللفلترة حق تم الانهاء
+    public function doneReports(){
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+                'reports.report_date', 'reports.report_statues' , 'types_reports.type_report')
+            ->where('report_statues','=','تم الانهاء')
+            ->where('type_report','!=','مهرب')
+            ->where('type_report','!=','مسحوب')
+            ->where('type_report','!=','غير مطابق')
+            ->where('type_report','!=','مستثناء')
+            ->get();
+        return view('pharmacovigilanceManagement/followReports',compact('reports'));
+    }
+
+
+//عشان تفاصيل الذي قيد المتابعه
+    public function followedUp($report_no){
+        $reports = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$reports)
+            return redirect()->back();
+
+        $report = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
+            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
+                'app_user.app_user_name','app_user.app_user_phone'
+                ,'site.pharmacy_name','types_reports.type_report','commercial_drug.drug_name')
+            ->where('report_no','=', $report_no)->get();
+
+
+        return view('pharmacovigilanceManagement/followedUp',compact('report'));
+    }
+//عشان تفاصيل الذي تم الانهاء
+    public function followedUp2($report_no){
+        $reports = DB::table('reports')->select('reports.report_no')
+            ->where('report_no','=', $report_no)->get();  // search in given table id only
+        if (!$reports)
+            return redirect()->back();
+
+        $report = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->join('site', 'reports.site_no', '=', 'site.site_no')
+            ->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
+            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
+                'app_user.app_user_name','app_user.app_user_phone'
+                ,'site.pharmacy_name','types_reports.type_report','commercial_drug.drug_name')
+            ->where('report_no','=', $report_no)
+            ->get();
+
+        $procedures=DB::table('procedures')->select('procedures.procedure'
+            ,'procedures.procedure_date','procedures.procedure_result')
+            ->where('report_no','=', $report_no)->get();
+
+        return view('pharmacovigilanceManagement/followedUp2',compact('report','procedures'));
+    }
+
+//عشان اضافة اجراء على البلاغ
+    public function createProcedure($report_no){
+        $reports = Reports::find($report_no);
+        return view('pharmacovigilanceManagement/doneReports',compact('reports'));
+    }
+    public function store($report_no,Request $request)
+    {
+        Procedures::create([
+            'procedure' => $request->procedure,
+            'procedure_date' => $request->procedure_date,
+            'procedure_result' => $request->procedure_result,
+            'report_no' => $report_no,
+             ]);
+
+         DB::table('reports')->select('reports.transfer_party')
+            ->where('report_no', '=', $report_no)
+            ->update(['reports.report_statues'=>'تم الانهاء']);
+
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
+            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
+                'reports.report_date', 'reports.report_statues', 'types_reports.type_report' )
+            ->where('report_statues','!=',null)
+            ->where('type_report','!=','مهرب')
+            ->where('type_report','!=','مسحوب')
+            ->where('type_report','!=','غير مطابق')
+            ->where('type_report','!=','مستثناء')
+            ->get();
+        return view('pharmacovigilanceManagement/followReports',compact('reports'));
+
+    }
 
 
 

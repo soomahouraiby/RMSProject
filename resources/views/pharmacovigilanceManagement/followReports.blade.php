@@ -52,17 +52,17 @@
                         <tbody class="list" id="table-purchase-body">
                         @if(isset($reports))
                         @foreach($reports as $report)
-                            @if($report -> report_statues=='قيد المتابعة')
+                            @if($report -> state==0)
                                     <tr class="btn-reveal-trigger">
                                         <td class="align-middle" style="width: 28px;">
                                             <div class="form-check mb-2 mt-2 d-flex align-items-center">
                                                 <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
                                         </td>
-                                        <td class="align-middle white-space-nowrap text-left name ">{{$report -> app_user_name}}</td>
-                                        <td class="align-middle white-space-nowrap text-left email">{{$report -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report -> name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report -> date_report}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
                                             <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('PHC_followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
-                                                <span data-feather="file  text-center">{{$report -> report_statues}} </span>
+                                                <span data-feather="file  text-center">{{$report -> state}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
                                         </td>
@@ -79,17 +79,17 @@
                                             </div>
                                         </td>
                                     </tr>
-                            @elseif($report -> report_statues=='تم الانهاء')
+                            @elseif($report -> state==1)
                                     <tr class="btn-reveal-trigger">
                                         <td class="align-middle" style="width: 28px;">
                                             <div class="form-check mb-2 mt-2 d-flex align-items-center">
                                                 <input class="form-check-input" type="checkbox" id="recent-purchase-0" data-bulk-select-row="data-bulk-select-row" /></div>
                                         </td>
-                                        <td class="align-middle white-space-nowrap text-left name ">{{$report -> app_user_name}}</td>
-                                        <td class="align-middle white-space-nowrap text-left email">{{$report -> report_date}}</td>
+                                        <td class="align-middle white-space-nowrap text-left name ">{{$report -> name}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report -> date_report}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
                                             <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('PHC_followedUp2',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
-                                                <span data-feather="file  text-center">{{$report -> report_statues}} </span>
+                                                <span data-feather="file  text-center">{{$report -> state}} </span>
                                                 <i class="fas fa-file-contract ml-3"></i>
                                             </a>
                                         </td>
