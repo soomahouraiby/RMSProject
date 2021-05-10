@@ -10,15 +10,17 @@
         {{--Title--}}
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 pr-2  border-bottom main " >
             <h1 class="h2   ml-2 mt-2 mb-2">تفاصيل بلاغ وارد</h1>
-            <div class="dropdown  ml-5" >
-                @if(isset($report))
-                    @foreach($report as $reports)
+            @if(isset($report))
+                @foreach($report as $reports)
+                    @if(\PHPUnit\Framework\isNull($reports->state))
+                    <div class="dropdown  ml-5" >
                         <button class="btn " type="submit" style=" width: 90%; background-color: #1b225a; color:#ffffff">
                             <a  href="{{route('PHC_transferReports',$reports -> report_no)}}" style=" color:#ffffff;">تحويل للمتابعة</a>
                         </button>
-                    @endforeach
-                @endif
-            </div>
+                    </div>
+                    @endif
+                @endforeach
+            @endif
         </div>
 
         {{--Title--}}

@@ -33,34 +33,50 @@
                             @if($reports -> type_report=='اعراض جانبية')
                             <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
                                 <label class="col-form-label Text ml-3 mr-4 ">اسم المبلغ : </label>
-                                <label class="col-form-label  ml-2 mr-4  ">{{$reports -> app_user_name}}  </label>
+                                <label class="col-form-label  ml-2 mr-4  ">{{$reports -> name}}  </label>
                                 <label class="col-form-label Text ml-5 mr-4 ">رقم الهاتف : </label>
-                                <label class="col-form-label  ml-2 mr-4  ">{{$reports -> app_user_phone}}  </label>
+                                <label class="col-form-label  ml-2 mr-4  ">{{$reports -> phone}}  </label>
+                                <label class="col-form-label Text ml-5 mr-4 ">تاريخ البلاغ : </label>
+                                <label class="col-form-label  ml-2 mr-4  ">{{$reports -> date_report}}  </label>
                             </div>
                             <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                 <label class="col-form-label  Text ml-3 mr-4 ">نوع البلاغ : </label>
                                 <label class="col-form-label  ml-2 mr-4 ">{{$reports -> type_report}}  </label>
+                                <label class="col-form-label  Text ml-3 mr-4 ">اسم المنشأه : </label>
+                                <label class="col-form-label  ml-2 mr-4 ">{{$reports -> facility_name}}  </label>
+                                @if(isset($drug))
+                                    @foreach($drug as $drugs)
                                 <label class="col-form-label Text  ml-5 mr-4 ">اسم الدواء : </label>
-                                <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports -> drug_name}}  </label>
+                                <label class="col-form-label ml-2 mr-4 mb-3  ">{{$drugs -> drug_name}}  </label>
+                                    @endforeach
+                                @endif
                             </div>
                             <div class="form-group raw mt-4  ">
-                                <a class="text-center col-form-label mb-3"  href="{{route('PHC_detailsEffectReport2',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                <a class="text-center col-form-label mb-3"  href="{{route('PHC_detailsEffectReport',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
                             </div>
                             @elseif($reports -> type_report=='جودة')
                                 <div class="form-group raw mt-2 " style="display: flex; flex-wrap: wrap;  ">
                                     <label class="col-form-label Text ml-3 mr-4 ">اسم المبلغ : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> app_user_name}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> name}}  </label>
                                     <label class="col-form-label Text ml-5 mr-4 ">رقم الهاتف : </label>
-                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> app_user_phone}}  </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> phone}}  </label>
+                                    <label class="col-form-label Text ml-5 mr-4 ">تاريخ البلاغ : </label>
+                                    <label class="col-form-label  ml-2 mr-4  ">{{$reports -> date_report}}  </label>
                                 </div>
                                 <div class="form-group raw mt-4  border-bottom " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label  Text ml-3 mr-4 ">نوع البلاغ : </label>
                                     <label class="col-form-label  ml-2 mr-4 ">{{$reports -> type_report}}  </label>
-                                    <label class="col-form-label Text  ml-5 mr-4 ">اسم الدواء : </label>
-                                    <label class="col-form-label ml-2 mr-4 mb-3  ">{{$reports -> drug_name}}  </label>
+                                    <label class="col-form-label  Text ml-3 mr-4 ">اسم المنشأه : </label>
+                                    <label class="col-form-label  ml-2 mr-4 ">{{$reports -> facility_name}}  </label>
+                                    @if(isset($drug))
+                                        @foreach($drug as $drugs)
+                                            <label class="col-form-label Text  ml-5 mr-4 ">اسم الدواء : </label>
+                                            <label class="col-form-label ml-2 mr-4 mb-3  ">{{$drugs -> drug_name}}  </label>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <div class="form-group raw mt-4  ">
-                                    <a class="text-center col-form-label mb-3"  href="{{route('PHC_detailsReport2',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
+                                    <a class="text-center col-form-label mb-3"  href="{{route('PHC_detailsReport',$reports -> report_no)}}" style="margin-right: 45%"> تفاصيل البلاغ</a>
                                 </div>
                             @endif
                         @endforeach

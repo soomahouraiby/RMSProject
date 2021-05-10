@@ -52,7 +52,7 @@
                         <tbody class="list" id="table-purchase-body">
                         @if(isset($reports))
                         @foreach($reports as $report)
-                            @if($report -> state==0)
+                            @if($report -> state == 0)
                                     <tr class="btn-reveal-trigger">
                                         <td class="align-middle" style="width: 28px;">
                                             <div class="form-check mb-2 mt-2 d-flex align-items-center">
@@ -79,6 +79,7 @@
                                             </div>
                                         </td>
                                     </tr>
+
                             @elseif($report -> state==1)
                                     <tr class="btn-reveal-trigger">
                                         <td class="align-middle" style="width: 28px;">

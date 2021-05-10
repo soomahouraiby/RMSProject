@@ -153,18 +153,16 @@ Route::group(['namespace'=>'pharmacovigilanceManagement'],function (){
     ///////////////////Details///////////////
     Route::get('/PHC_detailsReport/{id}','PHCManageController@detailsReport')->name('PHC_detailsReport');
     Route::get('/PHC_detailsEffectReport/{id}','PHCManageController@detailsEffectReport')->name('PHC_detailsEffectReport');
-    Route::get('/PHC_detailsReport2/{report_no}','PHCManageController@detailsReport2')->name('PHC_detailsReport2');
-    Route::get('/PHC_detailsEffectReport2/{report_no}','PHCManageController@detailsEffectReport2')->name('PHC_detailsEffectReport2');
     Route::get('/PHC_detailsDrug/{id}','PHCManageController@detailsDrug')->name('PHC_detailsDrug');
 
     ///////////////////Transfer///////////////
     Route::get('/transferReports/{report_no}', 'PHCManageController@transferReports')->name('PHC_transferReports');
 
     ///////////////////Follow///////////////
-    Route::get('/PHC_followedUp/{report_no}','PHCManageController@followedUp')->name('PHC_followedUp');
-    Route::get('/PHC_followedUp2/{report_no}','PHCManageController@followedUp2')->name('PHC_followedUp2');
-    Route::get('/PHC_createProcedure/{report_no}', 'PHCManageController@createProcedure')->name('PHC_createProcedure');
-    Route::post('/PHC_store/{report_no}', 'PHCManageController@store')->name('PHC_store');
+    Route::get('/PHC_followedUp/{id}','PHCManageController@followedUp')->name('PHC_followedUp');
+    Route::get('/PHC_followedUp2/{id}','PHCManageController@followedUp2')->name('PHC_followedUp2');
+    Route::get('/PHC_createProcedure/{id}', 'PHCManageController@createProcedure')->name('PHC_createProcedure');
+    Route::post('/PHC_store/{id}', 'PHCManageController@store')->name('PHC_store');
 
 });
 ////////////////////////End pharmacovigilance Management////////////////////////
