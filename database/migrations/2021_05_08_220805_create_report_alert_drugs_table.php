@@ -35,7 +35,7 @@ class CreateReportAlertDrugsTable extends Migration
             $table->longText('notes')->nullable();
             $table->date('date_report');
             $table->string('relative_relation');
-            $table->integer('state')->nullable();
+            $table->integer('state')->default(0);
 
             $table->foreignId('types_report_id')->constrained('types_notices')->onDelete('cascade');
             $table->foreignId('app_user_id')->constrained('app_users')->onDelete('cascade');
