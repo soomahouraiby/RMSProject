@@ -19,29 +19,23 @@ class NewNotification implements ShouldBroadcast
      * @return void
      */
 
-//    public $user_id;
-//    public $comment;
-//    public $user_name;
-//    public $post_id;
-//    public $data;
-//    public $time;
 
-//    public function __construct($data = [])
-//    {
-//        $this->user_id = $data['user_id'];
-//        $this->user_name = $data['user_name'];
-//        $this->comment = $data['comment'];
-//        $this->post_id = $data['post_id'];
-//        $this->date = date("Y-m-d", strtotime(Carbon::now()));
-//        $this->time = date("h:i A", strtotime(Carbon::now()));
-//
-//    }
+    public $id;
+    public $state;
+    public $data;
+    public $time;
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
+    public function __construct($data = [])
+    {
+
+        $this->state = $data['state'];
+        $this->id = $data['id'];
+        $this->date = date("Y-m-d", strtotime(Carbon::now()));
+        $this->time = date("h:i A", strtotime(Carbon::now()));
+
+    }
+
+
     public function broadcastOn()
     {
         //return new channel('new-notification')

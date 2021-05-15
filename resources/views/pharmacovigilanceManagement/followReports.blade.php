@@ -43,6 +43,7 @@
                             </th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="name">اسم المبلغ</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="email">تاريخ البلاغ</th>
+                            <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="amount">مستخدم الدواء</th>
                             <th class="sort pr-1 align-middle white-space-nowrap text-left" data-sort="amount">حالة البلاغ</th>
                             <th class="no-sort pr-1 align-middle data-table-row-action"></th>
                         </tr>
@@ -57,6 +58,7 @@
                                         </td>
                                         <td class="align-middle white-space-nowrap text-left name ">{{$report -> name}}</td>
                                         <td class="align-middle white-space-nowrap text-left email">{{$report -> date_report}}</td>
+                                        <td class="align-middle white-space-nowrap text-left email">{{$report -> user_name}}</td>
                                         <td class="align-middle text-left  white-space-nowrap payment">
                                             <a class="badge badge rounded-pill badge-soft-success  align-items-center text-left nav-link active" href="{{route('PHC_followedUp',$report -> report_no)}}" style="background-color:#D9DEFF; color:#5468FF;  height:25px;"  >
                                                 <span data-feather="file  text-center">{{$report -> state}} </span>

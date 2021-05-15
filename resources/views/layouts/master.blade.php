@@ -61,7 +61,8 @@
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('e385633e7a2e9feba132', {
-        cluster: 'ap1'
+        cluster: 'ap1',
+        encrypted: false
     });
 
     // var channel = pusher.subscribe('my-channel');

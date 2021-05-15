@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\pharmacovigilanceManagement;
 
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Models\Report_alert_drug;
 use App\Models\Commercial_drug;
@@ -35,7 +36,7 @@ class PHCManageController extends Controller
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
-                , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
+                , 'report_alert_drugs.user_name','report_alert_drugs.date_report', 'types_reports.name as type_report')
             ->where('report_alert_drugs.state','=',0)
             ->where('types_reports.name','!=','مهرب')
             ->where('types_reports.name','!=','مسحوب')
@@ -53,7 +54,7 @@ class PHCManageController extends Controller
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
-                , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
+                , 'report_alert_drugs.user_name','report_alert_drugs.date_report', 'types_reports.name as type_report')
             ->where('report_alert_drugs.state','=',0)
             ->where('types_reports.name','=','اعراض جانبية')
             ->get();
@@ -66,7 +67,7 @@ class PHCManageController extends Controller
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
-                , 'report_alert_drugs.date_report', 'types_reports.name as type_report')
+                , 'report_alert_drugs.user_name','report_alert_drugs.date_report', 'types_reports.name as type_report')
             ->where('report_alert_drugs.state','=',0)
             ->where('types_reports.name','=','جودة')
             ->get();
@@ -191,6 +192,12 @@ class PHCManageController extends Controller
         $reports = DB::table('report_alert_drugs')
             ->where('report_alert_drugs.id', '=', $id)
             ->update(['state'=>1]);
+
+        $data =[
+            'id' => 'aa',
+            'state' =>'g' ,
+        ];
+        event(new NewNotification($data));
         return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
     }
 
@@ -222,8 +229,8 @@ class PHCManageController extends Controller
             ->join('types_reports', 'report_alert_drugs.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
-                , 'report_alert_drugs.state','report_alert_drugs.date_report',
-                'types_reports.name as type_report')
+                , 'report_alert_drugs.state','report_alert_drugs.user_name',
+                'report_alert_drugs.date_report', 'types_reports.name as type_report')
             ->where('report_alert_drugs.state','!=',0)
             ->where('types_reports.name','!=','مهرب')
             ->where('types_reports.name','!=','مسحوب')
@@ -246,7 +253,7 @@ class PHCManageController extends Controller
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
                 , 'report_alert_drugs.state','report_alert_drugs.date_report',
-                'types_reports.name as type_report')
+                'report_alert_drugs.user_name', 'types_reports.name as type_report')
             ->where('report_alert_drugs.state','=',1)
             ->where('types_reports.name','!=','مهرب')
             ->where('types_reports.name','!=','مسحوب')
@@ -268,7 +275,7 @@ class PHCManageController extends Controller
             ->join('app_users', 'report_alert_drugs.app_user_id', '=', 'app_users.id')
             ->select('report_alert_drugs.id as report_no','app_users.name'
                 , 'report_alert_drugs.state','report_alert_drugs.date_report',
-                'types_reports.name as type_report')
+                'report_alert_drugs.user_name','types_reports.name as type_report')
             ->where('report_alert_drugs.state','=',2)
             ->where('types_reports.name','!=','مهرب')
             ->where('types_reports.name','!=','مسحوب')
