@@ -14,10 +14,11 @@
                         نوع البلاغ
                     </button>
                     <div class="dropdown-menu dropdown-menu-right bg-light">
-                        <a class="dropdown-item " href="{{route('PM_newReports')}}">جميع البلاغات</a>
-                        <a class="dropdown-item " href="{{route('PM_newSmuggledReports')}}">مهرب</a>
-                        <a class="dropdown-item " href="{{route('PM_newDrownReports')}}">مسحوب</a>
-                        <a class="dropdown-item " href="{{route('PM_newDifferentReports')}}">غير مطابق</a>
+                        <a class="dropdown-item border-bottom" href="{{route('PM_newReports')}}"> جميع البلاغات</a>
+                        <a class="dropdown-item border-bottom" href="{{route('PM_newSmuggledReports')}}"><i class="fas fa-angle-left ml-2"></i>مهرب</a>
+                        <a class="dropdown-item border-bottom" href="{{route('PM_newDrownReports')}}"><i class="fas fa-angle-left ml-2"></i>مسحوب</a>
+                        <a class="dropdown-item border-bottom" href="{{route('PM_newDifferentReports')}}"><i class="fas fa-angle-left ml-2"></i>غير مطابق</a>
+                        <a class="dropdown-item " href="{{route('PM_newExceptionReports')}}"><i class="fas fa-angle-left ml-2"></i>مستثناه</a>
                     </div>
                 </div>
             </div>
@@ -41,10 +42,10 @@
                     <tbody>
                     @foreach($reports as $report)
                         <tr>
-                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> name_user}}</a></td>
-                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> date}}</a></td>
-                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> type_report}}</a></td>
-                            <td><a href="{{route('PM_detailsReport',$report -> id_report)}}">{{$report -> pharmacy_title}}</a></td>
+                            <td><a>{{$report -> name_user}}</a></td>
+                            <td><a>{{$report -> date}}</a></td>
+                            <td><a>{{$report -> type_report}}</a></td>
+                            <td><a>{{$report -> pharmacy_title}}</a></td>
                             <td><a  class="btn " href="{{route('PM_detailsReport',$report -> id_report)}}">تفاصيل</a></td>
                         </tr>
                     @endforeach

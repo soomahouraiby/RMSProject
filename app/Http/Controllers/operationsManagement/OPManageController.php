@@ -3,6 +3,7 @@ namespace App\Http\Controllers\operationsManagement;
 
 use App\Http\Controllers\Controller;
 use App\Models\Batch_number;
+use App\Models\Report;
 use App\Models\Report_detailes;
 use App\Models\Sites;
 use App\Models\Commercial_drugs;
@@ -29,529 +30,374 @@ class OPManageController extends Controller
     {
         $this->middleware(['role:مدير العمليات']);
     }
-    //عشان عرض البلاغات الوارده
+
+
+    //////////////// [ Show .. بلاغات وارده ]  ////////////////
     public function newReports()
     {
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','app_users.name '
-                , 'reports.date ', 'types_reports.name as type_report')
+            ->select('reports.id','app_users.name as name_user'
+                , 'reports.date', 'types_reports.name as type_report')
 
             ->where('types_reports.name','!=','اعراض جانبية')
             ->where('state','=',0)
             ->where('types_reports.name','!=','جودة')
             ->get();
-        //return response($reports);
+
         return view('operationsManagement.newReports', compact('reports'));
 
     }
-    // عشان اللفلترة حق البلاغات الوارده المهربة
+
+    //////////////// [ Show .. متابعة البلاغات الوارده ]  ////////////////
+    public function followReports(){
+
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+
+            ->select('reports.id','reports.state','app_users.name as name_user',
+                'reports.date', 'reports.transfer_date','reports.transfer_party','reports.transfer_party',
+                'reports.report_statuses' , 'types_reports.name as type_report','reports.opmanage_notes')
+
+            ->where('report_statuses','!=',null)
+            ->where('transfer_party','!=',null)
+            ->where('types_reports.name','!=','اعراض جانبية')
+            ->where('types_reports.name','!=','جودة')
+            ->get();
+
+//        $reports2 = DB::table('reports')
+//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+//            ->select('reports.report_no','reports.authors_name',
+//                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+//                'reports.report_statues' , 'types_reports.type_report')
+//            ->where('app_user_no','=',null)
+//            ->where('report_statues','!=',null)
+//            ->where('transfer_party','!=',null)
+//            ->where('type_report','!=','اعراض جانبية')
+//            ->where('type_report','!=','جودة')
+//            ->get();
+        return view('operationsManagement/followReports',compact('reports'));
+    }
+
+
+
+
+    //////////////// [ Transfer .. تحويل البلاغ الوارد ]  ////////////////
+    public function transferReports($report_no,Request $request)
+    {
+        $reports = DB::table('reports')->select('reports.transfer_party')
+            ->where('reports.id', '=', $report_no)
+
+            ->update(['transfer_party' => 'ادارة الصيدلة',
+                'transfer_date' => Carbon::now()->toDateTimeString()
+                ,'state'=>1,'reports.report_statuses'=>'محول للمتابعة']);
+
+
+        return redirect()->back();
+    }
+
+    //////////////// [Save .. لحفظ ملاحظة المدير ]  ////////////////
+    public function saveOPMNotes($report_no,Request $request)
+    {
+        Report::select('reports.id')
+            ->where('reports.id', '=', $report_no)
+            ->update(['opmanage_notes' => $request->opmanage_notes,
+                'reports.report_statuses'=>'تم الانهاء' ]);
+
+
+        return redirect()->route('OP_followedUp',$report_no);
+    }
+
+    //////////////// [ Add report .. إضافة بلاغ ]  ////////////////
+    public function addReport(){
+        return view('operationsManagement/addReport');
+    }
+
+
+
+
+    //////////////// [ Details ..  بلاغ وارد ]  ////////////////
+    public function detailsReport($id){
+
+        $report = DB::table('reports')->select('reports.id')
+            ->where('id','=', $id)->get();
+        if (!$report)
+            return redirect()->back();
+
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+
+            ->select('reports.id','reports.state','reports.drug_picture','reports.notes_user', 'reports.date',
+                'reports.drug_price','reports.commercial_name','reports.company_name','reports.agent_name',
+                'reports.site_dec','reports.neig_name','reports.pharmacy_title','reports.street_name',
+                'app_users.name as name_user', 'app_users.phone as phone_user', 'app_users.adjective'
+                , 'app_users.age','app_users.report_count','reports.report_statuses',
+                'types_reports.name as type_report')
+            ->where('reports.id', '=', $id)->get();
+
+        $batches = DB::table('reports')->select('reports.batch_number')
+            ->where('reports.id', '=', $id)->get();
+
+        foreach ($batches as $batch) {
+
+            $drugs = DB::table('batch_numbers')
+                ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
+                ->join('combinations', 'combinations.commercial_id', '=','commercial_drugs.id')
+                ->join('effective_materials', 'combinations.material_id', '=', 'effective_materials.id')
+                ->join('companies', 'commercial_drugs.company_id', '=', 'companies.id')
+                ->join('shipments', 'batch_numbers.shipment_id', '=', 'shipments.id')
+
+                ->select('batch_numbers.batch_num','commercial_drugs.id', 'commercial_drugs.name as drug_name',
+                    'commercial_drugs.drug_form','commercial_drugs.how_use','commercial_drugs.side_effects'
+                    ,'effective_materials.name as material_name','shipments.exception','batch_numbers.drug_drawn',
+                    'companies.name as company_name')
+                ->where('batch_numbers.batch_num','=', $batch->batch_number)->get();
+        }
+
+        return view('operationsManagement.detailsReport', compact('reports' ,'drugs'));
+
+    }
+
+    //////////////// [ Details ..  تفاصيل المتابعة ]  ////////////////
+    public function followedUp($report_no){
+
+        $report = DB::table('reports')->select('reports.id')
+            ->where('reports.id','=', $report_no)->get();  // search in given table id only
+        if (!$report)
+            return redirect()->back();
+
+        $reports = DB::table('reports')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+
+            ->select('reports.id as report_no','app_users.name as name_user','app_users.phone as phone_user'
+                ,'reports.pharmacy_title','types_reports.name as type_report','reports.date',
+                'reports.report_statuses','reports.batch_number','reports.opmanage_notes')
+
+            ->where('reports.id','=', $report_no)->get();
+
+
+        $procedures= DB::table('procedures')
+            ->select('procedures.report_id','procedures.result','procedures.procedure','procedures.date')
+            ->where('procedures.report_id','=',$report_no)->get();
+
+//       return $reports;
+        return view('operationsManagement/followedUp',compact('reports','procedures'));
+    }
+
+    //////////////// [ Details ..  الدواء ]  ////////////////
+    public function detailsDrug($id){
+
+        $batches = DB::table('reports')->select('reports.batch_number')
+            ->where('reports.id', '=', $id)->get();
+
+        foreach ($batches as $batch) {
+
+            $drugs = DB::table('batch_numbers')
+                ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
+                ->join('combinations', 'combinations.commercial_id', '=', 'commercial_drugs.id')
+                ->join('effective_materials', 'combinations.material_id', '=', 'effective_materials.id')
+                ->join('companies', 'commercial_drugs.company_id', '=', 'companies.id')
+                ->join('agents', 'commercial_drugs.agent_id', '=', 'agents.id')
+                ->join('shipments', 'batch_numbers.shipment_id', '=', 'shipments.id')
+                ->join('magnitude_drugs', 'magnitude_drugs.commercial_id', '=', 'commercial_drugs.id')
+                ->join('magnitudes', 'magnitude_drugs.magnitude_id', '=', 'magnitudes.id')
+                ->select('batch_numbers.batch_num', 'batch_numbers.barcode', 'batch_numbers.production_date',
+                    'batch_numbers.expiry_date', 'batch_numbers.price', 'batch_numbers.quantity', 'batch_numbers.drug_drawn',
+                    'commercial_drugs.id', 'commercial_drugs.name as drug_name', 'commercial_drugs.drug_form',
+                    'commercial_drugs.how_use', 'commercial_drugs.side_effects', 'commercial_drugs.register_no',
+                    'effective_materials.name as material_name', 'effective_materials.indications_use',
+                    'companies.name as company_name', 'companies.country', 'shipments.exception',
+                    'agents.name as agent_name', 'agents.phone', 'agents.email', 'agents.address',
+                    'magnitudes.size', 'magnitudes.name')
+                ->where('batch_numbers.batch_num', '=', $batch->batch_number)->get();
+        }
+        return view('operationsManagement/detailsDrug',compact('drugs'));
+    }
+
+
+
+
+    //////////////// [ Filter .. البلاغات المهربه ]  ////////////////
     public function newSmuggledReports()
     {
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','app_users.name '
-                , 'reports.date ', 'types_reports.name as type_report')
+            ->select('reports.id','app_users.name as name_user'
+                , 'reports.date', 'types_reports.name as type_report')
 
-            ->where('state','=',0)
             ->where('types_reports.name','=','مهرب')
+            ->where('state','=',0)
             ->get();
+
         return view('operationsManagement.newReports', compact('reports'));
     }
-//عشان اللفلترة حق البلاغات الوارده المسحوبة
+
+    //////////////// [ Filter .. البلاغات المسحوبة ]  ////////////////
     public function newDrownReports()
     {
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','app_users.name '
-                , 'reports.date ', 'types_reports.name as type_report')
+            ->select('reports.id','app_users.name as name_user'
+                , 'reports.date', 'types_reports.name as type_report')
 
             ->where('state','=',0)
             ->where('types_reports.name','=','مسحوب')
             ->get();
         return view('operationsManagement.newReports', compact('reports'));
     }
-    //عشان اللفلترة حق البلاغات الوارده الغير مطابقة
+
+    //////////////// [ Filter .. البلاغات الغير مطابقة ]  ////////////////
     public function newDiffrentReports()
     {
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','app_users.name '
-                , 'reports.date ', 'types_reports.name as type_report')
+            ->select('reports.id','app_users.name as name_user'
+                , 'reports.date', 'types_reports.name as type_report')
 
             ->where('state','=',0)
             ->where('types_reports.name','=','غير مطابق')
             ->get();
+
         return view('operationsManagement.newReports', compact('reports'));
     }
-    //عشان اللفلترة حق البلاغات الوارده المستثناه
+
+    //////////////// [ Filter .. البلاغات المستثناه ]  ////////////////
     public function newExceptionReports()
     {
         $reports = DB::table('reports')
             ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
             ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','app_users.name '
-                , 'reports.date ', 'types_reports.name as type_report')
+            ->select('reports.id','app_users.name as name_user'
+                , 'reports.date', 'types_reports.name as type_report')
 
             ->where('state','=',0)
             ->where('types_reports.name','=','مستثناء')
             ->get();
+
         return view('operationsManagement.newReports', compact('reports'));
     }
 
-//عشان تفاصيل كل البلاغات المسحوبة والغير مطابقة
-    public function detailsReport($id){
-        $reports = DB::table('reports')->select('reports.id')
-            ->where('reports.id','=', $id)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
-            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
-                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
-                'reports.drug_picture','reports.date ',
-                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date ', 'types_reports.name as type_report')
-            ->where('reports.id', '=', $id)->get();
-
-        $r = DB::table('reports')->select('reports.batch_number ')
-            ->where('reports.id', '=', $id)->get();
-
-        $drug=DB::table('batch_numbers')
-            ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
-            ->select('commercial_drugs.name as drug_name', 'commercial_drugs.photo as drug_photo',
-                'commercial_drugs.how_use','commercial_drugs.side_effects','commercial_drugs.id')
-            ->where('batch_numbers.batch_num','=', $r)->get();
-        return view('operationsManagement.detailsReport', compact('report' ,'drug'));
-
-    }
-//عشان تفاصيل كل البلاغات المهربة
-    public function detailsSmuggledReport($id){
-        //استخدمت هذا بدل find
-        $reports = DB::table('reports')->select('reports.id')
-            ->where('reports.id','=', $id)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
-            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
-                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
-                'reports.drug_picture','reports.date ',
-                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date ', 'types_reports.name as type_report',
-                'reports.commercial_name','reports.material_name','reports.companies_name',
-                'reports.agent_name')
-            ->where('reports.id', '=', $id)->get();
-
-        return view('operationsManagement.detailsSmuggledReport', compact('report'));
-    }
-
-
-//عشان تفاصيل كل البلاغات المسحوبة والغير مطابقة بدون زر التحويل
-    public function detailsReport2($id){
-        $reports = DB::table('reports')->select('reports.id')
-            ->where('reports.id','=', $id)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
-            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
-                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
-                'reports.drug_picture','reports.date ',
-                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date ', 'types_reports.name as type_report')
-            ->where('reports.id', '=', $id)->get();
-
-        $r = DB::table('reports')->select('reports.batch_number ')
-            ->where('reports.id', '=', $id)->get();
-
-        $drug=DB::table('batch_numbers')
-            ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
-            ->select('commercial_drugs.name as drug_name', 'commercial_drugs.photo as drug_photo',
-                'commercial_drugs.how_use','commercial_drugs.side_effects','commercial_drugs.id')
-            ->where('batch_numbers.batch_num','=', $r)->get();
-
-
-        $reports2 = DB::table('reports')->select('reports.id')
-            ->where('reports.id','=', $id)->get();  // search in given table id only
-        if (!$reports2)
-            return redirect()->back();
-
-        $report2 = DB::table('reports')
-            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
-            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
-                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
-                'reports.drug_picture','reports.date ',
-                'reports.amount_name ','reports.phone ', 'reports.adjective','reports.age',
-                'reports.date as report_date', 'types_reports.name as type_report')
-            ->where('reports.id', '=', $id)->get();
-        return view('operationsManagement.detailsReport2', compact('report' ,'drug','report2'));
-
-    }
- //عشان تفاصيل كل البلاغات المهربة بدون زر التحويل
-    public function detailsSmuggledReport2($id){
-        //استخدمت هذا بدل find
-        $reports = DB::table('reports')->select('reports.id')
-            ->where('reports.id','=', $id)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
-            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
-            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
-                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
-                'reports.drug_picture','reports.date ',
-                'app_users.name ','app_users.phone ', 'app_users.adjective','app_users.age',
-                'reports.date ', 'types_reports.name as type_report',
-                'reports.commercial_name','reports.material_name','reports.companies_name',
-                'reports.agent_name')
-            ->where('reports.id', '=', $id)->get();
-
-        $reports2 = DB::table('reports')->select('reports.id')
-            ->where('reports.id','=', $id)->get();  // search in given table id only
-        if (!$reports2)
-            return redirect()->back();
-
-        $report2 = DB::table('reports')
-            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
-            ->select('reports.id ','reports.pharmacy_title', 'reports.street_name ',
-                'reports.neig_name ','reports.site_dec ', 'reports.notes_user ','reports.batch_number',
-                'reports.drug_picture','reports.date ',
-                'reports.amount_name ','reports.phone ', 'reports.adjective','reports.age',
-                'reports.date ', 'types_reports.name as type_report',
-            'reports.commercial_name','reports.material_name','reports.companies_name',
-                'reports.agent_name')
-            ->where('reports.id', '=', $id)->get();
-
-        return view('operationsManagement.detailsSmuggledReport2', compact('report','report2'));
-    }
-
-//عشان تفاصيل الدواء
-    public function detailsDrug($id){
-
-        $r = DB::table('commercial_drugs')
-            ->join('combinations', 'combinations.drug_no', '=','commercial_drugs.drug_no')
-            ->join('effective_materials', 'combinations.material_no', '=', 'effective_materials.material_no')
-            ->join('batch_number', 'batch_number.drug_no', '=','commercial_drug.drug_no')
-            ->join('shipments', 'batch_number.shipment_no', '=', 'shipments.shipment_no')
-            ->join('agents', 'commercial_drug.agent_no', '=', 'agents.agent_no')
-            ->join('companies', 'commercial_drug.company_no', '=', 'companies.company_no')
-            ->select('commercial_drug.drug_name','commercial_drug.how_to_use'
-                ,'commercial_drug.side_effects','commercial_drug.drug_no','agents.agent_name'
-                ,'effective_material.material_name','companies.company_name','companies.company_country'
-                ,'batch_number.batch_num','shipments.production_date','shipments.expiry_date'
-                ,'shipments.shipment_drawn','shipments.exception')
-            ->where('commercial_drug.drug_no','=',$id)
-            ->get();
-
-
-        return view('operationsManagement/detailsDrug',compact('r'));
-        // return response($r) ;
-
-    }
-
-//عشان تحويل البلاغات الوارده
-    public function transferReports($report_no,Request $request)
-    {
-        $reports = DB::table('reports')->select('reports.transfer_party')
-            ->where('report_no', '=', $report_no)
-            ->update(['transfer_party' => 'ادارة الصيدلة',
-                'transfer_date' => Carbon::now()->toDateTimeString()
-                ,'state'=>1,'reports.report_statues'=>'محول للمتابعة']);
-        return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
-    }
-
-// عشان عرض المتابعة للبلاغات
-    public function followReports(){
-        $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','app_user.app_user_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('report_statues','!=',null)
-            ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->get();
-
-        $reports2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->select('reports.report_no','reports.authors_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('app_user_no','=',null)
-            ->where('report_statues','!=',null)
-            ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->get();
-        return view('operationsManagement/followReports',compact('reports','reports2'));
-    }
-    //عشان اللفلترة حق محول للمتابعة
+    //////////////// [ Filter .. محول للمتابعة ]  ////////////////
     public function transferFollowingReports(){
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','app_user.app_user_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('report_statues','=','محول للمتابعة')
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->get();
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->select('reports.id','reports.state','app_users.name as name_user',
+                'reports.date', 'reports.transfer_date','reports.transfer_party','reports.transfer_party',
+                'reports.report_statuses' , 'types_reports.name as type_report')
 
-        $reports2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->select('reports.report_no','reports.authors_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('app_user_no','=',null)
-            ->where('report_statues','!=',null)
+            ->where('report_statuses','=','محول للمتابعة')
             ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
+            ->where('types_reports.name','!=','اعراض جانبية')
+            ->where('types_reports.name','!=','جودة')
             ->get();
 
-        return view('operationsManagement/followReports',compact('reports','reports2'));
+//        $reports2 = DB::table('reports')
+//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+//            ->select('reports.report_no','reports.authors_name',
+//                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+//                'reports.report_statues' , 'types_reports.type_report')
+//            ->where('app_user_no','=',null)
+//            ->where('report_statues','!=',null)
+//            ->where('transfer_party','!=',null)
+//            ->where('type_report','!=','اعراض جانبية')
+//            ->where('type_report','!=','جودة')
+//            ->get();
+
+        return view('operationsManagement/followReports',compact('reports'));
     }
-    //عشان اللفلترة حق قيد المتابعة
+
+    //////////////// [ Filter .. قيد المتابع ]  ////////////////
     public function followingReports(){
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('report_statues','=','قيد المتابعة')
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->get();
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->select('reports.id','reports.state','app_users.name as name_user',
+                'reports.date', 'reports.transfer_date','reports.transfer_party','reports.transfer_party',
+                'reports.report_statuses' , 'types_reports.name as type_report')
 
-        $reports2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->select('reports.report_no','reports.authors_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('app_user_no','=',null)
-            ->where('report_statues','!=',null)
+            ->where('report_statuses','=','قيد المتابعة')
             ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
+            ->where('types_reports.name','!=','اعراض جانبية')
+            ->where('types_reports.name','!=','جودة')
             ->get();
 
-        return view('operationsManagement/followReports',compact('reports','reports2'));
+//        $reports2 = DB::table('reports')
+//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+//            ->select('reports.report_no','reports.authors_name',
+//                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+//                'reports.report_statues' , 'types_reports.type_report')
+//            ->where('app_user_no','=',null)
+//            ->where('report_statues','!=',null)
+//            ->where('transfer_party','!=',null)
+//            ->where('type_report','!=','اعراض جانبية')
+//            ->where('type_report','!=','جودة')
+//            ->get();
+
+        return view('operationsManagement/followReports',compact('reports'));
     }
-    //عشان اللفلترة حق تمت المتابعة
+
+    //////////////// [ Filter .. تمت المتابعة ]  ////////////////
     public function followDoneReports(){
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('report_statues','=','تمت المتابعة')
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->get();
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->select('reports.id','reports.state','app_users.name as name_user',
+                'reports.date', 'reports.transfer_date','reports.transfer_party','reports.transfer_party',
+                'reports.report_statuses' , 'types_reports.name as type_report')
 
-        $reports2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->select('reports.report_no','reports.authors_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('app_user_no','=',null)
-            ->where('report_statues','!=',null)
+            ->where('report_statuses','=','تمت المتابعة')
             ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
+            ->where('types_reports.name','!=','اعراض جانبية')
+            ->where('types_reports.name','!=','جودة')
             ->get();
 
-        return view('operationsManagement/followReports',compact('reports','reports2'));
+//        $reports2 = DB::table('reports')
+//            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
+//            ->select('reports.report_no','reports.authors_name',
+//                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
+//                'reports.report_statues' , 'types_reports.type_report')
+//            ->where('app_user_no','=',null)
+//            ->where('report_statues','!=',null)
+//            ->where('transfer_party','!=',null)
+//            ->where('type_report','!=','اعراض جانبية')
+//            ->where('type_report','!=','جودة')
+//            ->get();
+
+        return view('operationsManagement/followReports',compact('reports'));
     }
-    //عشان اللفلترة حق تم الانهاء
+
+    //////////////// [ Filter .. تم الانهاء ]  ////////////////
     public function doneReports(){
         $reports = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('report_statues','=','تم الانهاء')
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
+            ->join('app_users', 'reports.app_user_id', '=', 'app_users.id')
+            ->join('types_reports', 'reports.types_report_id', '=', 'types_reports.id')
+            ->select('reports.id','reports.state','app_users.name as name_user',
+                'reports.date', 'reports.transfer_date','reports.transfer_party','reports.transfer_party',
+                'reports.report_statuses' , 'types_reports.name as type_report')
+
+            ->where('report_statuses','=','تم الانهاء')
+            ->where('transfer_party','!=',null)
+            ->where('types_reports.name','!=','اعراض جانبية')
+            ->where('types_reports.name','!=','جودة')
             ->get();
         return view('operationsManagement/followReports',compact('reports'));
     }
 
-//عشان تفاصيل الذي تمت المتابعه
-    public function followedUp($report_no){
-        $reports = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            //->join('commercial_drug', 'reports.drug_no', '=', 'commercial_drug.drug_no')
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-            'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name'
-                ,'site.pharmacy_name','types_reports.type_report','reports.report_date')
-            ->where('report_no','=', $report_no)->get();
-
-
-        $report2 = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
-        if (!$report2)
-            return redirect()->back();
-
-        $report2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party','site.pharmacy_name',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('app_user_no','=',null)
-            ->where('report_statues','!=',null)
-            ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->where('report_no','=', $report_no)
-            ->get();
 
 
 
-        $procedures=DB::table('procedures')->select('procedures.procedure'
-            ,'procedures.procedure_date','procedures.procedure_result')
-            ->where('report_no','=', $report_no)->get();
-
-        return view('operationsManagement/followedUp',compact('report','procedures','report2'));
-    }
-//والمحوله //عشان تفاصيل الذي قيد المتابعه
-    public function followedUp2($report_no){
-        $reports = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-            'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name'
-                ,'site.pharmacy_name','types_reports.type_report','reports.report_date','reports.report_statues')
-            ->where('report_no','=', $report_no)->get();
-
-        $report2 = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
-        if (!$report2)
-            return redirect()->back();
-
-        $report2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party','site.pharmacy_name',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('app_user_no','=',null)
-            ->where('report_statues','!=',null)
-            ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->where('report_no','=', $report_no)
-            ->get();
-
-        $procedures=DB::table('procedures')->select('procedures.procedure'
-            ,'procedures.procedure_date','procedures.procedure_result')
-            ->where('report_no','=', $report_no)->get();
-
-        return view('operationsManagement/followedUp2',compact('report','procedures','report2'));
-    }
-//عشان تفاصيل الذي تم الانهاء
-    public function followedUp3($report_no){
-        $reports = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
-        if (!$reports)
-            return redirect()->back();
-
-        $report = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-            'app_user.app_user_name','app_user.app_user_phone','reports.commercial_name','reports.report_date'
-                ,'site.pharmacy_name','types_reports.type_report','reports.opmanage_notes')
-            //->where('opmanage_notes','!=',null)
-            ->where('report_no','=', $report_no)
-            ->get();
-
-        $report2 = DB::table('reports')->select('reports.report_no')
-            ->where('report_no','=', $report_no)->get();  // search in given table id only
-        if (!$report2)
-            return redirect()->back();
-
-        $report2 = DB::table('reports')
-            ->join('types_reports', 'reports.type_report_no', '=', 'types_reports.type_report_no')
-            ->join('site', 'reports.site_no', '=', 'site.site_no')
-            ->select('reports.report_no','reports.authors_name','reports.authors_phone',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party','site.pharmacy_name',
-                'reports.report_statues' , 'types_reports.type_report')
-            ->where('app_user_no','=',null)
-            ->where('report_statues','!=',null)
-            ->where('transfer_party','!=',null)
-            ->where('type_report','!=','اعراض جانبية')
-            ->where('type_report','!=','جودة')
-            ->where('report_no','=', $report_no)
-            ->get();
 
 
 
-        $procedures=DB::table('procedures')->select('procedures.procedure'
-            ,'procedures.procedure_date','procedures.procedure_result')
-            ->where('report_no','=', $report_no)->get();
 
-        return view('operationsManagement/followedUp3',compact('report','procedures','report2'));
-    }
-
-//عشان حفظ ملاحظة المدير على البلاغ
-    public function editReport($report_no){
-        $reports = Reports::find($report_no);
-        return view('operationsManagement/doneReports',compact('reports'));
-    }
-    public function saveOPMNotes($report_no,Request $request)
-    {
-        Reports::select('reports.report_no')
-            ->where('report_no', '=', $report_no)
-            ->update(['opmanage_notes' => $request->opmanage_notes,
-                'reports.report_statues'=>'تم الانهاء' ]);
-        $reports = DB::table('reports')
-            ->join('app_user', 'reports.app_user_no', '=', 'app_user.app_user_no')
-            ->select('reports.report_no','reports.authors_name','app_user.app_user_name',
-                'reports.report_date', 'reports.transfer_date','reports.transfer_party','reports.report_statues' )
-            ->where('report_statues','!=',null)
-            ->get();
-        return view('operationsManagement/followReports',compact('reports'))
-            ->with(['success' => 'تم الانهاء بنجاح ']);
-    }
-
-//عشان اضافة بلاغ
-    public function addReport(){
-        return view('operationsManagement/addReport');
-    }
     public function selectBNumber(Request $request){
         $batch_no = $request->input('batch_num');
 

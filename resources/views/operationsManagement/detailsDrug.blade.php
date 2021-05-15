@@ -19,51 +19,164 @@
         {{--                       بيانات الدواء                   --}}
         {{--//////////////////////////////////////////////////////--}}
 
-        <div class="card shadow mb-0 pb-0" >
-            <div class="card-header "style="background-color: #F9F9F9;">
-                <h5 class="card-title" style="color:#5468FF">تفاصيل الدواء</h5>
+        <div class="row col-lg-12" style="width: 100%" >
+
+            {{--//////////////////////////////////////////////////////--}}
+            {{--                    بيانات الدواء                      --}}
+            {{--//////////////////////////////////////////////////////--}}
+
+            <div class="card shadow col-lg-5" style="width: 50% ;background-color: #F9F9F9;"  >
+                <div class="card-header "style="background-color: #F9F9F9;">
+                    <h5 class="card-title" style="color:#5468FF">تفاصيل الدواء</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row" >
+                        @if(isset($drugs))
+                            @foreach($drugs as $drug)
+                                <ul class="list-group list-group-flush" >
+                                    <li class="list-group-item" style="background-color: #F9F9F9;">
+                                        <label class="Text">الاسم التجاري : </label>
+                                        <label  class="ml-3">{{$drug -> drug_name}}</label>
+                                    </li>
+                                    <li class="list-group-item" style="background-color: #F9F9F9;">
+                                        <label class="Text">الاسم العلمي : </label>
+                                        <label  class="ml-3">{{$drug -> material_name}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">قوة التركيز : </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> size}}{{$drug -> name}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">دواعي الأستخدام: </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> indications_use}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">طريقة الإستعمال: </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> how_use}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">الشكل الصيدلاني : </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> drug_form}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">رقم التسجيل  : </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> register_no}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">الأثار الجانبية : </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> side_effects}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">الشركة المصنعة  : </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> company_name}}</label>
+                                    </li>
+                                    <li class="list-group-item"style="background-color: #F9F9F9;">
+                                        <label class="Text">بلد الشركة المصنعة  : </label>
+                                        <label  class="ml-3 mr-4">{{$drug -> country}}</label>
+                                    </li>
+                                </ul>
+                                @break($drug)
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
             </div>
-            <div class="card-body position-relative mb-0 pb-0" style="background-color: #F9F9F9;">
-                <form>
-                    @if(isset($r))
-                        @foreach($r as $rr)
-                            <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap;  ">
-                                <label>الاسم التجاري : </label>
-                                <label  class="ml-3">{{$rr->drug_name}}</label>
-                                <label >الاسم العلمي : </label>
-                                <label class="ml-3" >{{$rr->material_name}}</label>
-                            </div>
-                            <div>
-                                <label > اسم الوكيل : </label>
-                                <label  class="ml-3">{{$rr->agent_name}}</label>
-                                <label > بلد الصنع : </label>
-                                <label  class="ml-3">{{$rr->company_country}}</label>
-                            </div>
-                            <div >
-                                <label>الاستخدامات : </label>
-                                <label  class="ml-3 mr-4">{{$rr->how_to_use}}</label>
-                                <label > الاعراض : </label>
-                                <label  class="ml-3">{{$rr->side_effects}}</label>
-                            </div >
-                            <div>
-                                <label > رقم الشحنة : </label>
-                                <label  class="ml-3">{{$rr->batch_num}}</label>
-                                <label>السحب : </label>
-                                <label  class="ml-3">{{$rr->shipment_drawn}}</label>
-                                <label >الاستثناء : </label>
-                                <label class="ml-3" >{{$rr->exception}}</label>
-                            </div>
-                            <div class="form-group raw   border-bottom " style="display: flex; flex-wrap: wrap; ">
-                                <label>  تاريخ الانتاج : </label>
-                                <label  class="ml-3">{{$rr->production_date}}</label>
-                                <label > تاريخ الانتهاء :</label>
-                                <label  class="ml-3">{{$rr->expiry_date}}</label>
-                            </div>
-                        @endforeach
-                    @endif
-                </form>
+
+            {{--//////////////////////////////////////////////////////--}}
+            {{--                   تفاصيل الموقع                       --}}
+            {{--//////////////////////////////////////////////////////--}}
+
+            <div class="container col-lg-6 " style="margin-top:6%" >
+                <div class="card shadow col-lg-10" style="background-color: #F9F9F9; "  >
+                    <div class="card-header "style="background-color: #F9F9F9;">
+                        <h5 class="card-title" style="color:#5468FF">بيانات الوكيل</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" >
+                            @if(isset($drugs))
+                                @foreach($drugs as $drug)
+                                    <ul class="list-group list-group-flush" >
+                                        <li class="list-group-item" style="background-color: #F9F9F9;">
+                                            <label class="Text">اسم الوكيل : </label>
+                                            <label  class="ml-3">{{$drug -> agent_name}}</label>
+                                        </li>
+                                        <li class="list-group-item" style="background-color: #F9F9F9;">
+                                            <label class="Text">رقم الهاتف : </label>
+                                            <label  class="ml-3">{{$drug -> phone}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">البريد الإلكتروني : </label>
+                                            <label  class="ml-3 mr-4">{{$drug -> email}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">عنوان الوكيل : </label>
+                                            <label  class="ml-3 mr-4">{{$drug -> address}}</label>
+                                        </li>
+                                    </ul>
+                                    @break($drug)
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow col-lg-12" style="background-color: #F9F9F9;"  >
+                    <div class="card-header "style="background-color: #F9F9F9;">
+                        <h5 class="card-title" style="color:#5468FF">بيانات الشحنة</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row" >
+                            @if(isset($drugs))
+                                @foreach($drugs as $drug)
+                                    <ul class="list-group list-group-flush" >
+                                        <li class="list-group-item" style="background-color: #F9F9F9;">
+                                            <label class="Text">رقم التشغيلة  : </label>
+                                            <label  class="ml-3">{{$drug -> batch_num}}</label>
+                                        </li>
+                                        <li class="list-group-item" style="background-color: #F9F9F9;">
+                                            <label class="Text">تاريخ الإنتاج : </label>
+                                            <label  class="ml-3">{{$drug -> production_date}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">تاريخ الإنتهاء  : </label>
+                                            <label  class="ml-3 mr-4">{{$drug -> expiry_date}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">سعر الصنف : </label>
+                                            <label  class="ml-3 mr-4">{{$drug -> price}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">الكمية : </label>
+                                            <label  class="ml-3 mr-4">{{$drug -> quantity}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">نوع الشحنة : </label>
+                                            <label  class="ml-3 mr-4">{{$drug -> exception}}</label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">الاستثناء : </label>
+                                            <label  class="ml-3 mr-4"></label>
+                                        </li>
+                                        <li class="list-group-item"style="background-color: #F9F9F9;">
+                                            <label class="Text">السحب : </label>
+                                            <label  class="ml-3 mr-4">
+                                                @if($drug -> drug_drawn == 0)
+                                                    غير مسحوب
+                                                @else
+                                                    مسحوب
+                                                @endif
+                                            </label>
+                                        </li>
+
+                                    </ul>
+                                    @break($drug)
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
 
 
         {{--End Content--}}

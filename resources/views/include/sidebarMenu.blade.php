@@ -58,25 +58,25 @@
                     <ul class="UL">
                         <li class="nav-item " >
                             <a class="nav-link active " aria-current="page" href="{{route('OP_transferFollowingReports')}}">
-                                <i class="far fa-newspaper"></i>
+                                <i class="fas fa-angle-left"></i>
                                 <span data-feather="file" class="ml-2">محول للمتابعة</span>
                             </a>
                         </li>
                         <li class="nav-item " >
                             <a class="nav-link active " aria-current="page" href="{{route('OP_followingReports')}}">
-                                <i class="far fa-newspaper"></i>
+                                <i class="fas fa-angle-left"></i>
                                 <span data-feather="file" class="ml-2">قيد المتابعة</span>
                             </a>
                         </li>
                         <li class="nav-item " >
                             <a class="nav-link active " aria-current="page" href="{{route('OP_followDoneReports')}}">
-                                <i class="far fa-newspaper"></i>
+                                <i class="fas fa-angle-left"></i>
                                 <span data-feather="file" class="ml-2">تم متابعتها</span>
                             </a>
                         </li>
                         <li class="nav-item " >
                             <a class="nav-link active " aria-current="page" href="{{route('OP_doneReports')}}">
-                                <i class="far fa-newspaper"></i>
+                                <i class="fas fa-angle-left"></i>
                                 <span data-feather="file" class="ml-2">تم انهائها</span>
                             </a>
                         </li>
@@ -122,6 +122,12 @@
                                 <span data-feather="file" class="ml-2">غير مطابق</span>
                             </a>
                         </li>
+                        <li class="nav-item " >
+                            <a class="nav-link active " aria-current="page" href="{{route('PM_newExceptionReports')}}">
+                                <i class="far fa-newspaper"></i>
+                                <span data-feather="file" class="ml-2">مستثناء</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -139,13 +145,13 @@
                     <ul class="UL">
                         <li class="nav-item " >
                             <a class="nav-link active " aria-current="page" href="{{route('PM_followingReports')}}">
-                                <i class="far fa-newspaper"></i>
+                                <i class="fas fa-angle-left"></i>
                                 <span data-feather="file" class="ml-2">قيد المتابعة</span>
                             </a>
                         </li>
                         <li class="nav-item " >
                             <a class="nav-link active " aria-current="page" href="{{route('PM_followDoneReports')}}">
-                                <i class="far fa-newspaper"></i>
+                                <i class="fas fa-angle-left"></i>
                                 <span data-feather="file" class="ml-2">تم متابعتها</span>
                             </a>
                         </li>

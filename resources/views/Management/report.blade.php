@@ -1,22 +1,18 @@
 @extends('layouts\master')
 @section('content')
 
-
+    {{--Title--}}
+    {{--    @if(Session::has('saved'))--}}
+    {{--        <div class="alert alert-success">--}}
+    {{--            {{Session::get('saved')}}--}}
+    {{--        </div>--}}
+    {{--    @endif--}}
     <main class="col-md-8 ms-sm-auto col-lg-10 px-md-4 ">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 pr-2  border-bottom main " >
-            <h1 class="h2  ml-4">متابعة بلاغ وارد</h1>
+            <h1 class="h2  ml-4">تفاصيل البلاغ</h1>
             <div class="btn-toolbar ">
                 <div class="btn-group show ">
-                    @if(isset($reports))
-                        @foreach($reports as $report)
-                            @if($report->report_statuses =='قيد المتابعة')
-                                <button  class="btn btn-sm btn-outline-secondary  mr-4 ml-4 button" >
-                                    <a href="{{route('PM_endFollowUp',$report->report_no)}}">انهاء المتابعة</a>
-                                </button>
-                            @endif
-                            @break($report)
-                        @endforeach
-                    @endif
+
                 </div>
             </div>
         </div>
@@ -52,9 +48,9 @@
                                 <label class="col-form-label ml-2 mr-4 mb-3  ">{{$report -> date}}  </label>
                             </div>
                             <div class="form-group raw mt-4  ">
-                                <a class="text-center col-form-label mb-3"  href="{{route('PM_detailsReport',$report->report_no)}}" style="margin-right: 20%"> تفاصيل البلاغ</a>
+                                <a class="text-center col-form-label mb-3"  href="{{route('details',$report->id)}}" style="margin-right: 20%"> تفاصيل البلاغ</a>
                                 @if($report -> type_report != 'مهرب')
-                                    <a class="text-center col-form-label mb-3 "  href="{{route('PM_detailsDrug',$report->report_no)}}" style="margin-right: 34%"> تفاصيل الدواء</a>
+                                    <a class="text-center col-form-label mb-3 "  href="{{route('detailsDrug',$report->id)}}" style="margin-right: 34%"> تفاصيل الدواء</a>
                                 @endif
                             </div>
                         @endforeach
@@ -78,7 +74,7 @@
                 <div class="row pb-5">
                     @if(isset($procedures))
                         @foreach($procedures as $procedure)
-                            @if($procedure->report_id == $report->report_no)
+                            @if($procedure->report_id == $report->id)
                                 <div class="form-group raw mt-4 col-lg-12 " style="display: flex; flex-wrap: wrap; ">
                                     <label class="col-form-label col-lg-2  Text ml-3 ">  التاريخ : </label>
                                     <label class="  col-lg-8 mt-2">{{$procedure -> date}}</label>
@@ -87,37 +83,26 @@
                                     <label class="col-form-label col-lg-2  Text ml-3 ">  الإجراء المتخذ : </label>
                                     <label class="  col-lg-8 mt-2">{{$procedure -> procedure}}</label>
                                 </div>
-                                <div class="form-group raw mt-4 col-lg-12 " style="display: flex; flex-wrap: wrap; ">
-                                    <label class="col-form-label col-lg-2 Text  ml-3 ">  الــنــتــائــج : </label>
+                                <div class="form-group raw mt-4 col-lg-12 border-bottom " style="display: flex; flex-wrap: wrap; ">
+                                    <label class="col-form-label col-lg-2  Text ml-3 ">  الــنــتــائــج : </label>
                                     <label class="  col-lg-8 mt-2">{{$procedure -> result}}</label>
                                 </div>
-
                             @endif
                         @endforeach
                     @endif
                 </div>
-                @if($report->report_statuses == 'قيد المتابعة')
-                    <form method="POST" action="{{route('PM_addProcedure',$report->report_no)}}">
-                        @csrf
-                        <div class="row pb-5">
-                            <div class="form-group raw mt-4 col-lg-12 " style="display: flex; flex-wrap: wrap; ">
-                                <label class="col-form-label col-lg-2 Text mt-2 ml-3 ">  الإجراء المتخذ : </label>
-                                <div class=" mt-2 col-lg-8 ">
-                                    <textarea class="form-control" name="procedure" placeholder="الإجراء المتخذ" rows="3"></textarea>
+                <div class="row pb-5">
+                    @if(isset($reports))
+                        @foreach($reports as $report)
+                            @if($report -> opmanage_notes != null)
+                                <div class="form-group raw mt-4 col-lg-12 border-bottom " style="display: flex; flex-wrap: wrap; ">
+                                    <label class="col-form-label col-lg-4  ml-3  " style="color: #0c63e4 ; font-size: 18px">  ملاحظة مدير العمليات : </label>
+                                    <label class="  col-lg-7 mt-2">{{$report -> opmanage_notes}}</label>
                                 </div>
-                            </div>
-                            <div class="form-group raw mt-4 col-lg-12" style="display: flex; flex-wrap: wrap; ">
-                                <label class="col-form-label col-lg-2 Text mt-2 ml-3 ">  الــنــتــائــج : </label>
-                                <div class=" mt-2 col-lg-8 ">
-                                    <textarea class="form-control" name="result" placeholder="النتائج" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group raw mt-4 col-lg-12 "  style="display: flex; flex-wrap: wrap; ">
-                                <button class="btn " type="submit" style="margin-right:90%; width: 20%; background-color: #5468FF; color:#ffffff">حفظ</button>
-                            </div>
-                        </div>
-                    </form>
-                @endif
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
     </main>
