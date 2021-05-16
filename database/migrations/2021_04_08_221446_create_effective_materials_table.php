@@ -14,6 +14,7 @@ class CreateEffectiveMaterialsTable extends Migration
     public function up()
     {
         Schema::create('effective_materials', function (Blueprint $table) {
+
             $table->id();
             $table->string('name',50);
             $table->longText('indications_use');

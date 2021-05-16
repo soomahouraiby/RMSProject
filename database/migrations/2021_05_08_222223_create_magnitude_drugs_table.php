@@ -15,8 +15,9 @@ class CreateMagnitudeDrugsTable extends Migration
     {
         Schema::create('magnitude_drugs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('magnitude_id')->constrained('magnitudes')->onDelete('cascade');
-            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade');
+            $table->foreignId('magnitude_id')->constrained('magnitudes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['magnitude_id', 'commercial_id']);
             $table->timestamps();
         });
     }

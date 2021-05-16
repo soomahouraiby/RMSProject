@@ -9,7 +9,7 @@ class Shipment extends Model
 {
     //use HasFactory;
     protected $table="shipments";
-    protected $fillable = ['id', 'exception',
+    protected $fillable = ['id', 'type',
 
     ];
     protected $primaryKey = 'id';

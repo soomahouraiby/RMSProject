@@ -152,7 +152,7 @@ class OPManageController extends Controller
 
                 ->select('batch_numbers.batch_num','commercial_drugs.id', 'commercial_drugs.name as drug_name',
                     'commercial_drugs.drug_form','commercial_drugs.how_use','commercial_drugs.side_effects'
-                    ,'effective_materials.name as material_name','shipments.exception','batch_numbers.drug_drawn',
+                    ,'effective_materials.name as material_name','shipments.exception','shipments.type','batch_numbers.drug_drawn',
                     'companies.name as company_name')
                 ->where('batch_numbers.batch_num','=', $batch->batch_number)->get();
         }
@@ -210,7 +210,7 @@ class OPManageController extends Controller
                     'commercial_drugs.id', 'commercial_drugs.name as drug_name', 'commercial_drugs.drug_form',
                     'commercial_drugs.how_use', 'commercial_drugs.side_effects', 'commercial_drugs.register_no',
                     'effective_materials.name as material_name', 'effective_materials.indications_use',
-                    'companies.name as company_name', 'companies.country', 'shipments.exception',
+                    'companies.name as company_name', 'companies.country', 'shipments.exception','shipments.type',
                     'agents.name as agent_name', 'agents.phone', 'agents.email', 'agents.address',
                     'magnitudes.size', 'magnitudes.name')
                 ->where('batch_numbers.batch_num', '=', $batch->batch_number)->get();

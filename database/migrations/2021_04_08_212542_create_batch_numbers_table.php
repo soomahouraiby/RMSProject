@@ -14,17 +14,19 @@ class CreateBatchNumbersTable extends Migration
     public function up()
     {
         Schema::create('batch_numbers', function (Blueprint $table) {
+
             $table->id();
-            $table->string('batch_num',30)->unique();
-            $table->string('barcode')->unique();
+
+            $table->bigInteger('batch_num')->unique();
+            $table->bigInteger('barcode')->unique();
             $table->date('production_date');
             $table->date('expiry_date');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
             $table->boolean('drug_drawn')->default(0);
 
-            $table->foreignId('shipment_id')->constrained('shipments')->onDelete('cascade');
-            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade');
+            $table->foreignId('shipment_id')->constrained('shipments')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

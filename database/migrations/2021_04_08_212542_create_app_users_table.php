@@ -16,16 +16,15 @@ class CreateAppUsersTable extends Migration
         Schema::create('app_users', function (Blueprint $table) {
 
             $table->id();
-            $table->string('name',30);
-            $table->string('email')->unique();
-            $table->string('phone',14);
-            $table->smallInteger('age');
-            $table->boolean('sex');
-            $table->string('address')->nullable();
-            $table->string('adjective',60)->default('مواطن');
+            $table->string('name',60);
+            $table->string('email', 70)->unique();
+            $table->integer('phone')->length(9);
+            $table->smallInteger('age')->nullable()->length(3);
+            $table->boolean('sex')->nullable();
+            $table->string('address',70)->nullable();
+            $table->string('adjective', 30)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('report_count')->nullable();
 
             $table->rememberToken();
 

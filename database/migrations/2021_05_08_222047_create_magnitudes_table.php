@@ -14,9 +14,10 @@ class CreateMagnitudesTable extends Migration
     public function up()
     {
         Schema::create('magnitudes', function (Blueprint $table) {
+
             $table->id();
             $table->string('name',10);
-            $table->float('size');
+            $table->decimal('size', 10, 10);
 
             $table->timestamps();
         });

@@ -14,10 +14,12 @@ class CreateCombinationsTable extends Migration
     public function up()
     {
         Schema::create('combinations', function (Blueprint $table) {
-            $table->id();
 
-            $table->foreignId('material_id')->constrained('effective_materials')->onDelete('cascade');
-            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('material_id')->constrained('effective_materials')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['material_id', 'commercial_id']);
+
 
             $table->timestamps();
         });

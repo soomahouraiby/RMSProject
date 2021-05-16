@@ -14,8 +14,10 @@ class CreateTypesReportsTable extends Migration
     public function up()
     {
         Schema::create('types_reports', function (Blueprint $table) {
+
             $table->id();
-            $table->string('name');
+            $table->string('name',20);
+            $table->string('display_name', 20);
 
             $table->timestamps();
 

@@ -14,9 +14,12 @@ class CreateDiseasesCommercialsTable extends Migration
     public function up()
     {
         Schema::create('diseases_commercials', function (Blueprint $table) {
+
             $table->id();
-            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade');
-            $table->foreignId('diseases_id')->constrained('diseases')->onDelete('cascade');
+            $table->foreignId('commercial_id')->constrained('commercial_drugs')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('diseases_id')->constrained('diseases')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['commercial_id', 'diseases_id']);
+
             $table->timestamps();
         });
     }

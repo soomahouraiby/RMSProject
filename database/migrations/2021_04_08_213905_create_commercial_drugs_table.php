@@ -14,18 +14,19 @@ class CreateCommercialDrugsTable extends Migration
     public function up()
     {
         Schema::create('commercial_drugs', function (Blueprint $table) {
+
             $table->id();
-            $table->string('name',30);
-            $table->string('register_no',15)->unique();
+
+            $table->string('name',50);
+            $table->bigInteger('register_no')->unique()->length(15);
             $table->string('drug_entrance',50);
-            $table->Text('how_use');
-            $table->string('drug_form',30);
-            $table->Text('side_effects');
-            $table->string('photo')->nullable();
+            $table->string('photo',191);
+            $table->longText('how_use');
+            $table->longText('side_effects');
+            $table->smallInteger('drug_form')->length(3);
 
-            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
-            $table->foreignId('agent_id')->constrained('agents')->onDelete('cascade');
-
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('agent_id')->constrained('agents')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

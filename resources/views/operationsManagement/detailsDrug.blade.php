@@ -150,11 +150,24 @@
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
                                             <label class="Text">نوع الشحنة : </label>
-                                            <label  class="ml-3 mr-4">{{$drug -> exception}}</label>
+                                            <label  class="ml-3 mr-4">
+                                                @if($drug -> exception == 0)
+                                                    تجارية
+                                                @else
+                                                    تابعة لمنظمة(مجانية)
+                                                @endif
+
+                                            </label>
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
                                             <label class="Text">الاستثناء : </label>
-                                            <label  class="ml-3 mr-4"></label>
+                                            <label  class="ml-3 mr-4">
+                                                @if($drug -> type == 0)
+                                                    غير مُستثنى
+                                                @else
+                                                    مُستثنى
+                                                @endif
+                                            </label>
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
                                             <label class="Text">السحب : </label>

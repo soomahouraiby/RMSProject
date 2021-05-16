@@ -132,7 +132,19 @@
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
                                             <label class="Text">نوع الشحنة :</label>
-                                            <label  class="ml-3">{{$drug -> exception}}</label>
+                                            <label  class="ml-3">
+                                                @if($drug -> exception == 0)
+                                                    تجارية
+                                                @else
+                                                    تابعة لمنظمة(مجانية)
+                                                @endif
+                                                >>
+                                                @if($drug -> type == 0)
+                                                    غير مُستثنى
+                                                @else
+                                                    مُستثنى
+                                                @endif
+                                            </label>
                                         </li>
                                         <li class="list-group-item"style="background-color: #F9F9F9;">
                                             <label class="Text">السحب : </label>
@@ -189,7 +201,19 @@
                                         @foreach($drugs as $drug)
                                             <li class="list-group-item"style="background-color: #F9F9F9;">
                                                 <label class="Text">نوع الشحنة :</label>
-                                                <label  class="ml-3">{{$drug -> exception}}</label>
+                                                <label  class="ml-3">
+                                                    @if($drug -> exception == 0)
+                                                        تجارية
+                                                    @else
+                                                        تابعة لمنظمة(مجانية)
+                                                    @endif
+                                                    >>
+                                                    @if($drug -> type == 0)
+                                                        غير مُستثنى
+                                                    @else
+                                                        مُستثنى
+                                                    @endif
+                                                </label>
                                             </li>
                                             <li class="list-group-item"style="background-color: #F9F9F9;">
                                                 <label class="Text">السحب : </label>
