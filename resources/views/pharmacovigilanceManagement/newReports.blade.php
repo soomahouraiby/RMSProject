@@ -71,7 +71,7 @@
                                 <td><a class="nav-link "   href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> name}}</a></td>
                                 <td><a class="nav-link  "  href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> date_report}} </a></td>
                                 <td ><a class="nav-link  " href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> type_report}}</a></td>
-                                <td ><a class="nav-link  " href="{{route('PHC_detailsEffectReport',$report -> report_no)}}">{{$report -> user_name}}</a></td>
+                                <td ><a class="nav-link  " href="{{route('PHC_detailsReport',$report -> report_no)}}">{{$report -> user_name}}</a></td>
                                 <td class="align-middle white-space-nowrap">
                                     <div class="dropdown font-sans-serif">
                                         <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-right" type="button" id="dropdown0" data-toggle="dropdown">

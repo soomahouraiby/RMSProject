@@ -193,11 +193,6 @@ class PHCManageController extends Controller
             ->where('report_alert_drugs.id', '=', $id)
             ->update(['state'=>1]);
 
-        $data =[
-            'id' => 'aa',
-            'state' =>'g' ,
-        ];
-        event(new NewNotification($data));
         return redirect()->back()->with(['success' => 'تم التحويل بنجاح ']);
     }
 

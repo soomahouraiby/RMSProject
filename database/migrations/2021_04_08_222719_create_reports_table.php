@@ -44,7 +44,7 @@ class CreateReportsTable extends Migration
             $table->string('drug_photo',90)->nullable();
 
 
-            $table->foreignId('app_user_id')->constrained('app_users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('app_user_id')->constrained('app_users')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('types_report_id')->constrained('types_reports')->onDelete('cascade')->onUpdate('cascade');
 
 

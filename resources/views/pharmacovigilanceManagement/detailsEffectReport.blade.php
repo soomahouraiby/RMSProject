@@ -55,6 +55,7 @@
 
                                 <label class="col-form-label Text ml-3 mr-4 ">صلة القرابة بالمريض : </label>
                                 <label class="col-form-label  ml-2 mr-4  ">{{$reports -> relative_relation}}  </label>
+                            </div>
                         @endforeach
                     @endif
                 </form>

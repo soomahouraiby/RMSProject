@@ -1,19 +1,17 @@
 <?php
 namespace App\Http\Controllers\operationsManagement;
 
+use App\Events\NewNotification;
 use App\Http\Controllers\Controller;
 use App\Models\Batch_number;
 use App\Models\Report;
-use App\Models\Report_detailes;
-use App\Models\Sites;
-use App\Models\Commercial_drugs;
-use App\Models\App_users;
-use App\Models\Reports;
-use App\Models\Types_report;
+use App\Models\Commercial_drug;
+use App\Models\App_user;
+use App\Models\Type_report;
 use App\Request\ReportsRequest;
-use App\Models\Shipments;
-use App\Models\Combinations;
-use App\Models\Effective_materials;
+use App\Models\Shipment;
+use App\Models\Combination;
+use App\Models\Effective_material;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -94,7 +92,11 @@ class OPManageController extends Controller
                 'transfer_date' => Carbon::now()->toDateTimeString()
                 ,'state'=>1,'reports.report_statuses'=>'محول للمتابعة']);
 
-
+        $data =[
+            'id' => 'aa',
+            'state' =>'g' ,
+        ];
+        event(new NewNotification($data));
         return redirect()->back();
     }
 
@@ -114,6 +116,46 @@ class OPManageController extends Controller
     public function addReport(){
         return view('operationsManagement/addReport');
     }
+    public function selectBNumber(Request $request){
+        $batch_no = $request->input('batch_num');
+        $drug=DB::table('batch_numbers')
+            ->join('commercial_drugs', 'batch_numbers.commercial_id', '=', 'commercial_drugs.id')
+            ->select('commercial_drugs.name','commercial_drugs.id as drug_no','batch_numbers.drug_drawn')
+            ->where('batch_num','=', $batch_no)->get();
+
+        return view('operationsManagement/addReport',compact('drug'));
+    }
+    public function store(Request  $request): \Illuminate\Http\RedirectResponse
+    {
+        $reports = DB::table('reports')->insert([
+            'amount_name' =>   $request->input('amount_name'),
+            'phone' =>  $request->input('phone'),
+            'adjective' => $request->input('adjective'),
+            'age' => $request->input('age'),
+            'sex'=> $request->input('sex'),
+            'date'=>Carbon::now()->toDateTimeString(),
+            'transfer_party' =>'ادارة الصيدلة',
+            'transfer_date'=>Carbon::now()->toDateTimeString(),
+            'commercial_name' =>   $request->input('commercial_name'),
+            'material_name' =>  $request->input('material_name'),
+            'company_name' => $request->input('company_name'),
+            'agent_name' => $request->input('agent_name'),
+            'batch_number' => $request->input('batch_num'),
+            'drug_price' => $request->input('drug_price'),
+            'district' => $request->input('district'),
+            'notes_user' =>$request->input('notes_user'),
+            'state'=>1,
+            'types_report_id' =>$request->input('types_report_id'),
+            'pharmacy_title' => $request->input('pharmacy_title'),
+            'street_name' => $request->input('street_name'),
+            'neig_name' => $request->input('neig_name'),
+            'site_dec' => $request->input('site_dec'),
+            'source'=>'1',
+            'report_statuses'=>'محول للمتابعة'
+        ]);
+        return redirect()->back()->with(['success' => 'تم اضافه البلاغ بنجاح ']);
+    }
+
 
 
 
@@ -390,69 +432,5 @@ class OPManageController extends Controller
             ->get();
         return view('operationsManagement/followReports',compact('reports'));
     }
-
-
-
-
-
-
-
-
-    public function selectBNumber(Request $request){
-        $batch_no = $request->input('batch_num');
-
-        $drug=DB::table('batch_number')
-            ->join('commercial_drug', 'batch_number.drug_no', '=', 'commercial_drug.drug_no')
-            ->select('commercial_drug.drug_name','commercial_drug.drug_no')
-            ->where('batch_num','=', $batch_no)->get();
-
-        $site=Sites::orderByDesc('site_no')->first('site_no');
-
-
-
-        return view('operationsManagement/addReport',compact('drug','site'));
-
-
-
-    }
-    public function store(Request  $request): \Illuminate\Http\RedirectResponse
-    {
-
-        $this->validate($request, [
-            'type_report_no' => 'required',
-        ]);
-
-
-        $reports = DB::table('reports')->insert([
-            'authors_name' =>   $request->input('authors_name'),
-            'authors_phone' =>  $request->input('authors_phone'),
-            'authors_adjective' => $request->input('authors_adjective'),
-            'authors_age' => $request->input('authors_age'),
-            'report_date'=>Carbon::now()->toDateTimeString(),
-            'transfer_party' =>'ادارة الصيدلة',
-            'transfer_date'=>Carbon::now()->toDateTimeString(),
-            'commercial_name' =>   $request->input('commercial_name'),
-            'material_name' =>  $request->input('material_name'),
-            'company_name' => $request->input('company_name'),
-            'agent_name' => $request->input('agent_name'),
-//            'batch_number' => $request->input('batch_number'),
-            'district' => $request->input('district'),
-            'report_statues'=>'محول للمتابعة',
-            'notes_user' =>$request->input('notes_user'),
-            'state'=>1,
-            'type_report_no' =>$request->input('type_report_no'),
-            'site_no' =>$request->input('site_no'),
-            'drug_no' =>$request->input('drug_no'),
-        ]);
-        $sites = DB::table('site')->insert([
-          'pharmacy_name' => $request->input('pharmacy_name'),
-          'street_name' => $request->input('street_name'),
-          'neig_name' => $request->input('neig_name'),
-          'site_dec' => $request->input('site_dec'),
-
-      ]);
-         return redirect()->back()->with(['success' => 'تم اضافه البلاغ بنجاح ']);
-    }
-
 
 }

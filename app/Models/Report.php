@@ -17,7 +17,7 @@ class Report extends Model
     protected $table = "reports";
     protected $fillable =[
         'id','app_user_id','batch_number', 'types_report_id','date',
-        'notes_user','district', 'commercial_name', 'material_name','drug_picture','drug_price',
+        'notes_user','district', 'commercial_name', 'material_name','drug_photo','drug_price',
         'company_name','agent_name','transfer_date', 'transfer_party', 'report_statuses'
         ,'opmanage_notes','state','pharmacy_title','street_name','neig_name','site_dec'
         ,'longitude','latitude','source','amount_name','phone','sex','age','adjective'

@@ -40,7 +40,7 @@
                                     <div class="mt-2  ml-4">
                                         <input type="text" class="form-control" placeholder="رقم التشغيلة  " name="batch_num" id="batch_num">
                                     </div>
-                        +        </div>
+                                </div>
                                 <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                     <button id="query" class="btn btn-primary " type="submit" style="color: white;background-color: #0F122D">
                                         تحقق
@@ -62,21 +62,27 @@
                                  <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap;">
                                      <label class="col-form-label text-sm-right mt-2 ">اسم المبلغ : </label>
                                      <div class=" mt-2 ml-4 ">
-                                         <input type="text" class="form-control " placeholder="اسم المبلغ" name="authors_name">
+                                         <input type="text" class="form-control " placeholder="اسم المبلغ" name="amount_name">
                                      </div>
                                      <label class="col-form-label text-sm-right mt-2"> رقم الهاتف : </label>
                                      <div class=" mt-2 ml-4">
-                                         <input type="text" class="form-control" placeholder="رقم الهاتف " name="authors_phone">
+                                         <input type="text" class="form-control" placeholder="رقم الهاتف " name="phone">
                                      </div>
                                  </div>
                                  <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap;">
                                      <label class="col-form-label text-sm-right mt-2"> العمر : </label>
                                      <div class=" mt-2 ml-4">
-                                         <input type="text" class="form-control" placeholder="العمر " name="authors_age">
+                                         <input type="text" class="form-control" placeholder="العمر " name="age">
                                      </div>
                                      <label class="col-form-label text-sm-right mt-2 ml-0"> الصفة : </label>
                                      <div class=" mt-2 ml-4  ">
-                                         <input type="text" class="form-control  " placeholder="الصفة " name="authors_adjective">
+                                         <input type="text" class="form-control  " placeholder="الصفة " name="adjective">
+                                     </div>
+                                 </div>
+                                 <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap;">
+                                     <label class="col-form-label text-sm-right mt-2 ml-0"> النوع : </label>
+                                     <div class=" mt-2 ml-4  ">
+                                         <input type="text" class="form-control  " placeholder="النوع " name="sex">
                                      </div>
                                  </div>
                              </div>
@@ -112,11 +118,9 @@
                                 </div>
                                 <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
 
-                                    <input name="site_no" type="hidden" value="{{$site->site_no + 1}}">
-
                                     <label class="col-form-label text-sm-right mt-2">اسم الصيدلية  : </label>
                                     <div class=" mt-2 ml-4">
-                                        <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_name">
+                                        <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_title">
                                     </div>
                                     <label class="col-form-label text-sm-right mt-2">اسم الشارع  : </label>
                                     <div class=" mt-2 ml-4">
@@ -147,7 +151,7 @@
                                 </div>
                                  <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                      <label class="col-form-label text-sm-right mt-2">نوع البلاغ : </label>
-                                     <input type="hidden" class="form-control"  name="type_report_no" value="1">
+                                     <input type="hidden" class="form-control"  name="types_report_id" value="1">
                                      <div class=" mt-2 ml-4">
                                          <input type="text" class="form-control" placeholder="مهرب" name="type_report" value="مهرب">
                                      </div>
@@ -163,8 +167,12 @@
 
 
                         </form>
+
                         @elseif(isset($drug) && $drug!=null)
-                            <form method="POST" action="{{route('OP_store')}}">
+                            @if(isset($drug))
+                                @foreach($drug as $drugs)
+                                    @if($drugs->drug_drawn==1)
+                                        <form method="POST" action="{{route('OP_store')}}">
                                 @csrf
                                 {{--//////////////////////////////////////////////////////--}}
                                 {{--                       بيانات المبلغ                   --}}
@@ -177,21 +185,25 @@
                                     <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap;">
                                         <label class="col-form-label text-sm-right mt-2 ">اسم المبلغ : </label>
                                         <div class=" mt-2 ml-4 ">
-                                            <input type="text" class="form-control " placeholder="اسم المبلغ" name="authors_name">
+                                            <input type="text" class="form-control " placeholder="اسم المبلغ" name="amount_name">
                                         </div>
                                         <label class="col-form-label text-sm-right mt-2"> رقم الهاتف : </label>
                                         <div class=" mt-2 ml-4">
-                                            <input type="text" class="form-control" placeholder="رقم الهاتف " name="authors_phone">
+                                            <input type="text" class="form-control" placeholder="رقم الهاتف " name="phone">
                                         </div>
                                     </div>
                                     <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap;">
                                         <label class="col-form-label text-sm-right mt-2"> العمر : </label>
                                         <div class=" mt-2 ml-4">
-                                            <input type="text" class="form-control" placeholder="العمر " name="authors_age">
+                                            <input type="text" class="form-control" placeholder="العمر " name="age">
                                         </div>
                                         <label class="col-form-label text-sm-right mt-2 ml-0"> الصفة : </label>
                                         <div class=" mt-2 ml-4  ">
-                                            <input type="text" class="form-control  " placeholder="الصفة " name="authors_adjective">
+                                            <input type="text" class="form-control  " placeholder="الصفة " name="adjective">
+                                        </div>
+                                        <label class="col-form-label text-sm-right mt-2 ml-0"> النوع : </label>
+                                        <div class=" mt-2 ml-4  ">
+                                            <input type="text" class="form-control  " placeholder="النوع " name="sex">
                                         </div>
                                     </div>
                                 </div>
@@ -209,8 +221,6 @@
                                         <div class="mt-2 ml-4">
                                             @if(isset($drug))
                                                 @foreach($drug as $drugs)
-                                                    <input type="hidden" class="form-control" placeholder="{{$drugs->drug_no}}  " name="drug_no"
-                                                           value="{{$drugs->drug_no}}">
                                                     <input type="text" class="form-control" placeholder="{{$drugs->drug_name}}  " name="drug_name"
                                                            value="{{$drugs->drug_name}}">
                                                 @endforeach
@@ -218,7 +228,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
-                                        <input name="site_no" type="hidden" value="{{$site->site_no + 1}}">
 
                                         <label class="col-form-label text-sm-right mt-2">اسم الصيدلية  : </label>
                                         <div class=" mt-2 ml-4">
@@ -253,12 +262,9 @@
                                     </div>
                                     <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
                                         <label class="col-form-label text-sm-right mt-2">نوع البلاغ : </label>
+                                        <input type="hidden" class="form-control"  name="types_report_id" value="2">
                                         <div class=" mt-2 ml-4">
-                                            <select class="form-control mb-3" name="type_report_no">
-                                                <option selected="" ></option>
-                                                <option value="2" >مسحوب</option>
-                                                <option value="3" >غير مطابق</option>
-                                            </select>
+                                            <input type="text" class="form-control" placeholder="مسحوب"  value="مسحوب">
                                         </div>
                                         <label class="col-form-label text-sm-right mt-2">الجهه المحال إليها : </label>
                                         <div class="mt-2 ml-4">
@@ -272,6 +278,120 @@
 
 
                             </form>
+                                    @else
+                                        <form method="POST" action="{{route('OP_store')}}">
+                                            @csrf
+                                            {{--//////////////////////////////////////////////////////--}}
+                                            {{--                       بيانات المبلغ                   --}}
+                                            {{--//////////////////////////////////////////////////////--}}
+
+                                            <div class="row">
+                                                <h4>بيانات المبلغ</h4>
+                                            </div>
+                                            <div class="row border-bottom pb-5">
+                                                <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap;">
+                                                    <label class="col-form-label text-sm-right mt-2 ">اسم المبلغ : </label>
+                                                    <div class=" mt-2 ml-4 ">
+                                                        <input type="text" class="form-control " placeholder="اسم المبلغ" name="amount_name">
+                                                    </div>
+                                                    <label class="col-form-label text-sm-right mt-2"> رقم الهاتف : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="رقم الهاتف " name="phone">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap;">
+                                                    <label class="col-form-label text-sm-right mt-2"> العمر : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="العمر " name="age">
+                                                    </div>
+                                                    <label class="col-form-label text-sm-right mt-2 ml-0"> الصفة : </label>
+                                                    <div class=" mt-2 ml-4  ">
+                                                        <input type="text" class="form-control  " placeholder="الصفة " name="adjective">
+                                                    </div>
+                                                    <label class="col-form-label text-sm-right mt-2 ml-0"> النوع : </label>
+                                                    <div class=" mt-2 ml-4  ">
+                                                        <input type="text" class="form-control  " placeholder="النوع " name="sex">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{--//////////////////////////////////////////////////////--}}
+                                            {{--                       تفاصيل البلاغ                    --}}
+                                            {{--//////////////////////////////////////////////////////--}}
+
+                                            <div class="row mt-4">
+                                                <h4>موضوع البلاغ</h4>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                                    <label class="col-form-label text-sm-right mt-2">  اسم الدواء : </label>
+                                                    <div class="mt-2 ml-4">
+                                                        @if(isset($drug))
+                                                            @foreach($drug as $drugs)
+                                                                <input type="text" class="form-control" placeholder="{{$drugs->drug_name}}  " name="drug_name"
+                                                                       value="{{$drugs->drug_name}}">
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <label class="col-form-label text-sm-right mt-2">  سعر الدواء : </label>
+                                                    <div class="mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="سعر الدواء " name="drug_price">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+
+                                                    <label class="col-form-label text-sm-right mt-2">اسم الصيدلية  : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="اسم الصيدلية" name="pharmacy_name">
+                                                    </div>
+                                                    <label class="col-form-label text-sm-right mt-2">اسم الشارع  : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="اسم الشارع" name="street_name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                                    <label class="col-form-label text-sm-right mt-2">المنطقة : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="المنطقة " name="district">
+                                                    </div>
+                                                    <label class="col-form-label text-sm-right mt-2">اسم الحي  : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="اسم الحي" name="neig_name">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                                    <label class="col-form-label text-sm-right mt-2">وصف الموقع : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <textarea  class="form-control" placeholder="وصف الموقع " name="site_dec"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group raw mt-4 mr-3 " style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                                    <label class="col-form-label text-sm-right mt-2">ملاحظة المبلغ : </label>
+                                                    <div class=" mt-2 ml-4">
+                                                        <textarea id="notes" class="form-control" placeholder="ملاحظة المبلغ" rows="3" name="notes_user"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group raw mt-4 mr-3" style="display: flex; flex-wrap: wrap; margin-left: -12px; margin-right: -12px;">
+                                                    <label class="col-form-label text-sm-right mt-2">نوع البلاغ : </label>
+                                                    <input type="hidden" class="form-control"  name="types_report_id" value="3">
+                                                    <div class=" mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="غير مطابق"  value="غير مطابق">
+                                                    </div>
+                                                    <label class="col-form-label text-sm-right mt-2">الجهه المحال إليها : </label>
+                                                    <div class="mt-2 ml-4">
+                                                        <input type="text" class="form-control" placeholder="ادارة الصيدلة"  value="ادارة الصيدلة">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group raw mt-4 " style="display: flex; flex-wrap: wrap; ">
+                                                <button id="save" class="btn btn-primary " type="submit" style="margin-right:90%;background-color: #0F122D; color: white">حفظ</button>
+                                            </div>
+
+
+                                        </form>
+                                    @endif
+                                @endforeach
+                            @endif
                         @endif
 
                     </div>
@@ -284,36 +404,3 @@
     </main>
 
 @endsection
-@push('save_ajax')
-    <script>
-        $(document).on('click', '#save', function () {
-
-            $.ajax({
-                type: 'POST',
-                url: '/store',
-                data: {
-                    '_token':"{{csrf_token()}}",
-                    'authors_name':$("input[name='authors_name']").val(),
-                    'authors_phone':$("input[name='authors_phone']").val(),
-                    'authors_age':$("input[name='authors_age']").val(),
-                    'authors_character':$("input[name='authors_character']").val(),
-                    'pharmacy_address':$("input[name='pharmacy_address']").val(),
-                    'drug_name':$("input[name='drug_name']").val(),
-                    'material_name':$("input[name='material_name']").val(),
-                    'district':$("input[name='district']").val(),
-                    'notes_user':$("#notes").val(),
-                    'type_report_no':$("#type_report").val(),
-                    'transfer_party':$("#transfer").val(),
-                },
-                success: function (data) {
-                    alert(data);
-                },
-                error: function (reject) {
-
-                }
-            });
-        });
-
-
-    </script>
-@endpush
